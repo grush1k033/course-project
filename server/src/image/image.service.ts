@@ -30,7 +30,7 @@ export interface AutoPart {
 export interface ICategory {
   id: number;
   name: string;
-  id_auto_part: number;
+  image: string
 }
 
 @Injectable()

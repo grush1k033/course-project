@@ -1,0 +1,45 @@
+.main {
+  margin-top: 20px;
+  &__title {
+    font-size: 26px;
+  }
+
+  .category {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    &__title {
+      font-size: 30px
+    }
+
+    &__items {
+      background: lightgray;
+      width: 100%;
+      display: flex;
+      padding-top: 14px;
+      padding-bottom: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    &__item {
+      background: white;
+      padding: 16px;
+      width: 310px;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+
+      &__image {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+  }
+}
