@@ -8,6 +8,8 @@ import {DropdownChangeEvent, DropdownModule} from 'primeng/dropdown';
 import {FormsModule} from '@angular/forms';
 import {CarService} from '../../service/car.service';
 import {Router} from '@angular/router';
+import {LocalStorageService} from '../../service/local-storage.service';
+import {LOCAL_STORAGE_KEY_CAR_MARK, LOCAL_STORAGE_KEY_CAR_MODEL} from '../../constants';
 
 export interface IModel {
   id: number,
@@ -36,18 +38,20 @@ export class MainComponent implements OnInit, OnDestroy{
   categories$: Observable<ICategory[]> | null;
   subModels: Subscription | null = null;
   models:IModel[] = [];
-  selectedModel: IModel = this.models[0];
+  selectedModel: string | null = null;
   subMarks: Subscription | null = null;
   marks:IMark[] = [];
-  selectedMark: IMark = this.marks[0];
-  loading = true;
-  loadingObj = {name: 'Loading...'}
+  selectedMark: string | null = null;
+  loading = false;
   constructor(
     public categoryService: CategoryService,
     private carService: CarService,
-    private router: Router
+    private router: Router,
+    private localStorage: LocalStorageService,
   ) {
     this.categories$ = this.categoryService.getAllCategory();
+    this.selectedModel = this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL) || null;
+    this.selectedMark = this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MARK) || null;
   }
 
   ngOnInit(): void {
@@ -60,7 +64,6 @@ export class MainComponent implements OnInit, OnDestroy{
     this.loading = true;
     this.subModels = this.carService.getModels(id).subscribe((res) => {
       this.models = res;
-      this.selectedModel = res[0];
       this.loading = false;
     })
   }
@@ -68,9 +71,10 @@ export class MainComponent implements OnInit, OnDestroy{
   getMarks() {
     this.subMarks = this.carService.getAllMarks().subscribe((res)=> {
       this.marks = res;
-      this.selectedMark = res[0];
-      const id = res[0].id.toString();
-      this.getModels(id);
+      const id = this.selectedMark;
+      if(id) {
+        this.getModels(id);
+      }
     })
   }
 
@@ -80,8 +84,14 @@ export class MainComponent implements OnInit, OnDestroy{
   }
 
   onChangeMark(event: DropdownChangeEvent) {
-    const id: string = event.value.id.toString();
+    this.selectedModel = null;
+    this.localStorage.set(LOCAL_STORAGE_KEY_CAR_MODEL, null);
+    this.localStorage.set(LOCAL_STORAGE_KEY_CAR_MARK, event.value);
+    const id: string = event.value.toString();
     this.getModels(id);
+  }
+  onChangeModel(event: DropdownChangeEvent) {
+    this.localStorage.set(LOCAL_STORAGE_KEY_CAR_MODEL, event.value);
   }
 
   navigateToAutoPart(id: number) {

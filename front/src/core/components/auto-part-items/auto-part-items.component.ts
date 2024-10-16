@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {AutoPartService} from '../../service/auto-part.service';
 
 @Component({
   selector: 'app-auto-part-items',
@@ -11,7 +12,10 @@ import {ActivatedRoute} from '@angular/router';
 export class AutoPartItemsComponent implements OnInit{
 
   id: string | null = null;
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private autoPartService: AutoPartService
+  ) {}
 
   ngOnInit(): void {
     this.id = (this.activatedRoute.snapshot.params as {id: string}).id;
@@ -20,6 +24,8 @@ export class AutoPartItemsComponent implements OnInit{
 
 
   getAutoPart(id: string) {
-
+    this.autoPartService.getAutoPartByCategory(id).subscribe(res => {
+      console.log(res);
+    })
   }
 }

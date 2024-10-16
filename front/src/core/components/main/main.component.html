@@ -10,6 +10,7 @@
           placeholder="Выберите марку"
           [options]="marks"
           optionLabel="name"
+          optionValue="id"
           (onChange)="onChangeMark($event)"
         ></p-dropdown>
       </div>
@@ -19,8 +20,10 @@
           [(ngModel)]="selectedModel"
           [loading]="loading"
           [editable]="true"
+          (onChange)="onChangeModel($event)"
           placeholder="Выберите модель"
           optionLabel="name"
+          optionValue="id"
         ></p-dropdown>
       </div>
       <div class="car__image">
