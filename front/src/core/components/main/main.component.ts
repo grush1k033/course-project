@@ -7,6 +7,7 @@ import {SearchCategoryPipe} from '../../pipes/search-category.pipe';
 import {DropdownChangeEvent, DropdownModule} from 'primeng/dropdown';
 import {FormsModule} from '@angular/forms';
 import {CarService} from '../../service/car.service';
+import {Router} from '@angular/router';
 
 export interface IModel {
   id: number,
@@ -43,7 +44,8 @@ export class MainComponent implements OnInit, OnDestroy{
   loadingObj = {name: 'Loading...'}
   constructor(
     public categoryService: CategoryService,
-    private carService: CarService
+    private carService: CarService,
+    private router: Router
   ) {
     this.categories$ = this.categoryService.getAllCategory();
   }
@@ -80,5 +82,9 @@ export class MainComponent implements OnInit, OnDestroy{
   onChangeMark(event: DropdownChangeEvent) {
     const id: string = event.value.id.toString();
     this.getModels(id);
+  }
+
+  navigateToAutoPart(id: number) {
+    this.router.navigate(["auto-part", id]).then()
   }
 }
