@@ -1,11 +1,14 @@
 .header {
-  padding: 10px 20px;
-  height: 60px;
-  width: 100%;
-  background: lightgray;
-  display: flex;
-  align-items: center;
-  gap: 50px;
+  background-color: #fafafa;
+
+  .container {
+    height: 60px;
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
 
 
   &__logo {

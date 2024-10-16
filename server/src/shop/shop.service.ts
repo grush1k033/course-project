@@ -16,18 +16,18 @@ export class ShopService {
 
   async getShopByID(id: string) {
     return (
-      await this.database.pool.query(this.commonService.getShopByID(id))
+      await this.database.pool.query(this.commonService.getByID(id))
     )[0][0];
   }
 
   async createShop(dto: IShopDto) {
-    return await this.database.pool.query(
-      this.commonService.create<IShopDto>(dto),
+    return this.database.pool.query(
+        this.commonService.create<IShopDto>(dto),
     );
   }
 
   async updateShop(dto: IShopDto, id: string) {
-    return await this.database.pool.query(this.commonService.update(dto, id));
+    return this.database.pool.query(this.commonService.update(dto, id));
   }
 
   async deleteShop(id: string) {
@@ -35,6 +35,6 @@ export class ShopService {
 
     // if(isDeleteAutopart)
 
-    return await this.database.pool.query(this.commonService.delete(id));
+    return this.database.pool.query(this.commonService.delete(id));
   }
 }

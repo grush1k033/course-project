@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../services/database.service';
 import { CommonService } from '../services/common.service';
-import {ICategory} from "../image/image.service";
+import {ICategory} from "../Interfaces/interfaces";
 @Injectable()
 export class CategoryService {
   constructor(

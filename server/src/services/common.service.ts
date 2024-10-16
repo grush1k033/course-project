@@ -1,4 +1,3 @@
-import { log } from 'console';
 
 export class CommonService {
   public tableName: string;
@@ -19,7 +18,7 @@ export class CommonService {
     return `SELECT * FROM ${this.tableName}`;
   }
 
-  public getShopByID(id: string) {
+  public getByID(id: string) {
     return `SELECT * FROM ${this.tableName} WHERE id = ${id}`;
   }
 

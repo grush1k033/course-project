@@ -14,3 +14,4 @@ export class SearchCategoryPipe implements PipeTransform {
     return categories.filter(item => item.name.toLowerCase().trim().includes(name.toLowerCase().trim()));
   }
 }
+

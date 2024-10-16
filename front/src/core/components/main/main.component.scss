@@ -1,5 +1,27 @@
-.main {
+.wrapper {
   margin-top: 20px;
+  &__title {
+    font-size: 30px
+  }
+  .car {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 20px;
+
+    &__model {
+      margin-right: auto;
+    }
+
+    &_image {
+      height: 60px;
+      align-self: flex-end;
+    }
+  }
+}
+
+.main {
   &__title {
     font-size: 26px;
   }
@@ -16,7 +38,7 @@
     }
 
     &__items {
-      background: lightgray;
+      background-color: #fafafa;
       width: 100%;
       display: flex;
       padding-top: 14px;
@@ -27,6 +49,7 @@
     }
 
     &__item {
+      cursor: pointer;
       background: white;
       padding: 16px;
       width: 310px;
@@ -38,6 +61,10 @@
       &__image {
         width: 60px;
         height: 60px;
+      }
+
+      &:hover {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
       }
     }
 
