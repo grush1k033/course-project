@@ -1,1 +1,23 @@
-<p>auto-part-items works!</p>
+<div class="container">
+  <div class="auto-part">
+    @for(item of autoParts; track item) {
+      <div class="auto-part__container">
+        <img [src]="'assets/images/'+ item.image + '.webp'" alt="Автозапчасть" class="product-image">
+        <div class="product-details">
+          <h2>{{item.name}}</h2>
+          <p>{{item.description}}</p>
+          <div class="product-price">Цена: {{item.price}} BYN</div>
+          <div class="quantity-container">
+            <input type="number" class="quantity-input" value="1" min="1">
+            <button class="add-to-cart">Добавить в корзину</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+
+
+
+

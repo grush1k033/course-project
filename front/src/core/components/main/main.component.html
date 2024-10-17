@@ -3,6 +3,11 @@
   <div class="wrapper">
     <div class="wrapper__title">Гараж</div>
     <div class="car">
+      <div class="car__title">
+        <img src="assets/icons/garage.svg" alt="garage-icon">
+        <div class="car__title__label">Гараж</div>
+      </div>
+      <div class="car__divider"></div>
       <div class="car__mark">
         <p-dropdown
           [(ngModel)]="selectedMark"
@@ -27,7 +32,7 @@
         ></p-dropdown>
       </div>
       <div class="car__image">
-        <img src="assets/images/audiA1.webp" alt="car-image">
+        <img [src]="carImage ? 'assets/images/' + carImage + '.webp' : 'assets/images/zaglushka.webp'" alt="car-image">
       </div>
     </div>
   </div>
@@ -38,7 +43,7 @@
       <div class="category__items">
             @for(item of (categories$ | async ); track item.id) {
               <button (click)="navigateToAutoPart(item.id)" class="category__item">
-                <img class="category__item__image" [src]="'assets/images/'+ item.image +'.jpg'" alt="">
+                <img class="category__item__image" [src]="'assets/images/'+ item.image +'.webp'" alt="">
                 <div class="category__item__label">{{item.name}}</div>
               </button>
             } @empty {

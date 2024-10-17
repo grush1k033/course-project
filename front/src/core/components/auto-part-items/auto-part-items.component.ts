@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {AutoPartService} from '../../service/auto-part.service';
+import {AutoPartService, IAutoPart} from '../../service/auto-part.service';
 
 @Component({
   selector: 'app-auto-part-items',
@@ -10,7 +10,7 @@ import {AutoPartService} from '../../service/auto-part.service';
   styleUrl: './auto-part-items.component.scss'
 })
 export class AutoPartItemsComponent implements OnInit{
-
+  autoParts: IAutoPart[] = [];
   id: string | null = null;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,7 +25,7 @@ export class AutoPartItemsComponent implements OnInit{
 
   getAutoPart(id: string) {
     this.autoPartService.getAutoPartByCategory(id).subscribe(res => {
-      console.log(res);
+      this.autoParts = res;
     })
   }
 }
