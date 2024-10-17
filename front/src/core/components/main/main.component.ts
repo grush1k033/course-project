@@ -54,7 +54,7 @@ export class MainComponent implements OnInit, OnDestroy{
 
   getCar() {
     this.carService.getCar().subscribe((res) => {
-      this.carImage = res.image;
+      this.carImage = res?.image;
     })
   }
 

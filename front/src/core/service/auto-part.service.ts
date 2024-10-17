@@ -24,6 +24,7 @@ export class AutoPartService {
   ) {}
 
   getAutoPartByCategory(categoryId: string): Observable<IAutoPart[]> {
-    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part?categoryId=${categoryId}&carsId=${this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL)}`)
+    const id = this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL);
+    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part?categoryId=${categoryId}${id ? `&carsId=${id}` : ''}`)
   }
 }
