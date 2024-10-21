@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {LocalStorageService} from './local-storage.service';
 import {LOCAL_STORAGE_KEY_CAR_MODEL} from '../constants';
 
@@ -12,12 +12,22 @@ export interface IAutoPart {
   image: string,
   category_id: number,
   cars_id: number
+  amount: number;
+  discount:number;
+  favourites: number
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutoPartService {
+  _search = new BehaviorSubject<string>('');
+  search$ = this._search.asObservable();
+
+  set search(value: string) {
+    this._search.next(value);
+  }
+
   constructor(
     private httpClient: HttpClient,
     private localStorage: LocalStorageService

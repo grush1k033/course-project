@@ -1,0 +1,58 @@
+@if (item) {
+  <div class="auto-parts">
+    <div class="auto-parts__left-content">
+      <div class="auto-parts__left-content__product-image">
+        <img
+          [src]="'assets/images/'+ item.image + '.webp'"
+          onerror="src = 'assets/icons/zaglushka.svg'"
+          alt="Автозапчасть">
+        <div class="article">код А.000000{{ item.id }}</div>
+      </div>
+      <div class="auto-parts__left-content__description">
+        <div class="description__title">{{ item.name }}</div>
+        <div class="description__subtitle">{{ item.description }}</div>
+        <div appVisibleImg [like]="!!item.favourites" class="description__favourite">
+          <div class="description__favourite__img">
+            <img width=30 [src]="likeSrc" alt="like-empty">
+          </div>
+          <div class="description__favourite__label">{{ item.favourites ? "В избранном" : "В избранное" }}</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="auto-parts__divider"></div>
+    <div class="auto-parts__right-content">
+      <div class="auto-parts__right-content__box-up">
+        <div class="box-up__discount">
+          <div class="box-up__discount__label">-{{ item.discount }}%</div>
+          <div class="box-up__discount__info" tooltipPosition="bottom"
+               pTooltip="Скидка действует при оформлении через корзину">i
+          </div>
+        </div>
+        <div class="box-up__price">{{ item.price }} BYN</div>
+      </div>
+      <div class="auto-parts__right-content__box-center">{{ getPrice(item.price, item.discount) }}
+        <span class="box-center__byn">BYN</span></div>
+      <div class="auto-parts__right-content__box-bottom">
+        <div class="auto-parts__right-content__box-bottom__amount">
+          <p-dropdown
+            [options]="getAmount(item.amount)"
+            [(ngModel)]="selectAmount"
+          ></p-dropdown>
+        </div>
+        <div class="auto-parts__right-content__box-bottom__basket">
+          <p-button
+            (onClick)="changeColor()"
+            [style]="{width: '100%',}"
+            [label]="label"
+            icon="pi pi-cart-plus"
+            [severity]="color"
+          />
+
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+

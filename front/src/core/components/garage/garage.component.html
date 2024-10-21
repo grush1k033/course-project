@@ -1,0 +1,36 @@
+<div class="wrapper">
+  <div [ngClass]="{isFilter}" class="wrapper__title">Гараж</div>
+  <div class="car" [ngClass]="{isFilter}">
+    <div [ngClass]="{isFilter}" class="car__title">
+      <img src="assets/icons/garage.svg" alt="garage-icon">
+      <div class="car__title__label">Гараж</div>
+    </div>
+    <div [ngClass]="{isFilter}" class="car__divider"></div>
+    <div class="car__mark">
+      <p-dropdown
+        [(ngModel)]="selectedMark"
+        [editable]="true"
+        placeholder="Выберите марку"
+        [options]="marks"
+        optionLabel="name"
+        optionValue="id"
+        (onChange)="onChangeMark($event)"
+      ></p-dropdown>
+    </div>
+    <div class="car__model">
+      <p-dropdown
+        [options]="models"
+        [(ngModel)]="selectedModel"
+        [loading]="loading"
+        [editable]="true"
+        (onChange)="onChangeModel($event)"
+        placeholder="Выберите модель"
+        optionLabel="name"
+        optionValue="id"
+      ></p-dropdown>
+    </div>
+    <div class="car__image">
+      <img [src]="carImage ? 'assets/images/' + carImage + '.webp' : 'assets/images/zaglushka.webp'" alt="car-image">
+    </div>
+  </div>
+</div>

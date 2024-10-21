@@ -1,0 +1,52 @@
+<div class="filters">
+  <div class="filters__title">
+    <img src="assets/icons/price.svg" alt="price">
+    Цена
+  </div>
+  <div class="filters__inputs">
+
+    <div class="filters__inputs__min">
+      <p-inputNumber
+        (onInput)="changeMin($event)"
+        [(ngModel)]="values[0]"
+        inputId="min"
+        mode="decimal"
+        [min]="values[0]"
+        [max]="values[1]" />
+    </div>
+
+    <div class="filters__inputs__max">
+      <p-inputNumber
+        (onInput)="changeMax($event)"
+        [(ngModel)]="values[1]"
+        inputId="max"
+        mode="decimal"
+        [min]="values[0]"
+        [max]="values[1]" />
+    </div>
+  </div>
+  <div class="filters__range">
+    <p-slider [style]="{width: '14rem'}" (onChange)="changePrice($event)" [(ngModel)]="rangeValues" [range]="true" />
+  </div>
+  <div class="filters__title">
+    <img src="assets/icons/like-black.svg" alt="price">
+    Избранное
+  </div>
+  <div class="filters__favourites">
+
+    @for(item of favorites; track item.key) {
+      <div class="filters__favourites__item">
+        <p-radioButton
+          (onClick)="changeFavourite()"
+          [inputId]="item.key"
+          name="item"
+          [value]="item"
+          [(ngModel)]="selectedFavorite" />
+        <label [for]="item.key" class="ml-2">
+          {{ item.name }}
+        </label>
+      </div>
+    }
+
+  </div>
+</div>

@@ -1,9 +1,13 @@
-
-
 <div class="header">
   <div class="container">
-    <div class="header__logo">Logo</div>
-    <input placeholder="Поиск" class="header__search"  type="text" pInputText [(ngModel)]="value" />
+    <button routerLink="/" class="header__logo">
+      <div class="header__logo__label">E</div>
+      <img src="assets/icons/logo.svg" alt="logo">
+      <div class="header__logo__label">PERT CAR</div>
+    </button>
+    <div class="header__search">
+      <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value" />
+    </div>
     <div class="header__basket">
       <img width="25" src="assets/icons/basket.svg" alt="basket-icon">
       <div class="header__basket__label">Корзина</div>

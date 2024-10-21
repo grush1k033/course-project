@@ -1,48 +1,27 @@
 .auto-part {
-  border: 1px solid black;
   display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
+  gap: 20px;
 
-  .auto-part__container {
+  &__items {
     display: flex;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 5px;
-    max-width: 600px;
-  }
-  .product-image {
-    max-width: 150px;
-    margin-right: 20px;
-  }
-  .product-details {
-    flex: 1;
-  }
-  .product-price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  .quantity-container {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  .quantity-input {
-    width: 50px;
-    margin-right: 10px;
-  }
-  .add-to-cart {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .add-to-cart:hover {
-    background-color: #218838;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    width: 100%;
+
+
+    &::-webkit-scrollbar {
+      width: 12px;               /* ширина scrollbar */
+    }
+    &::-webkit-scrollbar-track {
+      background: white;        /* цвет дорожки */
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: lightgray;    /* цвет плашки */
+      border-radius: 20px;       /* закругления плашки */
+      border: 3px solid #fafafa;  /* padding вокруг плашки */
+    }
   }
 }
