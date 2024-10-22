@@ -29,7 +29,9 @@
                pTooltip="Скидка действует при оформлении через корзину">i
           </div>
         </div>
-        <div class="box-up__price">{{ item.price }} BYN</div>
+        <div class="box-up__price"><span>{{ item.price }}</span> BYN</div>
+      </div>
+      <div class="box-center__available">Доступно: {{item.amount}} шт.
       </div>
       <div class="auto-parts__right-content__box-center">{{ getPrice(item.price, item.discount) }}
         <span class="box-center__byn">BYN</span></div>
@@ -42,11 +44,11 @@
         </div>
         <div class="auto-parts__right-content__box-bottom__basket">
           <p-button
-            (onClick)="changeColor()"
+            (onClick)="addToBasket(item.id)"
             [style]="{width: '100%',}"
-            [label]="label"
+            [label]="isInBasket ? 'В корзине' : 'Купить'"
             icon="pi pi-cart-plus"
-            [severity]="color"
+            [severity]="isInBasket ? 'success' : 'warning' "
           />
 
         </div>

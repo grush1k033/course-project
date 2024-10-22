@@ -37,4 +37,8 @@ export class AutoPartService {
     const id = this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL);
     return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part?categoryId=${categoryId}${id ? `&carsId=${id}` : ''}`)
   }
+
+  updateAutoPart(dto: {favourite: boolean}, id: number) {
+    return this.httpClient.patch<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
+  }
 }

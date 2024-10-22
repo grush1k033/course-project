@@ -10,7 +10,8 @@
       <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value"/>
     </div>
     <div class="header__basket">
-      <img width="25" src="assets/icons/basket.svg" alt="basket-icon">
+<!--      <img width="25" src="assets/icons/basket.svg" alt="basket-icon">-->
+      <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [value]="(basketService.basket$ | async)?.length || 0"></i>
       <div class="header__basket__label">Корзина</div>
     </div>
   </div>

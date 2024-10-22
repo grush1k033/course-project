@@ -10,6 +10,7 @@ import {FiltersComponent} from '../filters/filters.component';
 import {PricePipe} from '../../pipes/price.pipe';
 import {FavouritePipe} from '../../pipes/favourite.pipe';
 import {GarageComponent} from '../garage/garage.component';
+import {BasketService} from '../../service/basket.service';
 
 @Component({
   selector: 'app-auto-part-items',
@@ -36,14 +37,14 @@ export class AutoPartItemsComponent implements OnInit{
   favourite: string = '2';
   constructor(
     private activatedRoute: ActivatedRoute,
-    public autoPartService: AutoPartService
+    public autoPartService: AutoPartService,
   ) {
     this.id = (this.activatedRoute.snapshot.params as {id: string}).id;
   }
 
 
   ngOnInit(): void {
-    this.getAutoPart(this.id as string);
+    // this.getAutoPart(this.id as string);
   }
 
   getAutoPart(id: string) {
