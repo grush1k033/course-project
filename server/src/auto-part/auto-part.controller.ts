@@ -1,11 +1,12 @@
-import {Controller, Get, Query} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Query} from '@nestjs/common';
 import {AutoPartService} from "./auto-part.service";
 import {DatabaseService} from "../services/database.service";
+import {CommonService} from "../services/common.service";
 
 @Controller('auto-part')
 export class AutoPartController {
 
-    constructor(private autoPartService: AutoPartService, private db: DatabaseService) {}
+    constructor(private autoPartService: AutoPartService, private db: DatabaseService, private cm: CommonService) {}
     @Get()
     async getAllAutoParts(
         @Query('categoryId') categoryId: string,
@@ -24,11 +25,14 @@ export class AutoPartController {
        }
     }
 
-
-
+    @Patch(':id')
+    async updateAutoParts(@Body() dto: {favourite: boolean}, @Param('id') id: string) {
+         return await this.autoPartService.updateFavourite(dto, id);
+    }
     get randomInteger() {
         const min = 5;
         const max = 15;
         return Math.floor(Math.random()*(max-min+1))+min;
     }
+
 }

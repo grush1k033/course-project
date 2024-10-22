@@ -24,7 +24,6 @@ export class CommonService {
 
   public create<T>(dto: T) {
     const [keys, values] = this.keyValues<T>(dto);
-    console.log(`INSERT INTO ${this.tableName} (${keys}) VALUES (${values})`);
     return `INSERT INTO ${this.tableName} (${keys}) VALUES (${values})`;
   }
 

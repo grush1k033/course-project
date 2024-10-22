@@ -65,6 +65,12 @@ export class AutoPartItemsComponent implements OnInit{
       this.getAutoPart(this.id as string)
     }
   }
+
+  updateFavourite(event: boolean) {
+    if(event) {
+      this.getAutoPart(this.id as string);
+    }
+  }
 }
 
 

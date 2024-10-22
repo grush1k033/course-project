@@ -11,7 +11,7 @@
       <div class="auto-parts__left-content__description">
         <div class="description__title">{{ item.name }}</div>
         <div class="description__subtitle">{{ item.description }}</div>
-        <div appVisibleImg [like]="!!item.favourites" class="description__favourite">
+        <div (click)="updateFavourite(item)" appVisibleImg [like]="!!item.favourites" class="description__favourite">
           <div class="description__favourite__img">
             <img width=30 [src]="likeSrc" alt="like-empty">
           </div>

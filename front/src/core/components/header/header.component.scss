@@ -28,6 +28,7 @@
     margin-right: auto;
     letter-spacing: 4px;
     font-size: 25px;
+    white-space: nowrap;
     img {
       height: 60px;
     }
@@ -38,8 +39,12 @@
     width: 50%;
     display: flex;
     align-items: center;
+    justify-content: center;
     align-self: flex-end;
-
+    i::before {
+      position: absolute;
+      top:-8px;
+    }
     input {
       width: 100%;
     }
@@ -50,5 +55,6 @@
     flex-direction: column;
     align-items: center;
     gap: 2px;
+    cursor: pointer;
   }
 }

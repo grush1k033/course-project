@@ -7,9 +7,10 @@ import { ModelsModule } from './models/models.module';
 import { MarksModule } from './marks/marks.module';
 import { AutoPartModule } from './auto-part/auto-part.module';
 import { CarModule } from './car/car.module';
+import { BasketModule } from './basket/basket.module';
 
 @Module({
-  imports: [ShopModule, CategoryModule, ModelsModule, MarksModule, AutoPartModule, CarModule],
+  imports: [ShopModule, CategoryModule, ModelsModule, MarksModule, AutoPartModule, CarModule, BasketModule],
   controllers: [AppController],
   providers: [DatabaseService],
 })

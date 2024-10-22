@@ -1,10 +1,21 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {IAutoPart} from '../../service/auto-part.service';
 import {DropdownModule} from 'primeng/dropdown';
 import {FormsModule} from '@angular/forms';
 import {Button} from 'primeng/button';
 import {VisibleImgDirective} from '../../directive/visible-img.directive';
 import {TooltipModule} from 'primeng/tooltip';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-auto-part',
@@ -15,11 +26,15 @@ import {TooltipModule} from 'primeng/tooltip';
 })
 export class AutoPartComponent implements OnChanges{
   @Input() item: IAutoPart | null = null;
+  @Output() onUpdateFavourite = new EventEmitter<boolean>();
   selectAmount: number = 1;
   color: 'warning' | 'success' = 'warning'
   label = 'Купить'
 
   likeSrc = "assets/icons/like-empty.svg";
+
+  constructor(private http: HttpClient) {
+  }
 
   ngOnChanges() {
     this.likeSrc = (this.item && this.item?.favourites)
@@ -46,5 +61,14 @@ export class AutoPartComponent implements OnChanges{
       this.color = 'warning'
       this.label = 'Купить'
     }
+  }
+
+  updateFavourite(autoPart:IAutoPart) {
+    const id = autoPart.id;
+    const favourite = autoPart.favourites;
+    const dto = {favourite:!favourite};
+    this.http.patch<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto).subscribe(() => {
+      this.onUpdateFavourite.next(true);
+    });
   }
 }

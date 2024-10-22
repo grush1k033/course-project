@@ -20,4 +20,11 @@ export class AutoPartService {
             return (await this.databaseService.pool.query(this.commonService.getAll()))[0];
         }
     }
+
+    async updateFavourite(dto: {favourite: boolean}, id: string) {
+        await this.databaseService.pool.query(`UPDATE autoparts SET favourites = ${dto.favourite} WHERE id = ${id}`);
+        return (await this.databaseService.pool.query(this.commonService.getByID(id)))[0][0];
+    }
+
+
 }

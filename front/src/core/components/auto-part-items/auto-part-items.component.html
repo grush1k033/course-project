@@ -14,7 +14,7 @@
     <div class="auto-part__items">
       @let data = autoPartService.search$ | async;
       @for(item of autoParts | search : data | price : rangeValues | favourite: favourite ;track item) {
-        <app-auto-part  [item]="item"></app-auto-part>
+        <app-auto-part (onUpdateFavourite)="updateFavourite($event)"  [item]="item"></app-auto-part>
       } @empty {
         Нет данных
       }

@@ -5,8 +5,9 @@
       <img src="assets/icons/logo.svg" alt="logo">
       <div class="header__logo__label">PERT CAR</div>
     </button>
-    <div class="header__search">
-      <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value" />
+    <div class="header__search p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value"/>
     </div>
     <div class="header__basket">
       <img width="25" src="assets/icons/basket.svg" alt="basket-icon">
