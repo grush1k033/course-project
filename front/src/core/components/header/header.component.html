@@ -10,10 +10,11 @@
       <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value"/>
     </div>
     <div class="header__basket">
-<!--      <img width="25" src="assets/icons/basket.svg" alt="basket-icon">-->
       <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [value]="(basketService.basket$ | async)?.length || 0"></i>
       <div class="header__basket__label">Корзина</div>
     </div>
+    <p-avatar (click)="visible=true" size="large" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
   </div>
 </div>
 
+<app-registration-modal (onHide)="visible = false" [visible]="visible"></app-registration-modal>
