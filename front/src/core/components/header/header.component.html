@@ -13,8 +13,9 @@
       <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [value]="(basketService.basket$ | async)?.length || 0"></i>
       <div class="header__basket__label">Корзина</div>
     </div>
-    <p-avatar (click)="visible=true" size="large" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+    <p-avatar (click)="visibleLogin=true" size="large" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
   </div>
 </div>
 
-<app-registration-modal (onHide)="visible = false" [visible]="visible"></app-registration-modal>
+<app-registration-modal (onHide)="visibleRegistration = false" [visible]="visibleRegistration" (onNavigateToLogin)="visibleLogin = true"></app-registration-modal>
+<app-login-modal (onHide)="visibleLogin=false" [visible]="visibleLogin" (onNavigateToRegistration)="visibleRegistration=true"></app-login-modal>

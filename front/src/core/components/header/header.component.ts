@@ -8,17 +8,19 @@ import {BadgeModule} from 'primeng/badge';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { RegistrationModalComponent } from "../registration-modal/registration-modal.component";
+import { LoginModalComponent } from "../login-modal/login-modal.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, InputTextModule, FormsModule, RouterLink, BadgeModule, AvatarModule, RegistrationModalComponent, RegistrationModalComponent],
+  imports: [CommonModule, InputTextModule, FormsModule, RouterLink, BadgeModule, AvatarModule, RegistrationModalComponent, RegistrationModalComponent, LoginModalComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit{
   value: string = '';
-  visible: boolean = false;
+  visibleRegistration: boolean = false;
+  visibleLogin: boolean = false;
 
   constructor(
     private autoPartService: AutoPartService,

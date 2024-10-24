@@ -12,10 +12,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 
 type TypeForm = FormGroup<{
-  username: FormControl<string | null>,
   email: FormControl<string | null>,
   password: FormControl<string | null>,
-  repeatPassword: FormControl<string | null>,
 }>
 
 interface IPasswordError {
@@ -28,33 +26,29 @@ interface IPasswordError {
 }
 
 @Component({
-  selector: 'app-registration-modal',
+  selector: 'app-login-modal',
   standalone: true,
   imports: [PasswordModule, CommonModule, DividerModule, ButtonModule, DialogModule, AvatarModule, ReactiveFormsModule, InputTextModule, FloatLabelModule],
-  templateUrl: './registration-modal.component.html',
-  styleUrl: './registration-modal.component.scss'
+  templateUrl: './login-modal.component.html',
+  styleUrl: './login-modal.component.scss'
 })
-export class RegistrationModalComponent {
+export class LoginModalComponent {
   form: TypeForm;
   @Input() visible: boolean = false;
   @Output() onHide = new EventEmitter<boolean>()
-  @Output() onNavigateToLogin = new EventEmitter<boolean>();
+  @Output() onNavigateToRegistration = new EventEmitter<boolean>()
 
   constructor() {
     this.form = new FormGroup({
-      username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, passwordValidator()]),
-      repeatPassword: new FormControl('', [Validators.required]),
     })
   }
 
   clearForm() {
     this.form.setValue({
-      username: '',
       email: '',
       password: '',
-      repeatPassword: ''
     });
     this.form.markAsUntouched();
     this.form.markAsPristine();
@@ -68,11 +62,7 @@ export class RegistrationModalComponent {
     return this.form.controls.password.errors as IPasswordError | null;
   }
 
-  get passwordEqual() {
-    return this.form.value.password === this.form.value.repeatPassword;
-  }
-
-  createAccount() {
+  login() {
     console.log(this.form.getRawValue());
   }
 
@@ -81,9 +71,9 @@ export class RegistrationModalComponent {
     this.clearForm();
   }
 
-  navigateToLogin() {
+  navigateToRegistration() {
     this.onHide.next(false);
-    this.onNavigateToLogin.next(true);
+    this.onNavigateToRegistration.next(true);
     this.clearForm();
   }
 }

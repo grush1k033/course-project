@@ -1,4 +1,4 @@
-<p-dialog (onHide)="hideForm()" [draggable]="false"  [dismissableMask]="true" header="Регистрация" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
+<p-dialog (onHide)="hideForm()" [draggable]="false"  [dismissableMask]="true" header="Авторизация" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem' }">
   <div class="password-info">
     <span class="p-text-secondary block">Пароль должен иметь:</span>
     <ul class="m-2 pl-4">
@@ -20,22 +20,9 @@
         <div class="error">Один специальный символ {{'!@#$%^&*'}}</div>
       } @else if (passwordError?.letters) {
         <div class="error">Только латинские буквы</div>
-      } @else if (!passwordEqual) {
-        <div class="error">Пароли должны совпадать</div>
       }
   }
   <form class="mt-3" [formGroup]="form">
-    <div class="flex align-items-center gap-3 mb-3" style="display: flex;">
-      <label for="Username" class="font-semibold w-10rem">Имя</label>
-      <input
-        [ngClass]="{
-          'ng-invalid ng-dirty': form.controls.username.touched && form.controls.username.invalid
-        }"
-        formControlName="username"
-        pInputText
-        id="Username"
-        class="flex-auto"/>
-    </div>
     <div class="flex align-items-center gap-3 mb-3" style="display: flex;">
       <label for="Email" class="font-semibold w-10rem">E-mail</label>
       <input
@@ -61,26 +48,13 @@
         class="flex-auto"
       />
   </div>
-  <div class="flex align-items-center gap-3 mb-5">
-    <label for="RepeatPassword" class="font-semibold w-10rem">Пароль еще раз</label>
-    <p-password
-      [ngClass]="{
-        'ng-invalid ng-dirty': form.controls.repeatPassword.touched && form.controls.repeatPassword.invalid
-      }"
-      [feedback]="false"
-      [inputStyle]="{width: '21rem'}"
-      [toggleMask]="true"
-      formControlName="repeatPassword"
-       id="RepeatPassword"
-       />
-  </div>
   <div class="flex justify-content-end gap-2">
       <p-button [style]="{width: '120px'}" label="Отмена" severity="secondary" (onClick)="this.onHide.next(false)" />
-      <p-button (onClick)="createAccount()" [disabled]="form.invalid || !passwordEqual" label="Зарегистрироваться" (onClick)="this.onHide.next(false)" />
+      <p-button [style]="{width: '207px'}" (onClick)="login()" [disabled]="form.invalid" label="Войти" (onClick)="this.onHide.next(false)" />
   </div>
   </form>
-  <div class="flex align-items-center justify-content-center gap-3 mt-2">
-    <div class="p-text-secondary">Уже есть аккаунт?</div>
-    <p-button (onClick)="navigateToLogin()" label="Войти" [link]="true" />
+  <div class="flex align-items-center justify-content-center mt-2">
+    <div class="p-text-secondary">Нет аккаунта?</div>
+    <p-button (onClick)="navigateToRegistration()" label="Зарегистрироваться" [link]="true" />
   </div>
 </p-dialog>
