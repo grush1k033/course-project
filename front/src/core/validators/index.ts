@@ -1,4 +1,5 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { delay, map, Observable, of } from "rxjs";
 
 export function passwordValidator(): ValidatorFn {
   const passwordPattern = /^(?=.*[A-Z])(?=.*\d.*\d.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{9,}$/;
@@ -17,5 +18,19 @@ export function passwordValidator(): ValidatorFn {
       char: !specialCharRegex.test(control.value),
     }
     return valid ? null : objError;
+  }
+}
+
+export function loginValidator(reverse: boolean = false): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    return of(false).pipe(
+      delay(500),
+      map((isExist) => {
+        if(reverse) {
+          return isExist ? null : {noExist: true};
+        }
+        return isExist ? {isExist: true} : null
+      })
+    )
   }
 }

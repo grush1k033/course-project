@@ -9,9 +9,14 @@
       <li class="p-text-secondary">Только латинские буквы</li>
     </ul>
   </div>
+  @if(email.touched) {
+    @if(emailError?.noExist) {
+      <div class="error">Пользовтеля с таким E-mail не существует.<br>Введите другой E-mail.</div>
+    }
+  }
   @if(password.touched) {
       @if(passwordError?.uppercase) {
-        <div class="error">Пароль должен иметь одну большую букву.<br>Введите другой пароль.</div>
+        <div class="error">Пароль должен иметьv хоть одну большую букву.<br>Введите другой пароль.</div>
       } @else if(passwordError?.digitCount) {
         <div class="error">Пароль должен иметь 3 или более цифр.<br>Введите другой пароль.</div>
       } @else if(passwordError?.len) {
@@ -23,17 +28,22 @@
       }
   }
   <form class="mt-3" [formGroup]="form">
-    <div class="flex align-items-center gap-3 mb-3" style="display: flex;">
-      <label for="Email" class="font-semibold w-10rem">E-mail</label>
+    @let status = email.statusChanges| async;
+  <div class="relative flex align-items-center gap-3 mb-3">
+    <label for="Email" class="font-semibold w-10rem">E-mail</label>
       <input
         [ngClass]="{
-          'ng-invalid ng-dirty': form.controls.email.touched && form.controls.email.invalid
+          'ng-invalid ng-dirty': email.touched && email.invalid
         }"
         formControlName="email"
         pInputText
         id="Email"
-        class="flex-auto"/>
-    </div>
+        class="flex-auto"
+      />
+      @if(status === 'PENDING') {
+        <p-inputIcon style="position: absolute; right: 13px;" styleClass="pi pi-spinner pi-spin"/>
+      }
+  </div>
   <div class="flex align-items-center gap-3 mb-3">
       <label for="Password" class="font-semibold w-10rem">Пароль</label>
       <p-password
@@ -50,7 +60,7 @@
   </div>
   <div class="flex justify-content-end gap-2">
       <p-button [style]="{width: '120px'}" label="Отмена" severity="secondary" (onClick)="this.onHide.next(false)" />
-      <p-button [style]="{width: '207px'}" (onClick)="login()" [disabled]="form.invalid" label="Войти" (onClick)="this.onHide.next(false)" />
+      <p-button [style]="{width: '207px'}" (onClick)="login()" [disabled]="form.invalid || status==='PENDING'" label="Войти" (onClick)="this.onHide.next(false)" />
   </div>
   </form>
   <div class="flex align-items-center justify-content-center mt-2">

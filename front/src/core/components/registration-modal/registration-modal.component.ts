@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { passwordValidator } from '../../validators';
+import { loginValidator, passwordValidator } from '../../validators';
 import {ReactiveFormsModule} from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
@@ -8,8 +8,9 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { CommonModule } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 type TypeForm = FormGroup<{
   username: FormControl<string | null>,
@@ -30,7 +31,7 @@ interface IPasswordError {
 @Component({
   selector: 'app-registration-modal',
   standalone: true,
-  imports: [PasswordModule, CommonModule, DividerModule, ButtonModule, DialogModule, AvatarModule, ReactiveFormsModule, InputTextModule, FloatLabelModule],
+  imports: [PasswordModule, CommonModule, DividerModule, ButtonModule, DialogModule, AvatarModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, InputIconModule],
   templateUrl: './registration-modal.component.html',
   styleUrl: './registration-modal.component.scss'
 })
@@ -43,7 +44,7 @@ export class RegistrationModalComponent {
   constructor() {
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email], [loginValidator()]),
       password: new FormControl('', [Validators.required, passwordValidator()]),
       repeatPassword: new FormControl('', [Validators.required]),
     })
@@ -64,8 +65,16 @@ export class RegistrationModalComponent {
     return this.form.controls.password;
   }
 
+  get email() {
+    return this.form.controls.email;
+  }
+
+  get emailError() : {isExist: boolean} | null {
+    return this.email.errors as {isExist: boolean} | null;
+  }
+
   get passwordError():IPasswordError | null {
-    return this.form.controls.password.errors as IPasswordError | null;
+    return this.password.errors as IPasswordError | null;
   }
 
   get passwordEqual() {
