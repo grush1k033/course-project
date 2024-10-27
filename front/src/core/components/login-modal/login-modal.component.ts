@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputIconModule } from 'primeng/inputicon';
+import {AuthService} from '../../service/auth.service';
 
 type TypeForm = FormGroup<{
   email: FormControl<string | null>,
@@ -39,10 +40,14 @@ export class LoginModalComponent {
   @Output() onHide = new EventEmitter<boolean>()
   @Output() onNavigateToRegistration = new EventEmitter<boolean>()
 
-  constructor() {
+  constructor(private auth: AuthService) {
     this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email], [loginValidator(true)]),
+      email: new FormControl('', [Validators.required, Validators.email], loginValidator(this.auth, true)),
       password: new FormControl('', [Validators.required, passwordValidator()]),
+    })
+
+    this.form.controls.email.statusChanges.subscribe(res => {
+      console.log(res);
     })
   }
 
@@ -72,6 +77,7 @@ export class LoginModalComponent {
   }
 
   login() {
+    this.onHide.next(false)
     console.log(this.form.getRawValue());
   }
 

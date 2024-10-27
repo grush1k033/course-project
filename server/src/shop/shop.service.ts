@@ -7,7 +7,7 @@ import { CommonService } from 'src/services/common.service';
 export class ShopService {
   constructor(
     private database: DatabaseService,
-    private commonService: CommonService,
+    private commonService: CommonService
   ) {}
 
   async getAllShops() {

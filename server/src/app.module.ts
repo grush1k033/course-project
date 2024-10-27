@@ -8,9 +8,11 @@ import { MarksModule } from './marks/marks.module';
 import { AutoPartModule } from './auto-part/auto-part.module';
 import { CarModule } from './car/car.module';
 import { BasketModule } from './basket/basket.module';
+import { UserModule } from './user/user.module';
+
 
 @Module({
-  imports: [ShopModule, CategoryModule, ModelsModule, MarksModule, AutoPartModule, CarModule, BasketModule],
+  imports: [ShopModule, CategoryModule, ModelsModule, MarksModule, AutoPartModule, CarModule, BasketModule, UserModule],
   controllers: [AppController],
   providers: [DatabaseService],
 })

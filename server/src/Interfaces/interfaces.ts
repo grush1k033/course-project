@@ -47,3 +47,21 @@ export interface ICategory {
     name: string;
     image: string
 }
+
+export interface IUser {
+    id: number;
+    name: string;
+    email:string;
+    password:string;
+    isAdmin:string;
+}
+
+export interface IUserDto {
+    name: string;
+    email:string;
+    password:string;
+}
+
+export interface CheckUserDto {
+    email: string;
+}

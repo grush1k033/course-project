@@ -16,7 +16,7 @@
   }
   @if(password.touched) {
       @if(passwordError?.uppercase) {
-        <div class="error">Пароль должен иметьv хоть одну большую букву.<br>Введите другой пароль.</div>
+        <div class="error">Пароль должен иметь хоть одну большую букву.<br>Введите другой пароль.</div>
       } @else if(passwordError?.digitCount) {
         <div class="error">Пароль должен иметь 3 или более цифр.<br>Введите другой пароль.</div>
       } @else if(passwordError?.len) {
@@ -60,7 +60,7 @@
   </div>
   <div class="flex justify-content-end gap-2">
       <p-button [style]="{width: '120px'}" label="Отмена" severity="secondary" (onClick)="this.onHide.next(false)" />
-      <p-button [style]="{width: '207px'}" (onClick)="login()" [disabled]="form.invalid || status==='PENDING'" label="Войти" (onClick)="this.onHide.next(false)" />
+      <p-button [style]="{width: '207px'}" (onClick)="login()" [disabled]="form.invalid || status==='PENDING'" label="Войти" />
   </div>
   </form>
   <div class="flex align-items-center justify-content-center mt-2">
