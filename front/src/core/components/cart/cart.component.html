@@ -1,0 +1,9 @@
+<div class="container">
+  @for(item of basketItems; track item.id) {
+    <app-cart-item [baketItem]="item"></app-cart-item>
+  } @empty {
+    @for(item of [1,2,3,4]; track item) {
+      <p-skeleton width="100%" height="152px"></p-skeleton>
+    }
+  }
+</div>

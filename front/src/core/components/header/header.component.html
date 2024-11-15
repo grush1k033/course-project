@@ -5,17 +5,36 @@
       <img src="assets/icons/logo.svg" alt="logo">
       <div class="header__logo__label">PERT CAR</div>
     </button>
-    <div class="header__search p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value"/>
-    </div>
-    <div class="header__basket">
-      <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [value]="(basketService.basket$ | async)?.length || 0"></i>
-      <div class="header__basket__label">Корзина</div>
-    </div>
-    <p-avatar (click)="visibleLogin=true" size="large" image="https://sun9-32.userapi.com/impg/REgaDYC60vK42Mommuw_9z8TASotezEHTHcmTQ/9dbwCdu0xoo.jpg?size=828x1035&quality=95&sign=ef070ef5ff49b7c51277fcd1f8461c2f&type=album" shape="circle" />
+
+    @if(!isCartPage) {
+      <div class="header__search p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value" />
+      </div>
+      <div (click)="router.navigate(['cart'])" class="header__basket">
+        <i style="font-size: 25px" class="pi pi-cart-plus" pBadge
+          [value]="(basketService.basket$ | async)?.length || 0"></i>
+        <div class="header__basket__label">Корзина</div>
+      </div>
+      <p-avatar (click)="visibleLogin=true" size="large"
+        image="https://sun9-32.userapi.com/impg/REgaDYC60vK42Mommuw_9z8TASotezEHTHcmTQ/9dbwCdu0xoo.jpg?size=828x1035&quality=95&sign=ef070ef5ff49b7c51277fcd1f8461c2f&type=album"
+        shape="circle" />
+    } @else {
+      <p-button
+            (onClick)="back()"
+            label="Вернуться к покупкам"
+            icon="pi pi-chevron-circle-left"
+          />
+    }
+
+    
   </div>
+
+
+
 </div>
 
-<app-registration-modal (onHide)="visibleRegistration = false" [visible]="visibleRegistration" (onNavigateToLogin)="visibleLogin = true"></app-registration-modal>
-<app-login-modal (onHide)="visibleLogin=false" [visible]="visibleLogin" (onNavigateToRegistration)="visibleRegistration=true"></app-login-modal>
+<app-registration-modal (onHide)="visibleRegistration = false" [visible]="visibleRegistration"
+  (onNavigateToLogin)="visibleLogin = true"></app-registration-modal>
+<app-login-modal (onHide)="visibleLogin=false" [visible]="visibleLogin"
+  (onNavigateToRegistration)="visibleRegistration=true"></app-login-modal>

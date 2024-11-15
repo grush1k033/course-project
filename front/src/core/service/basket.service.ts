@@ -13,6 +13,19 @@ export interface IBasketDto {
   UserId: number;
 }
 
+export interface IBasketItems {
+  id: number
+  name: string,
+  description: string,
+  price: string,
+  image: string,
+  amount: number;
+  discount:number;
+  favourites: number
+  // amountCurr: number
+}
+
+
 @Injectable({
   providedIn: 'root'
 })

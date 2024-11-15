@@ -3,13 +3,15 @@ import {DatabaseService} from "../services/database.service";
 import {CommonService} from "../services/common.service";
 
 import {IBasket, IBasketDto} from "../Interfaces/interfaces";
+import { AutoPartService } from 'src/auto-part/auto-part.service';
 
 
 @Injectable()
 export class BasketService {
     constructor(
         private databaseService: DatabaseService,
-        private commonService: CommonService
+        private commonService: CommonService,
+        private autoPartService: AutoPartService
     ) {}
 
     async addAutoPartsInBasket(dto: IBasketDto) {

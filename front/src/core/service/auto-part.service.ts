@@ -38,6 +38,10 @@ export class AutoPartService {
     return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part?categoryId=${categoryId}${id ? `&carsId=${id}` : ''}`)
   }
 
+  getAllAutoPart():Observable<IAutoPart[]> {
+    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part`);
+  }
+
   updateAutoPart(dto: {favourite: boolean}, id: number) {
     return this.httpClient.patch<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
   }

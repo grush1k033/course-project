@@ -16,7 +16,7 @@ export class BasketController {
     }
 
     @Get(':id')
-    async getShopById(@Param('id') id: string) {
+    async getBasket(@Param('id') id: string) {
         return await this.basketService.getBasket(id);
     }
 }

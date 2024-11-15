@@ -13,6 +13,7 @@ import {LOCAL_STORAGE_KEY_CAR_MARK, LOCAL_STORAGE_KEY_CAR_MODEL} from '../../con
 import {HttpClient} from '@angular/common/http';
 import {GarageComponent} from '../garage/garage.component';
 
+
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -22,7 +23,7 @@ import {GarageComponent} from '../garage/garage.component';
     SearchPipe,
     DropdownModule,
     FormsModule,
-    GarageComponent
+    GarageComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
