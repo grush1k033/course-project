@@ -8,5 +8,19 @@
     }
   }
 </div>
-<div class="total"></div>
+<div class="total">
+  <div class="total-back">
+    <p-button
+    (onClick)="back()"
+    label="Вернуться к покупкам"
+    icon="pi pi-chevron-circle-left"
+    />
+  </div>
+  <div class="total-result">
+    <div class="wrap-price">
+      <div class="wrap-price__old"></div>
+    </div>
+    <div class="wrap-buttons"></div>
+  </div>
+</div>
 </div>

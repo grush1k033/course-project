@@ -1,9 +1,12 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, Location } from "@angular/common";
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import { BasketService, IBasket, IBasketItems } from "../../service/basket.service";
 import { AutoPartService, IAutoPart } from "../../service/auto-part.service";
 import { SkeletonModule } from "primeng/skeleton";
+import { Button } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-cart',
@@ -12,6 +15,8 @@ import { SkeletonModule } from "primeng/skeleton";
         CommonModule,
         CartItemComponent,
         SkeletonModule,
+        FormsModule,
+        ButtonModule
     ],
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
@@ -24,6 +29,7 @@ export class CartComponent {
     constructor(
         private basketService: BasketService,
         private autoPartService: AutoPartService,
+        private location: Location,
     ) {
         this.getBasketItems();
     }
@@ -42,5 +48,7 @@ export class CartComponent {
         }
     }
 
-
+    back() {
+        this.location.back();
+    }
 }

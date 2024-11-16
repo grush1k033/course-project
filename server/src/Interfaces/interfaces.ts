@@ -38,6 +38,7 @@ export interface IBasket {
 }
 
 export interface IBasketDto {
+    countAutoparts: number;
     AutopartId:number;
     UserId: number;
 }

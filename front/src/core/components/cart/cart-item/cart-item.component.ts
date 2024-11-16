@@ -39,7 +39,7 @@ export class CartItemComponent implements OnInit, AfterViewInit {
     }
 
     getPrice(price: string, discount: number) {
-        return (+price * (1 - ((discount as number) / 100))).toFixed(2);
+        return this.newPrice = (+price * (1 - ((discount as number) / 100))).toFixed(2);
     }
 
     deleteItem (id: number) {
