@@ -25,22 +25,12 @@ export class CartComponent {
         private basketService: BasketService,
         private autoPartService: AutoPartService,
     ) {
-        this.basketService.basket$.subscribe(basket => {
-            if(basket.length) {
-                this.autoPartService.getAllAutoPart().subscribe(resp => {
-                    this.getBasketItems(resp, basket)
-                })
-            }
-           
-        })
+        this.getBasketItems();
     }
 
-    getBasketItems(allAutopart: IAutoPart[], basket: IBasket[]) {
-        this.basketItems = basket.map(({AutopartId}) => {
-            const autoPart = allAutopart.find(item => item.id === AutopartId) as IAutoPart;
-            return {
-                ...autoPart,
-            };
+    getBasketItems() {
+        this.basketService.getBasketItems().subscribe((res) => {
+            console.log(res);
         })
     }
 

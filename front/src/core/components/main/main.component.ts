@@ -20,7 +20,6 @@ import {GarageComponent} from '../garage/garage.component';
   imports: [
     AsyncPipe,
     SkeletonModule,
-    SearchPipe,
     DropdownModule,
     FormsModule,
     GarageComponent,

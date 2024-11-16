@@ -21,7 +21,6 @@ import {BasketService} from '../../service/basket.service';
     AutoPartComponent,
     SearchPipe,
     AsyncPipe,
-    NgIf,
     FiltersComponent,
     PricePipe,
     FavouritePipe,

@@ -23,4 +23,29 @@ export class BasketService {
         const res = await this.databaseService.pool.query(`SELECT * FROM baskets WHERE UserID = ${id}`);
         return res[0];
     }
+
+    async getBasketItems(id: string) {
+        const res = await this.databaseService.pool.query(`SELECT b.id AS basket_id, 
+       b.countAutoparts, 
+       b.AutopartId, 
+       b.UserId, 
+       a.name, 
+       a.description, 
+       a.price, 
+       a.image,
+       a.discount,
+       a.favourites
+        FROM baskets b 
+        JOIN autoparts a ON b.AutopartId = a.id 
+        WHERE b.UserId = ${id}`);
+        return res[0];
+    }
+
+    async deleteBasket(id: string) {
+        // const isDeleteAutopart = await this.database.pool.query(this.commonService.delete(id));
+    
+        // if(isDeleteAutopart)
+    
+        return this.databaseService.pool.query(this.commonService.delete(id));
+      }
 }

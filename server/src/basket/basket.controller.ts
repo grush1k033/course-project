@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {DatabaseService} from "../services/database.service";
 import {CommonService} from "../services/common.service";
 import {BasketService} from "./basket.service";
@@ -19,6 +19,17 @@ export class BasketController {
     async getBasket(@Param('id') id: string) {
         return await this.basketService.getBasket(id);
     }
+
+    @Delete(':id')
+    async deleteBasket(@Param('id') id: string) {
+      return await this.basketService.deleteBasket(id);
+    }
+
+    @Get('/items/:id') 
+    async getBasketItems(@Param('id') id: string) {
+        return await this.basketService.getBasketItems(id);
+    }
+    
 }
 
 

@@ -1,13 +1,9 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges, OnDestroy, OnInit,
   Output,
-  SimpleChanges,
-  ViewChild
 } from '@angular/core';
 import {AutoPartService, IAutoPart} from '../../service/auto-part.service';
 import {DropdownModule} from 'primeng/dropdown';
@@ -15,15 +11,13 @@ import {FormsModule} from '@angular/forms';
 import {Button} from 'primeng/button';
 import {VisibleImgDirective} from '../../directive/visible-img.directive';
 import {TooltipModule} from 'primeng/tooltip';
-import {HttpClient} from '@angular/common/http';
 import {BasketService, IBasket} from '../../service/basket.service';
-import {AsyncPipe} from '@angular/common';
 import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-auto-part',
   standalone: true,
-  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, AsyncPipe],
+  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule],
   templateUrl: './auto-part.component.html',
   styleUrl: './auto-part.component.scss'
 })

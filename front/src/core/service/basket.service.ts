@@ -14,7 +14,8 @@ export interface IBasketDto {
 }
 
 export interface IBasketItems {
-  id: number
+  basket_id: number,
+  countAutoparts: number,
   name: string,
   description: string,
   price: string,
@@ -22,8 +23,9 @@ export interface IBasketItems {
   amount: number;
   discount:number;
   favourites: number
-  // amountCurr: number
 }
+
+
 
 
 @Injectable({
@@ -53,4 +55,10 @@ export class BasketService {
     }
     return this.http.post<IBasket>('http://localhost:3000/basket', dto);
   }
+  
+  getBasketItems(){
+    return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.userId}`)
+    
+  }
+
 }
