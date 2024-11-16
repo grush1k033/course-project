@@ -9,6 +9,7 @@ export interface IBasket {
 }
 
 export interface IBasketDto {
+  countAutoparts: number;
   AutopartId: number;
   UserId: number;
 }
@@ -16,6 +17,7 @@ export interface IBasketDto {
 export interface IBasketItems {
   basket_id: number,
   countAutoparts: number,
+  id: number,
   name: string,
   description: string,
   price: string,
@@ -24,9 +26,6 @@ export interface IBasketItems {
   discount:number;
   favourites: number
 }
-
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -48,8 +47,9 @@ export class BasketService {
       );
   }
 
-  addBasket(id: number) {
+  addBasket(id: number, count: number = 1) {
     const dto:IBasketDto = {
+      countAutoparts: count,
       AutopartId: id,
       UserId: this.userId,
     }
@@ -58,7 +58,17 @@ export class BasketService {
   
   getBasketItems(){
     return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.userId}`)
-    
+  }
+
+  deleteItem(id: number) {
+    return this.http.delete(`http://localhost:3000/basket/${id}`);
+  }
+
+  updateBasketItem(id: number, count: number) {
+    const dto:{countAutoparts: number} = {
+      countAutoparts: count
+    }
+    return this.http.patch<typeof dto>(`http://localhost:3000/basket/${id}?UserId=${this.userId}`, dto);
   }
 
 }

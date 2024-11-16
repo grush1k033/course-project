@@ -30,8 +30,16 @@ export class CartComponent {
 
     getBasketItems() {
         this.basketService.getBasketItems().subscribe((res) => {
-            console.log(res);
+            this.basketItems = res;
         })
+    }
+
+    deleteBasketItem(id: number) {
+        const indexToRemove = this.basketItems.findIndex(item => item.basket_id === id);
+        if (indexToRemove !== -1) {
+            this.basketItems.splice(indexToRemove, 1);
+            this.basketService.getBasket().subscribe();
+        }
     }
 
 

@@ -92,13 +92,8 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
 
   addToBasket(id: number) {
     let amount = this.selectAmount;
-    if(!this.isInBasket) {
-      while (amount) {
-        this.basketService.addBasket(id).subscribe(() => {
-          this.basketService.getBasket().subscribe();
-        })
-        amount -= 1;
-      }
-    }
+    this.basketService.addBasket(id, amount).subscribe(() => {
+      this.basketService.getBasket().subscribe();
+    })
   }
 }
