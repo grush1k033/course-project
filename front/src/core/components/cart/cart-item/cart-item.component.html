@@ -38,10 +38,9 @@
       incrementButtonIcon="pi pi-plus" 
       decrementButtonIcon="pi pi-minus" />
     </div>
-    {{baketItem.amount}}
     <div class="right-content__price-wrapper">
       <div class="right-content__price-wrapper__old-price">{{baketItem.price}} BYN</div>
-      <div class="right-content__price-wrapper__new-price"><strong>{{getPrice(baketItem.price, baketItem.discount)}} BYN</strong></div>
+      <div class="right-content__price-wrapper__new-price"><strong>{{newPrice}} BYN</strong></div>
       <div class="right-content__price-wrapper__delivery">
         <div class="delivery-icon">
           <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

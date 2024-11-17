@@ -12,6 +12,7 @@ import {FavouritePipe} from '../../pipes/favourite.pipe';
 import {GarageComponent} from '../garage/garage.component';
 import {BasketService} from '../../service/basket.service';
 
+
 @Component({
   selector: 'app-auto-part-items',
   standalone: true,

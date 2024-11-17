@@ -71,4 +71,7 @@ export class BasketService {
     return this.http.patch<typeof dto>(`http://localhost:3000/basket/${id}?UserId=${this.userId}`, dto);
   }
 
+  getPrice(price: string, discount: number) {
+    return (+price * (1 - ((discount as number) / 100))).toFixed(2);
+}
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BasketService, IBasketItems } from "../../../service/basket.service";
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from "@angular/forms";
@@ -16,9 +16,10 @@ import { FormsModule } from "@angular/forms";
     styleUrl: './cart-item.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CartItemComponent implements OnInit, AfterViewInit {
+export class CartItemComponent implements AfterViewInit {
     @Input() baketItem: IBasketItems = <IBasketItems>{}
     @Output() onDelete = new EventEmitter<number>()
+    @Output() onUpdate = new EventEmitter()
     likeSrc = "assets/icons/like-empty.svg";
     trashSrc = "assets/icons/trash.svg"
     newPrice = '';
@@ -29,17 +30,10 @@ export class CartItemComponent implements OnInit, AfterViewInit {
 
     }
 
-    ngOnInit(): void {
-        this.newPrice = this.getPrice(this.baketItem.price, this.baketItem.discount);
-    }
-
     ngAfterViewInit(): void {
         this.newPrice = this.baketItem.price;
         this.amountValue = this.baketItem.countAutoparts || 0;
-    }
-
-    getPrice(price: string, discount: number) {
-        return this.newPrice = (+price * (1 - ((discount as number) / 100))).toFixed(2);
+        this.newPrice = this.basketService.getPrice(this.baketItem.price, this.baketItem.discount);
     }
 
     deleteItem (id: number) {
@@ -54,7 +48,9 @@ export class CartItemComponent implements OnInit, AfterViewInit {
         }
 
         if(event.value > 0) {
-            this.basketService.updateBasketItem(this.baketItem.basket_id, event.value).subscribe();
+            this.basketService.updateBasketItem(this.baketItem.basket_id, event.value).subscribe(() =>{
+                this.onUpdate.emit();
+            });
         }
     }
 }
