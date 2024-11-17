@@ -1,37 +1,35 @@
 import { CommonModule, Location } from "@angular/common";
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import { BasketService, IBasketItems } from "../../service/basket.service";
-import { AutoPartService} from "../../service/auto-part.service";
 import { SkeletonModule } from "primeng/skeleton";
-import { FormsModule } from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import {Button} from 'primeng/button';
 
 @Component({
     selector: 'app-cart',
     standalone: true,
-    imports: [
-        CommonModule,
-        CartItemComponent,
-        SkeletonModule,
-        FormsModule,
-        ButtonModule,
-        Button
-    ],
+  imports: [
+    CommonModule,
+    CartItemComponent,
+    SkeletonModule,
+    FormsModule,
+    ButtonModule,
+    Button,
+    ReactiveFormsModule
+  ],
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
 })
-export class CartComponent { 
-    @Input() baketItem: IBasketItems = <IBasketItems>{}
-    
+export class CartComponent {
     basketItems: IBasketItems[] = [];
     value = 0;
     total = 0;
     oldTotal = 0;
+    email: FormControl<string | null> = new FormControl("", [Validators.required, Validators.email]);
     constructor(
         private basketService: BasketService,
-        private autoPartService: AutoPartService,
         private location: Location,
     ) {
         this.getBasketItems();
@@ -70,5 +68,5 @@ export class CartComponent {
     updateItem() {
         this.getBasketItems();
     }
-    
+
 }

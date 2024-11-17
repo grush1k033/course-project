@@ -9,12 +9,12 @@
       <li class="p-text-secondary">Только латинские буквы</li>
     </ul>
   </div>
-  @if(email.touched) {
+  @if(email["touched"]) {
     @if(emailError?.noExist) {
       <div class="error">Пользовтеля с таким E-mail не существует.<br>Введите другой E-mail.</div>
     }
   }
-  @if(password.touched) {
+  @if(password["touched"]) {
       @if(passwordError?.uppercase) {
         <div class="error">Пароль должен иметь хоть одну большую букву.<br>Введите другой пароль.</div>
       } @else if(passwordError?.digitCount) {
@@ -33,7 +33,7 @@
     <label for="Email" class="font-semibold w-10rem">E-mail</label>
       <input
         [ngClass]="{
-          'ng-invalid ng-dirty': email.touched && email.invalid
+          'ng-invalid ng-dirty': email['touched'] && email.invalid
         }"
         formControlName="email"
         pInputText
@@ -48,7 +48,7 @@
       <label for="Password" class="font-semibold w-10rem">Пароль</label>
       <p-password
         [ngClass]="{
-          'ng-invalid ng-dirty': form.controls.password.touched && form.controls.password.invalid
+          'ng-invalid ng-dirty': form.controls.password['touched'] && form.controls.password.invalid
         }"
         [feedback]="false"
         [inputStyle]="{width: '21rem'}"

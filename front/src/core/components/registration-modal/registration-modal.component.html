@@ -9,12 +9,12 @@
       <li class="p-text-secondary">Только латинские буквы</li>
     </ul>
   </div>
-  @if(email.touched) {
+  @if(email["touched"]) {
     @if(emailError?.isExist) {
       <div class="error">Введеный E-mail уже существует. Введите другой.</div>
     }
   }
-  @if(password.touched) {
+  @if(password["touched"]) {
       @if(passwordError?.uppercase) {
         <div class="error">Пароль должен иметь одну большую букву.<br>Введите другой пароль.</div>
       } @else if(passwordError?.digitCount) {
@@ -34,7 +34,7 @@
       <label for="Username" class="font-semibold w-10rem">Имя</label>
       <input
         [ngClass]="{
-          'ng-invalid ng-dirty': form.controls.username.touched && form.controls.username.invalid
+          'ng-invalid ng-dirty': form.controls.username['touched'] && form.controls.username.invalid
         }"
         formControlName="username"
         pInputText
@@ -48,7 +48,7 @@
     <label for="Email" class="font-semibold w-10rem">E-mail</label>
       <input
         [ngClass]="{
-          'ng-invalid ng-dirty': form.controls.email.touched && form.controls.email.invalid
+          'ng-invalid ng-dirty': form.controls.email['touched'] && form.controls.email.invalid
         }"
         formControlName="email"
         pInputText
@@ -63,7 +63,7 @@
       <label for="Password" class="font-semibold w-10rem">Пароль</label>
       <p-password
         [ngClass]="{
-          'ng-invalid ng-dirty': form.controls.password.touched && form.controls.password.invalid
+          'ng-invalid ng-dirty': form.controls.password['touched'] && form.controls.password.invalid
         }"
         [feedback]="false"
         [inputStyle]="{width: '21rem'}"
@@ -77,7 +77,7 @@
     <label for="RepeatPassword" class="font-semibold w-10rem">Пароль еще раз</label>
     <p-password
       [ngClass]="{
-        'ng-invalid ng-dirty': form.controls.repeatPassword.touched && form.controls.repeatPassword.invalid
+        'ng-invalid ng-dirty': form.controls.repeatPassword['touched'] && form.controls.repeatPassword.invalid
       }"
       [feedback]="false"
       [inputStyle]="{width: '21rem'}"

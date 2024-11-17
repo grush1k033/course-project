@@ -33,18 +33,21 @@
 
     <div class="wrap-buttons">
       <div class="wrap-buttons__phone-input">
-        <label class="wrap-buttons__phone-title">Введите email*</label>
-        <input type="email" name="number"
-          value placeholder="Введите"
+        <label class="wrap-buttons__phone-title" [ngClass]="{error: email['touched'] && email.invalid}">Введите email*</label>
+        <input type="email" name="email"
+          [formControl]="email"
+          value
+          placeholder="Введите email"
           maxlength="19"
           style="text-align: center;">
       </div>
       <div class="wrap-buttons__order-button">
         <p-button
-        [style]="{width: '100%',}"
-        label="Заказать"
-        severity='warning' 
-      />
+          [style]="{width: '100%',}"
+          label="Заказать"
+          severity='warning'
+          [disabled]="email.invalid"
+        />
       </div>
     </div>
   </div>
