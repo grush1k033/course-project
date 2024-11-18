@@ -1,0 +1,71 @@
+<!-- <div class="flex flex-column gap-2">
+    <label for="username">Username</label>
+    <input 
+        pInputText 
+        id="username" 
+        aria-describedby="username-help" 
+        [(ngModel)]="value" />
+    <small id="username-help">
+        Enter your username to reset your password.
+    </small>
+</div> -->
+
+<!-- <p-fileUpload 
+    mode="basic" 
+    chooseLabel="Choose" 
+    chooseIcon="pi pi-upload"
+    name="demo[]" 
+    url="https://www.primefaces.org/cdn/api/upload.php" 
+    accept="image/*" 
+    maxFileSize="1000000" 
+    (onUpload)="onUpload($event)" /> --> 
+
+<div class="part-content">
+    <div class="content-wrap">
+        <div class="content-title">Полное название</div>
+        <div class="content-subtitle">Поля, отмеченные знаком (*) должны быть заполнены</div>
+        <div class="content-inputs">
+            <div class="flex flex-column gap-2">
+                <label for="username">Имя*</label>
+                <input 
+                    pInputText 
+                    id="username" 
+                    aria-describedby="username-help" 
+                    [(ngModel)]="value" />
+            </div>
+            <div class="flex flex-column gap-2">
+                <label for="username">Отчество</label>
+                <input 
+                    pInputText 
+                    id="username" 
+                    aria-describedby="username-help" 
+                    [(ngModel)]="value" />
+            </div>
+            <div class="flex flex-column gap-2">
+                <label for="username">Фамилия</label>
+                <input 
+                    pInputText 
+                    id="username" 
+                    aria-describedby="username-help" 
+                    [(ngModel)]="value" />
+            </div>
+            <div class="wrap-buttons__order-button">
+                <p-button
+                  [style]="{width: '100%',}"
+                  label="Сохранить"
+                  severity='warning'
+                />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="part-down">
+    <div class="part-down__title">Удалить профиль</div>
+    <div class="wrap-buttons__order-button">
+        <p-button
+          [style]="{width: '100%',}"
+          label="Удалить"
+          severity='warning'
+        />
+    </div>
+</div>
