@@ -31,4 +31,6 @@ export class ProfileComponent {
   navigateToEditProfile() {
     this.router.navigate(['profile/edit'])
   }
+
+  
 }
