@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-profile-edit',
@@ -9,7 +10,8 @@ import { FileUploadModule } from 'primeng/fileupload';
   imports: [
     InputTextModule,
     FormsModule,
-    FileUploadModule
+    FileUploadModule,
+    PasswordModule
   ],
   templateUrl: './profile-edit.component.html',
   styleUrl: './profile-edit.component.scss',

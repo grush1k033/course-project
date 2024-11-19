@@ -34,7 +34,7 @@
                     [(ngModel)]="value" />
             </div>
             <div class="flex flex-column gap-2">
-                <label for="username">Отчество</label>
+                <label for="username">Почта</label>
                 <input 
                     pInputText 
                     id="username" 
@@ -42,12 +42,12 @@
                     [(ngModel)]="value" />
             </div>
             <div class="flex flex-column gap-2">
-                <label for="username">Фамилия</label>
-                <input 
-                    pInputText 
-                    id="username" 
-                    aria-describedby="username-help" 
-                    [(ngModel)]="value" />
+                <label for="password">Пароль</label>
+                <p-password [(ngModel)]="value" [toggleMask]="true" />
+            </div>
+            <div class="flex flex-column gap-2">
+                <label for="password">Повторите пароль</label>
+                <p-password [(ngModel)]="value" [toggleMask]="true" />
             </div>
             <div class="wrap-buttons__order-button">
                 <p-button

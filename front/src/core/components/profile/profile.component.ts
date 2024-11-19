@@ -4,6 +4,7 @@ import { SkeletonModule } from "primeng/skeleton";
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Router } from "@angular/router";
 import {RouterOutlet} from '@angular/router';
+import { FooterComponent } from "../footer/footer.component";
 
 
 @Component({
@@ -15,7 +16,8 @@ import {RouterOutlet} from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterOutlet,
-  ],
+    FooterComponent
+],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss',
 })
