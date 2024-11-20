@@ -32,7 +32,7 @@
         <label for="category">Выберите категорию</label>
         <p-dropdown
           [style]="{width: '100%'}"
-          [options]="(this.categoryService.getAllCategory() | async) || []"
+          [options]=""
           inputId="category"
           optionLabel="name"
           placeholder="Выберите категорию"
@@ -68,8 +68,6 @@
         />
       </div>
     </div>
-
-
 
     <p-toast />
     <p-fileUpload name="myfile[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true" accept="image/*" maxFileSize="1000000" (onUpload)="onTemplatedUpload()" (onSelect)="onSelectedFiles($event)">

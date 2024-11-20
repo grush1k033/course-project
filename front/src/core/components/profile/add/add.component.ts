@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import {FileSelectEvent, FileUploadModule} from 'primeng/fileupload';
+import {FileSelectEvent, FileUploadEvent, FileUploadModule} from 'primeng/fileupload';
 import { DropdownModule } from 'primeng/dropdown';
 import { GarageComponent } from '../../garage/garage.component';
 import { CategoryService } from '../../../service/category.service';
@@ -11,6 +11,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import {ToastModule} from 'primeng/toast';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {BadgeModule} from 'primeng/badge';
+import {ProfileService} from '../../../service/profile.service';
 
 
 @Component({
@@ -35,7 +36,7 @@ import {BadgeModule} from 'primeng/badge';
 })
 export class AddComponent {
 
-  files = [];
+  files: File[] = [];
 
   totalSize : number = 0;
 
@@ -45,6 +46,7 @@ export class AddComponent {
     private config: PrimeNGConfig,
     private messageService: MessageService,
     public  categoryService: CategoryService,
+    private profileService: ProfileService
   ) {}
 
   choose(event: any, callback: any) {
@@ -64,10 +66,19 @@ export class AddComponent {
   }
 
   onTemplatedUpload() {
-    console.log(this.files)
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+    const file = this.files[0];
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    this.addFile(formData);
   }
 
+  addFile(data: FormData) {
+    console.log(data);
+    this.profileService.addFile(data).subscribe(res=> {
+      console.log(res);
+      this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+    })
+  }
   onSelectedFiles(event: any) {
     this.files = event.currentFiles;
     this.files.forEach((file) => {
@@ -97,5 +108,7 @@ export class AddComponent {
   changeGarage($event: boolean) {
 
   }
+
+
 }
 
