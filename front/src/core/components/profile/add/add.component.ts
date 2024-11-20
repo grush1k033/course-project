@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { FileUploadModule } from 'primeng/fileupload';
+import {FileSelectEvent, FileUploadModule} from 'primeng/fileupload';
 import { DropdownModule } from 'primeng/dropdown';
 import { GarageComponent } from '../../garage/garage.component';
 import { CategoryService } from '../../../service/category.service';
-import { AsyncPipe } from '@angular/common';
+import {AsyncPipe, CommonModule} from '@angular/common';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {TooltipModule} from 'primeng/tooltip';
+import {ToastModule} from 'primeng/toast';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {BadgeModule} from 'primeng/badge';
 
 
 @Component({
@@ -17,25 +22,80 @@ import { AsyncPipe } from '@angular/common';
     FileUploadModule,
     DropdownModule,
     GarageComponent,
-    AsyncPipe
+    AsyncPipe,
+    InputTextareaModule,
+    TooltipModule,
+    ToastModule,
+    BadgeModule,
+    CommonModule
   ],
   templateUrl: './add.component.html',
   styleUrl: './add.component.scss',
+  providers: [MessageService]
 })
-export class AddComponent { 
-  
-  constructor(public categoryService: CategoryService){
-    
+export class AddComponent {
+
+  files = [];
+
+  totalSize : number = 0;
+
+  totalSizePercent : number = 0;
+
+  constructor(
+    private config: PrimeNGConfig,
+    private messageService: MessageService,
+    public  categoryService: CategoryService,
+  ) {}
+
+  choose(event: any, callback: any) {
+    callback();
   }
 
-  onUpload(event: any) {
-    
+  onRemoveTemplatingFile(event:any, file: any, removeFileCallback: any, index: any) {
+    removeFileCallback(event, index);
+    this.totalSize -= parseInt(this.formatSize(file.size));
+    this.totalSizePercent = this.totalSize / 10;
   }
 
-  changeGarage(event: boolean) {
-
+  onClearTemplatingUpload(clear:any) {
+    clear();
+    this.totalSize = 0;
+    this.totalSizePercent = 0;
   }
 
+  onTemplatedUpload() {
+    console.log(this.files)
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+  }
 
+  onSelectedFiles(event: any) {
+    this.files = event.currentFiles;
+    this.files.forEach((file) => {
+      this.totalSize += parseInt(this.formatSize(file['size']));
+    });
+    this.totalSizePercent = this.totalSize / 10;
+  }
+
+  uploadEvent(callback: any) {
+    callback();
+  }
+
+  formatSize(bytes: any) {
+    const k = 1024;
+    const dm = 3;
+    const sizes = this.config.translation.fileSizeTypes;
+    if (bytes === 0) {
+      return `0 ${sizes?.[0]}`;
+    }
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+
+    return `${formattedSize} ${sizes?.[i]}`;
+  }
+
+  changeGarage($event: boolean) {
+
+  }
 }
 

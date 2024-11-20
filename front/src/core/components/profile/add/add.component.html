@@ -1,82 +1,128 @@
-<!-- name: string,
-description: string,
-price: string,
-image: string,
-category_id: number,
-cars_id: number
-amount: number;
-discount:number; -->
-<app-garage
-(onChangeGarage)="changeGarage($event)"
-></app-garage>
+<div class="add-profile">
 
-<div class="flex flex-column gap-2">
-    <label for="name">Введите название автозапчасти</label>
-    <input 
-        pInputText 
-        id="name" 
+  <app-garage
+    [isProfile]="true"
+    (onChangeGarage)="changeGarage($event)"
+  ></app-garage>
+
+  <div class="input-wrapper">
+    <div class="flex flex-column gap-2">
+      <label for="name">Введите название автозапчасти</label>
+      <input
+        pInputText
+        id="name"
+      />
+    </div>
+    <div class="flex flex-column gap-2 textarea">
+      <label for="description">Введите описание автозапчасти</label>
+      <textarea
+        [autoResize]="true"
+        id="description"
+        rows="5"
+        cols="30"
+        pInputTextarea
+      >
+    </textarea>
+    </div>
+
+
+
+    <div class="input-numbers">
+      <div class="input">
+        <label for="category">Выберите категорию</label>
+        <p-dropdown
+          [style]="{width: '100%'}"
+          [options]="(this.categoryService.getAllCategory() | async) || []"
+          inputId="category"
+          optionLabel="name"
+          placeholder="Выберите категорию"
         />
-</div>
-<div class="flex flex-column gap-2">
-    <label for="description">Введите описание автозапчасти</label>
-    <input 
-        pInputText 
-        id="description" 
-        />
-</div>
-
-<p-dropdown 
-    optionLabel="name" 
-    placeholder="Выберите категорию" />
-
-<div class="input-numbers">
-    <div class="input">
+      </div>
+      <div class="input">
         <label for="price">Введите цену</label>
-        <p-inputNumber  
-        id="price"
-        [showButtons]="true" 
-        buttonLayout="horizontal"
-        decrementButtonClass="p-button-secondary"
-        incrementButtonClass="p-button-secondary" 
-        incrementButtonIcon="pi pi-plus" 
-        decrementButtonIcon="pi pi-minus" />
-    </div>
-    <div class="input">
+        <p-inputNumber
+          [style]="{width: '100%'}"
+          inputId="price"
+          mode="currency"
+          currency="BYN"
+          locale="de-DE"
+          [min]="0"
+        />
+      </div>
+      <div class="input">
         <label for="amount">Введите количество</label>
-        <p-inputNumber  
-        id="amount"
-        [showButtons]="true" 
-        buttonLayout="horizontal"
-        decrementButtonClass="p-button-secondary"
-        incrementButtonClass="p-button-secondary" 
-        incrementButtonIcon="pi pi-plus" 
-        decrementButtonIcon="pi pi-minus" />
-    </div>
-    <div class="input">
+        <p-inputNumber
+          [style]="{width: '100%'}"
+          pTooltip="Введите максимальное количество товаров"
+          inputId="amount"
+          [min]="0"
+        />
+      </div>
+      <div class="input">
         <label for="discount">Введите скидку</label>
-        <p-inputNumber  
-        id="discount"
-        [showButtons]="true" 
-        buttonLayout="horizontal"
-        decrementButtonClass="p-button-secondary"
-        incrementButtonClass="p-button-secondary" 
-        incrementButtonIcon="pi pi-plus" 
-        decrementButtonIcon="pi pi-minus" />
+        <p-inputNumber
+          [style]="{width: '100%'}"
+          inputId="discount"
+          suffix="%"
+          [min]="0.1"
+        />
+      </div>
     </div>
+
+
+
+    <p-toast />
+    <p-fileUpload name="myfile[]" url="https://www.primefaces.org/cdn/api/upload.php" [multiple]="true" accept="image/*" maxFileSize="1000000" (onUpload)="onTemplatedUpload()" (onSelect)="onSelectedFiles($event)">
+      <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
+        <div class="flex flex-wrap justify-content-between align-items-center flex-1 gap-2">
+          <div class="flex gap-2">
+            <p-button (onClick)="choose($event, chooseCallback)" icon="pi pi-images" [rounded]="true" [outlined]="true" />
+            <p-button (onClick)="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success" [disabled]="!files || files.length === 0" />
+            <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true" [outlined]="true" severity="danger" [disabled]="!files || files.length === 0" />
+          </div>
+
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback" let-removeUploadedFileCallback="removeUploadedFileCallback">
+        <div *ngIf="files?.length > 0">
+          <h5>Pending</h5>
+          <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+            <div *ngFor="let file of files; let i = index" class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
+              <div>
+                <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="100" height="50" />
+              </div>
+              <span class="font-semibold">{{ file.name }}</span>
+              <div>{{ formatSize(file.size) }}</div>
+              <p-badge value="Pending" severity="warning" />
+              <p-button icon="pi pi-times" (onClick)="onRemoveTemplatingFile($event, file, removeFileCallback, i)" [outlined]="true" [rounded]="true" severity="danger" />
+            </div>
+          </div>
+        </div>
+        <div *ngIf="uploadedFiles?.length > 0">
+          <h5>Completed</h5>
+          <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+            <div *ngFor="let file of uploadedFiles; let i = index" class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
+              <div>
+                <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="100" height="50" />
+              </div>
+              <span class="font-semibold">{{ file.name }}</span>
+              <div>{{ formatSize(file.size) }}</div>
+              <p-badge value="Completed" class="mt-3" severity="success" />
+              <p-button icon="pi pi-times" (onClick)="removeUploadedFileCallback(i)" [outlined]="true" [rounded]="true" severity="danger" />
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="file"> </ng-template>
+      <ng-template pTemplate="empty">
+        <div class="flex align-items-center justify-content-center flex-column">
+          <i class="pi pi-cloud-upload border-2 border-circle p-5 text-8xl text-400 border-400"></i>
+          <p class="mt-4 mb-0">Drag and drop files here to upload.</p>
+        </div>
+      </ng-template>
+    </p-fileUpload>
+
+    <p-button [style]="{width: '100%'}" label="Добавить новый товар" severity="warning" />
+  </div>
+
 </div>
-
-
-
-<p-fileUpload 
-    mode="basic" 
-    chooseLabel="Choose" 
-    chooseIcon="pi pi-upload"
-    name="demo[]" 
-    url="https://www.primefaces.org/cdn/api/upload.php" 
-    accept="image/*" 
-    maxFileSize="1000000" 
-    (onUpload)="onUpload($event)" />
-
-
-
-

@@ -17,6 +17,7 @@ import {NgClass} from '@angular/common';
 })
 export class GarageComponent implements OnInit, OnDestroy {
   @Input() isFilter = false;
+  @Input() isProfile = false;
   subModels: Subscription | null = null;
   models:IModel[] = [];
   selectedModel: string | null = null;

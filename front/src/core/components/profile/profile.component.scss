@@ -25,7 +25,7 @@
     display: flex;
     align-items: center;
     gap: 25px;
-    
+
 }
 
 .part-round {
@@ -93,9 +93,9 @@
     justify-content: space-between;
     align-items:center;
     padding: 3px 10px;
-    
+
     border-radius: 10px;
-    &:hover {
+    &:hover, &.active {
         background-color: #f8f8f8;
     }
 
@@ -122,7 +122,7 @@
         color: black;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-decoration: none; 
+        text-decoration: none;
         width: 140px;
     }
 
@@ -133,26 +133,32 @@
     }
 }
 
-
-
-.navigation-item:hover .navigation-item__title {
-    color: #f2630a;
-}
-.navigation-item:hover .navigation-item__icon {
-    path {
-        fill: #f2630a;
+.navigation-item {
+  &:hover, &.active {
+    .navigation-item__title {
+      color: #f2630a;
     }
-}
 
-.navigation-item:hover .navigation-item__arrow {
-    path {
+    .navigation-item__icon {
+      path {
         fill: #f2630a;
+      }
     }
+  }
 }
 
-.navigation-item:hover .navigation-item__icon-basket {
-    path {
+.navigation-item {
+  &:hover, &.active {
+    .navigation-item__arrow {
+      path {
+        fill: #f2630a;
+      }
+    }
+    .navigation-item__icon-basket {
+      path {
         stroke: #f2630a;
+      }
     }
+  }
 }
 

@@ -29,6 +29,11 @@ export const routes: Routes = [
     component: ProfileComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'edit',
+        pathMatch: 'full'
+      },
+      {
         path: 'edit',
         component: ProfileEditComponent
       },

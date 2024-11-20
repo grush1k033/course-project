@@ -7,6 +7,10 @@
       display: none;
     }
 
+    &.isProfile {
+      display: none;
+    }
+
   }
   .car {
     padding: 24px;
@@ -23,7 +27,6 @@
       flex-direction: column;
       height: calc(50vh - 60px);
     }
-
 
     &__title {
       height: 42px;
