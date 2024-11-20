@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {DatabaseService} from "../services/database.service";
 import {CommonService} from "../services/common.service";
+import {IAddAutoPartDto} from "../Interfaces/interfaces";
 
 @Injectable()
 export class AutoPartService {
@@ -21,13 +22,38 @@ export class AutoPartService {
         }
     }
 
+    async getById(id: string) {
+        return (await this.databaseService.pool.query(this.commonService.getByID(id)))[0][0];
+    }
+
+    async addAutoPart(body: IAddAutoPartDto) {
+        console.log(`
+            INSERT INTO autoparts (name, description, price, image, category_id, cars_id, amount, discount, favourites) VALUES
+            (${body.name}, ${body.description}, ${body.price}, ${body.image}, ${body.category_id}, ${body.cars_id}, ${body.amount}, ${body.discount}, ${body.favourites})
+        `)
+        await this.databaseService.pool.query(`
+            INSERT INTO autoparts (name, description, price, image, category_id, cars_id, amount, discount, favourites) VALUES
+            ('${body.name}', '${body.description}', '${body.price}', '${body.image}', '${body.category_id}', '${body.cars_id}', '${body.amount}', '${body.discount}', '${body.favourites}')
+        `)
+        return body;
+    }
+
     async getAutoPartById(id: string) {
-        return await this.databaseService.pool.query(this.commonService.getByID(id));
+        return (await this.databaseService.pool.query(this.commonService.getByID(id)));
     }
 
     async updateFavourite(dto: {favourite: boolean}, id: string) {
         await this.databaseService.pool.query(`UPDATE autoparts SET favourites = ${dto.favourite} WHERE id = ${id}`);
         return (await this.databaseService.pool.query(this.commonService.getByID(id)))[0][0];
+    }
+
+    async updateAutoPart(dto: IAddAutoPartDto, id: string) {
+        await this.databaseService.pool.query(this.commonService.update(dto, id))
+        return dto;
+    }
+
+    async deleteAutoPart(id: string) {
+        return this.databaseService.pool.query(this.commonService.delete(id))
     }
 
 

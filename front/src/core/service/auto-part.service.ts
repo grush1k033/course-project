@@ -38,11 +38,26 @@ export class AutoPartService {
     return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part?categoryId=${categoryId}${id ? `&carsId=${id}` : ''}`)
   }
 
+  addAutoPart(dto: Omit<IAutoPart, 'id'>) {
+    return this.httpClient.post<typeof dto>("http://localhost:3000/auto-part", dto);
+  }
+
+  getAutoPartById(id: string) {
+    return this.httpClient.get<IAutoPart>(`http://localhost:3000/auto-part/${id}`)
+  }
   getAllAutoPart():Observable<IAutoPart[]> {
     return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part`);
   }
 
   updateAutoPart(dto: {favourite: boolean}, id: number) {
     return this.httpClient.patch<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
+  }
+
+  updateAutoPartAll(dto: Omit<IAutoPart, 'id'>, id: number) {
+    return this.httpClient.post<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
+  }
+
+  deleteAutoPart(id: string) {
+    return this.httpClient.delete<void>(`http://localhost:3000/auto-part/${id}`);
   }
 }

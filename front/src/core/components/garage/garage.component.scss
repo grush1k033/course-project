@@ -28,6 +28,10 @@
       height: calc(50vh - 60px);
     }
 
+    &__input-label {
+      white-space: nowrap;
+    }
+
     &__title {
       height: 42px;
       display: flex;

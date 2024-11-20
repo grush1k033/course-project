@@ -1,10 +1,17 @@
 <div class="wrapper">
   <div [ngClass]="{isFilter, isProfile}" class="wrapper__title">Гараж</div>
   <div class="car" [ngClass]="{isFilter}">
-    <div [ngClass]="{isFilter}" class="car__title">
-      <img src="assets/icons/garage.svg" alt="garage-icon">
-      <div class="car__title__label">Гараж</div>
-    </div>
+    @if(!isProfile) {
+      <div [ngClass]="{isFilter}" class="car__title">
+        <img src="assets/icons/garage.svg" alt="garage-icon">
+        <div class="car__title__label">Гараж</div>
+      </div>
+    } @else {
+      <div class="car__input-label">
+        Выберите машину
+      </div>
+    }
+
     <div [ngClass]="{isFilter}" class="car__divider"></div>
     <div class="car__mark">
       <p-dropdown

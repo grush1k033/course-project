@@ -1,14 +1,15 @@
-<div class="add-profile">
+<div [formGroup]="form" class="add-profile">
 
   <app-garage
     [isProfile]="true"
-    (onChangeGarage)="changeGarage($event)"
+    (onChangeGarage)="changeGarage()"
   ></app-garage>
 
   <div class="input-wrapper">
     <div class="flex flex-column gap-2">
       <label for="name">Введите название автозапчасти</label>
       <input
+        formControlName="name"
         pInputText
         id="name"
       />
@@ -16,6 +17,7 @@
     <div class="flex flex-column gap-2 textarea">
       <label for="description">Введите описание автозапчасти</label>
       <textarea
+        formControlName="description"
         [autoResize]="true"
         id="description"
         rows="5"
@@ -31,16 +33,19 @@
       <div class="input">
         <label for="category">Выберите категорию</label>
         <p-dropdown
+          formControlName="category"
           [style]="{width: '100%'}"
-          [options]=""
+          [options]="categories"
           inputId="category"
           optionLabel="name"
+          optionValue="id"
           placeholder="Выберите категорию"
         />
       </div>
       <div class="input">
         <label for="price">Введите цену</label>
         <p-inputNumber
+          formControlName="price"
           [style]="{width: '100%'}"
           inputId="price"
           mode="currency"
@@ -52,6 +57,7 @@
       <div class="input">
         <label for="amount">Введите количество</label>
         <p-inputNumber
+          formControlName="amount"
           [style]="{width: '100%'}"
           pTooltip="Введите максимальное количество товаров"
           inputId="amount"
@@ -61,6 +67,7 @@
       <div class="input">
         <label for="discount">Введите скидку</label>
         <p-inputNumber
+          formControlName="discount"
           [style]="{width: '100%'}"
           inputId="discount"
           suffix="%"
@@ -120,7 +127,20 @@
       </ng-template>
     </p-fileUpload>
 
-    <p-button [style]="{width: '100%'}" label="Добавить новый товар" severity="warning" />
+    @if(!id) {
+      <p-button
+        (onClick)="submitForm()"
+        [disabled]="form.invalid"
+        [style]="{width: '100%'}"
+        label='Добавить новый товар' severity="warning" />
+    } @else {
+      <p-button
+        (onClick)="editAutoPart()"
+        [disabled]="form.invalid"
+        [style]="{width: '100%'}"
+        label='Редактировать товар' severity="warning" />
+    }
+
   </div>
 
 </div>

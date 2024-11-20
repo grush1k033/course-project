@@ -31,6 +31,8 @@ export interface IAutoPart {
     favourites: boolean;
 }
 
+export type IAddAutoPartDto = Omit<IAutoPart, 'id'>
+
 export interface IBasket {
     id:number;
     autoPart_id:number;

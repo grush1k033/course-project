@@ -41,15 +41,19 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'edit',
+        redirectTo: 'edit-profile',
         pathMatch: 'full'
       },
       {
-        path: 'edit',
+        path: 'edit-profile',
         component: ProfileEditComponent
       },
       {
         path: 'add',
+        component: AddComponent
+      },
+      {
+        path: 'edit',
         component: AddComponent
       }
     ]

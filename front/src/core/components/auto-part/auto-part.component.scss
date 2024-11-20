@@ -95,9 +95,27 @@
       justify-content: space-between;
       align-items: center;
 
+      &.discount {
+        justify-content: flex-end;
+      }
+
+      .wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &.isAdmin {
+          flex-direction: column;
+          align-items: start;
+          gap: 5px;
+        }
+      }
     }
 
     .box-up {
+
+
       &__discount {
         display: flex;
         gap: 5px;
@@ -165,3 +183,5 @@
     }
   }
 }
+
+

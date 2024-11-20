@@ -13,11 +13,15 @@ import {VisibleImgDirective} from '../../directive/visible-img.directive';
 import {TooltipModule} from 'primeng/tooltip';
 import {BasketService, IBasket} from '../../service/basket.service';
 import {Subscription} from 'rxjs';
+import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
+import {MenuModule} from 'primeng/menu';
+import {NgClass} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auto-part',
   standalone: true,
-  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule],
+  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, MenuModule, NgClass],
   templateUrl: './auto-part.component.html',
   styleUrl: './auto-part.component.scss'
 })
@@ -28,12 +32,32 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
   likeSrc = "assets/icons/like-empty.svg";
   basket: IBasket[] | null = null;
   basketSub: Subscription | null = null;
-
+  editMenu: MenuItem[] = [
+    {
+      label: 'Опции',
+      items: [
+        {
+          label: 'Редактировать',
+          icon: 'pi pi-pencil',
+          iconClass: 'edit',
+          command: this.editAutoPart.bind(this)
+        },
+        {
+          label: 'Удалить',
+          icon: 'pi pi-trash',
+          iconClass: 'delete',
+          command: this.deleteAutoPart.bind(this)
+        }
+      ]
+    }
+  ];
 
   constructor(
     private autoPartService: AutoPartService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private router: Router,
   ) {}
+
 
   ngOnInit(): void {
     this.basketSubscription();
@@ -47,6 +71,21 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
     this.likeSrc = (this.item && this.item?.favourites)
       ? "assets/icons/like.svg"
       : "assets/icons/like-empty.svg";
+  }
+
+  editAutoPart() {
+    this.router.navigate(['profile/edit'], {
+      queryParams: {id: this.item?.id}
+    }).then()
+  }
+
+  deleteAutoPart() {
+    if(this.item) {
+      this.autoPartService.deleteAutoPart(this.item.id.toString()).subscribe(() => {
+        this.onUpdateFavourite.emit(true);
+      })
+    }
+
   }
 
   basketSubscription() {

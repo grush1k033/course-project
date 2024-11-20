@@ -21,14 +21,26 @@
     </div>
     <div class="auto-parts__divider"></div>
     <div class="auto-parts__right-content">
-      <div class="auto-parts__right-content__box-up">
-        <div class="box-up__discount">
-          <div class="box-up__discount__label">-{{ item.discount }}%</div>
-          <div class="box-up__discount__info" tooltipPosition="bottom"
-               pTooltip="Скидка действует при оформлении через корзину">i
+      <div class="auto-parts__right-content__box-up" [ngClass]="{discount: !item.discount}">
+
+      @if(!!item.discount) {
+        <div class="wrapper" [ngClass]="{isAdmin: true}">
+          <div class="box-up__discount">
+            <div class="box-up__discount__label">-{{ item.discount }}%</div>
+            <div class="box-up__discount__info" tooltipPosition="bottom"
+                 pTooltip="Скидка действует при оформлении через корзину">i
+            </div>
           </div>
+          <div class="box-up__price"><span>{{ item.price }}</span> BYN</div>
         </div>
-        <div class="box-up__price"><span>{{ item.price }}</span> BYN</div>
+      }
+      @if(true) {
+        <div class="menu flex align-self-start">
+          <p-menu #menu [model]="editMenu" [popup]="true" />
+          <p-button size="small" (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+        </div>
+      }
+
       </div>
       <div class="box-center__available">Доступно: {{item.amount}} шт.
       </div>

@@ -7,7 +7,7 @@
 
 
 *{
-  text-decoration: none; 
+  text-decoration: none;
 }
 body {
   margin: 0;
@@ -20,4 +20,12 @@ body {
 
 .p-inputnumber-input {
   width: 50%;
+}
+
+.p-menu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon.edit {
+  color: orange;
+}
+
+.p-menu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon.delete {
+  color: darkred;
 }
