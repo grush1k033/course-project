@@ -18,12 +18,4 @@ export class DatabaseService {
     password: 'mhcSJCTcwA',
     database: 'sql7746026',
   });
-
-  // pool2 = mysql.createPool({
-  //   host: '192.168.100.56',
-  //   user: 'root',
-  //   port: 3306,
-  //   password: 'unypyrebe',
-  //   database: 'nameofdb',
-  // });
 }

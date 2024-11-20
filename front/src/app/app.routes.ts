@@ -5,6 +5,9 @@ import { CartComponent } from '../core/components/cart/cart.component';
 import { ProfileComponent } from '../core/components/profile/profile.component';
 import { ProfileEditComponent } from '../core/components/profile/profile-edit/profile-edit.component';
 import { AddComponent } from '../core/components/profile/add/add.component';
+import {OrderItemComponent} from '../core/components/order-item/order-item.component';
+import {OrderItemsComponent} from '../core/components/order-items/order-items.component';
+import {OrderItemDetailComponent} from '../core/components/order-item-detail/order-item-detail.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +26,14 @@ export const routes: Routes = [
   {
     path: 'auto-part/:id',
     component: AutoPartItemsComponent
+  },
+  {
+    path: 'order',
+    component: OrderItemsComponent
+  },
+  {
+    path: 'order/:id',
+    component: OrderItemDetailComponent,
   },
   {
     path: 'profile',

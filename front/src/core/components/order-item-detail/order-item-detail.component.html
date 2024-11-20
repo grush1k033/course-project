@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Заказ {{id}}</h1>
+
+  <div class="items">
+      @for(item of [1,2,3,4,5]; track item) {
+        <app-order-autopart-item [orderAutoPart]="item"></app-order-autopart-item>
+      }
+  </div>
+</div>

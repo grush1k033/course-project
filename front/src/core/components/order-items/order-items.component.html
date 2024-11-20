@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>Заказы</h1>
+
+  <div class="items">
+    @for(item of [1,2,3,4,5]; track item) {
+      <app-order-item [item]="item"></app-order-item>
+    }
+  </div>
+</div>
+
+

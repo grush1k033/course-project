@@ -11,21 +11,22 @@
         <i class="pi pi-search"></i>
         <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value" />
       </div>
+    }
+
       <div (click)="router.navigate(['cart'])" class="header__basket">
         <i style="font-size: 25px" class="pi pi-cart-plus" pBadge
           [value]="(basketService.basket$ | async)?.length || 0"></i>
         <div class="header__basket__label">Корзина</div>
       </div>
+      <div (click)="router.navigate(['order'])" class="header__order">
+        <i style="font-size: 25px" class="pi pi-list" pBadge
+           [value]="0"></i>
+        <div class="header__basket__label">Заказы</div>
+      </div>
       <p-avatar (click)="visibleLogin=true" size="large"
         image="https://sun9-32.userapi.com/impg/REgaDYC60vK42Mommuw_9z8TASotezEHTHcmTQ/9dbwCdu0xoo.jpg?size=828x1035&quality=95&sign=ef070ef5ff49b7c51277fcd1f8461c2f&type=album"
         shape="circle" />
-    } @else {
-      <div class="header__basket">
-        <i style="font-size: 25px" class="pi pi-cart-plus" pBadge
-           [value]="(basketService.basket$ | async)?.length || 0"></i>
-        <div class="header__basket__label">Корзина</div>
-      </div>
-    }
+
   </div>
 </div>
 
