@@ -1,0 +1,82 @@
+<!-- name: string,
+description: string,
+price: string,
+image: string,
+category_id: number,
+cars_id: number
+amount: number;
+discount:number; -->
+<app-garage
+(onChangeGarage)="changeGarage($event)"
+></app-garage>
+
+<div class="flex flex-column gap-2">
+    <label for="name">Введите название автозапчасти</label>
+    <input 
+        pInputText 
+        id="name" 
+        />
+</div>
+<div class="flex flex-column gap-2">
+    <label for="description">Введите описание автозапчасти</label>
+    <input 
+        pInputText 
+        id="description" 
+        />
+</div>
+
+<p-dropdown 
+    optionLabel="name" 
+    placeholder="Выберите категорию" />
+
+<div class="input-numbers">
+    <div class="input">
+        <label for="price">Введите цену</label>
+        <p-inputNumber  
+        id="price"
+        [showButtons]="true" 
+        buttonLayout="horizontal"
+        decrementButtonClass="p-button-secondary"
+        incrementButtonClass="p-button-secondary" 
+        incrementButtonIcon="pi pi-plus" 
+        decrementButtonIcon="pi pi-minus" />
+    </div>
+    <div class="input">
+        <label for="amount">Введите количество</label>
+        <p-inputNumber  
+        id="amount"
+        [showButtons]="true" 
+        buttonLayout="horizontal"
+        decrementButtonClass="p-button-secondary"
+        incrementButtonClass="p-button-secondary" 
+        incrementButtonIcon="pi pi-plus" 
+        decrementButtonIcon="pi pi-minus" />
+    </div>
+    <div class="input">
+        <label for="discount">Введите скидку</label>
+        <p-inputNumber  
+        id="discount"
+        [showButtons]="true" 
+        buttonLayout="horizontal"
+        decrementButtonClass="p-button-secondary"
+        incrementButtonClass="p-button-secondary" 
+        incrementButtonIcon="pi pi-plus" 
+        decrementButtonIcon="pi pi-minus" />
+    </div>
+</div>
+
+
+
+<p-fileUpload 
+    mode="basic" 
+    chooseLabel="Choose" 
+    chooseIcon="pi pi-upload"
+    name="demo[]" 
+    url="https://www.primefaces.org/cdn/api/upload.php" 
+    accept="image/*" 
+    maxFileSize="1000000" 
+    (onUpload)="onUpload($event)" />
+
+
+
+
