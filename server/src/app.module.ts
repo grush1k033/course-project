@@ -1,19 +1,34 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { DatabaseService } from './services/database.service';
-import { ShopModule } from './shop/shop.module';
-import { CategoryModule } from './category/category.module';
-import { ModelsModule } from './models/models.module';
-import { MarksModule } from './marks/marks.module';
-import { AutoPartModule } from './auto-part/auto-part.module';
-import { CarModule } from './car/car.module';
-import { BasketModule } from './basket/basket.module';
-import { UserModule } from './user/user.module';
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {DatabaseService} from './services/database.service';
+import {ShopModule} from './shop/shop.module';
+import {CategoryModule} from './category/category.module';
+import {ModelsModule} from './models/models.module';
+import {MarksModule} from './marks/marks.module';
+import {AutoPartModule} from './auto-part/auto-part.module';
+import {CarModule} from './car/car.module';
+import {BasketModule} from './basket/basket.module';
+import {UserModule} from './user/user.module';
+import {FilesModule} from './files/files.module';
+import {MulterModule} from "@nestjs/platform-express";
 
 
 @Module({
-  imports: [ShopModule, CategoryModule, ModelsModule, MarksModule, AutoPartModule, CarModule, BasketModule, UserModule],
-  controllers: [AppController],
-  providers: [DatabaseService],
+    imports: [
+        ShopModule,
+        CategoryModule,
+        ModelsModule,
+        MarksModule,
+        AutoPartModule,
+        CarModule,
+        BasketModule,
+        UserModule,
+        MulterModule.register({
+            dest: './uploads',
+        }),
+        FilesModule],
+    controllers: [AppController],
+    providers: [DatabaseService],
 })
-export class AppModule {}
+export class AppModule {
+}
