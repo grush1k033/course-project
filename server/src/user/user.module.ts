@@ -10,6 +10,7 @@ import {CommonService} from "../services/common.service";
     DatabaseService,
     { provide: CommonService, useValue: new CommonService('users') },
   ],
+  exports: [UserService],
   controllers: [UserController]
 })
 export class UserModule {}

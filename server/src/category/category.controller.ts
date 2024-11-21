@@ -1,6 +1,8 @@
 import {Controller, Get, Query} from '@nestjs/common';
 import {CategoryService} from "./category.service";
+import { Public } from '../auth/public.decorator';
 
+@Public()
 @Controller('category')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}

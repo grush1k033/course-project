@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
+import { USER_ID } from '../constants';
+import { IUser } from './auth.service';
 
 export interface IUploadFileResponse {
   status: number,
@@ -17,7 +20,10 @@ export interface IUploadFileData {
 })
 export class ProfileService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private localStorage: LocalStorageService
+  ) { }
 
 
   addFile(data: FormData) {
@@ -25,5 +31,9 @@ export class ProfileService {
       reportProgress: true,
       observe: 'events' // Позволяет отслеживать прогресс загрузки
     });
+  }
+
+  getUser() {
+    return this.http.get<IUser>('http://localhost:3000/user/' + this.localStorage.get(USER_ID))
   }
 }

@@ -15,13 +15,14 @@ import {BasketService, IBasket} from '../../service/basket.service';
 import {Subscription} from 'rxjs';
 import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
 import {MenuModule} from 'primeng/menu';
-import {NgClass} from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {Router} from '@angular/router';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
   selector: 'app-auto-part',
   standalone: true,
-  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, MenuModule, NgClass],
+  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, MenuModule, NgClass, AsyncPipe],
   templateUrl: './auto-part.component.html',
   styleUrl: './auto-part.component.scss'
 })
@@ -52,11 +53,15 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
     }
   ];
 
+  @Input() isAdmin = false;
+
   constructor(
     private autoPartService: AutoPartService,
     private basketService: BasketService,
     private router: Router,
-  ) {}
+  ) {
+
+  }
 
 
   ngOnInit(): void {

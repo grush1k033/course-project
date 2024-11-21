@@ -69,7 +69,7 @@ export class AddComponent {
     private config: PrimeNGConfig,
     private messageService: MessageService,
     public  categoryService: CategoryService,
-    private profileService: ProfileService,
+    public profileService: ProfileService,
     private localStorage: LocalStorageService,
     private autoPartService: AutoPartService,
     private activatedRoute: ActivatedRoute

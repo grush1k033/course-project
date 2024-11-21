@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputIconModule } from 'primeng/inputicon';
-import {AuthService} from '../../service/auth.service';
+import { AuthService, IUser } from '../../service/auth.service';
 
 type TypeForm = FormGroup<{
   email: FormControl<string | null>,
@@ -77,8 +77,14 @@ export class LoginModalComponent {
   }
 
   login() {
-    this.onHide.next(false)
-    console.log(this.form.getRawValue());
+    const  {email, password} = this.form.getRawValue()
+    const dto: Omit<IUser, 'name'> = {
+      email: email as string,
+      password: password as string
+    }
+    this.auth.login(dto).subscribe(() => {
+      this.onHide.next(false);
+    })
   }
 
   hideForm() {

@@ -13,4 +13,8 @@ export class LocalStorageService {constructor() { }
   set(id: string, value: any) {
     localStorage.setItem(id, JSON.stringify(value));
   }
+
+  remove(id: string) {
+    localStorage.removeItem(id);
+  }
 }

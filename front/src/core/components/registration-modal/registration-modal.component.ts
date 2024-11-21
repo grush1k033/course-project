@@ -83,8 +83,13 @@ export class RegistrationModalComponent {
   }
 
   createAccount() {
-    this.onHide.next(false)
-    console.log(this.form.getRawValue());
+    this.auth.register({
+      name: this.form.getRawValue().username as string,
+      email: this.form.getRawValue().email as string,
+      password: this.form.getRawValue().password as string
+    }).subscribe(() => {
+      this.onHide.next(false)
+    })
   }
 
   hideForm() {
