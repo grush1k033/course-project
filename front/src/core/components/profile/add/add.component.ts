@@ -66,8 +66,6 @@ export class AddComponent {
   id: string;
 
   constructor(
-    private config: PrimeNGConfig,
-    private messageService: MessageService,
     public  categoryService: CategoryService,
     public profileService: ProfileService,
     private localStorage: LocalStorageService,
@@ -146,60 +144,12 @@ export class AddComponent {
     })
   }
 
-  choose(event: any, callback: any) {
-    callback();
-  }
+  
 
   changeGarage() {
     this.form.controls.mark.setValue(this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MARK))
     this.form.controls.model.setValue(this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL))
   }
 
-  onRemoveTemplatingFile(event:any, file: any, removeFileCallback: any, index: any) {
-    removeFileCallback(event, index);
-    this.totalSize -= parseInt(this.formatSize(file.size));
-    this.totalSizePercent = this.totalSize / 10;
-  }
-
-  onTemplatedUpload() {
-    const file = this.files[0];
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    this.addFile(formData);
-  }
-
-  addFile(data: FormData) {
-    console.log(data);
-    this.profileService.addFile(data).subscribe(res=> {
-      console.log(res);
-      this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-    })
-  }
-  onSelectedFiles(event: any) {
-    this.files = event.currentFiles;
-    this.form.controls.image.setValue(this.files[0]);
-    this.files.forEach((file) => {
-      this.totalSize += parseInt(this.formatSize(file['size']));
-    });
-    this.totalSizePercent = this.totalSize / 10;
-  }
-
-  uploadEvent(callback: any) {
-    callback();
-  }
-
-  formatSize(bytes: any) {
-    const k = 1024;
-    const dm = 3;
-    const sizes = this.config.translation.fileSizeTypes;
-    if (bytes === 0) {
-      return `0 ${sizes?.[0]}`;
-    }
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
-
-    return `${formattedSize} ${sizes?.[i]}`;
-  }
 }
 

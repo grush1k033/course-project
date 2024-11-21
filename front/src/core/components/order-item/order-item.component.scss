@@ -23,39 +23,7 @@
     font-weight: bold;
   }
 
-  &__button {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-radius: 5px;
-    padding: 10px 12px;
-    background-color: #2980b9;
-    max-width: 137px;
-    height: 36px;
-
-    &__title {
-      display: flex;
-      white-space: nowrap;
-      font-size: 13px;
-      font-weight: 600;
-      color: #ebebeb;
-    }
-
-    &__icon {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      justify-content: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: blue;
-      color: #ebebeb;
-      font-size: 14px;
-      font-weight: 600;
-    }
-  }
+  
 }
 
 .order-left__button:hover .order {

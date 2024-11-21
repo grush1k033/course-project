@@ -2,8 +2,12 @@
   <div class="order-left">
     <div class="order-left__title" >Заказ #{{ item }}010-037</div>
     <div class="order-left__button">
-      <div class="order-left__button__title">Заказ принят</div>
-      <div class="order-left__button__icon">i</div>
+      <p-button    [pTooltip]="tooltipContent"  label="Заказ принят" icon="pi pi-check" iconPos="right" />
+      <ng-template #tooltipContent>
+        <div class="flex align-items-center">
+            <span> <b>PrimeNG</b> rocks! <br>dscdscsdcsd <br>vsdvdsvsdv </span>
+        </div>
+    </ng-template>
     </div>
   </div>
   <div class="order-right">
