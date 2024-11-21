@@ -1,7 +1,9 @@
 import {BadRequestException, Body, Controller, Get, Post} from '@nestjs/common';
 import {IUserDto} from "../Interfaces/interfaces";
 import {AuthService} from "./auth.service";
+import { Public } from './public.decorator';
 
+@Public()
 @Controller('auth')
 export class AuthController {
 

@@ -1,6 +1,7 @@
 import {Controller, Get, Param} from '@nestjs/common';
 import {ModelsService} from "./models.service";
-
+import { Public } from '../auth/public.decorator';
+@Public()
 @Controller('models')
 export class ModelsController {
 
