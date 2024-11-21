@@ -15,6 +15,14 @@ export class UserService {
         return dto;
     }
 
+    async getAllUser() {
+        return (await this.databaseService.pool.query(this.commonService.getAll()))[0]
+    }
+
+    async getUser(id: string) {
+        return (await this.databaseService.pool.query(this.commonService.getByID(id)))[0][0]
+    }
+
     async doesUserExist(dto: CheckUserDto): Promise<{isExist: boolean}> {
 
             const user = (await this.databaseService.pool.query(`SELECT * FROM users WHERE email ='${dto.email}'`))[0];

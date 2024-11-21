@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {CheckUserDto, IUserDto} from "../Interfaces/interfaces";
 import {DatabaseService} from "../services/database.service";
@@ -8,11 +8,15 @@ import {CommonService} from "../services/common.service";
 export class UserController {
     constructor(private userService: UserService,private db: DatabaseService, private cm: CommonService) {}
 
+    @Get()
+    async getAllUser() {
+        return await this.userService.getAllUser();
+    }
 
-    // @Get('virtual')
-    // async testVirtual() {
-    //     return await this.db.pool2.query("SELECT * FROM dbo.PersonPhone");
-    // }
+    @Get(':id')
+    async getUser(@Param('id') id: string) {
+        return await this.userService.getUser(id);
+    }
 
     @Post()
     async addUser(@Body() dto: IUserDto) {
