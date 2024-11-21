@@ -109,7 +109,7 @@ export class AddComponent {
     })
   }
 
-  submitForm() {
+  submitForm(edit: boolean = false) {
     const form = this.form.getRawValue();
     const dto: Omit<IAutoPart, 'id'> = {
       name: form.name as string,
@@ -123,11 +123,20 @@ export class AddComponent {
       favourites: 0,
     }
 
-    this.autoPartService.addAutoPart(dto).subscribe(res => {
-      this.setDefaultForm();
-      this.form.markAsUntouched()
-      this.form.markAsPristine()
-    })
+    if(!edit) {
+      this.autoPartService.addAutoPart(dto).subscribe(() => {
+        this.setDefaultForm();
+        this.form.markAsUntouched()
+        this.form.markAsPristine()
+      })
+    } else {
+      this.autoPartService.updateAutoPartAll(dto, +this.id).subscribe(() => {
+        this.setDefaultForm();
+        this.form.markAsUntouched()
+        this.form.markAsPristine()
+      })
+    }
+
 
   }
 
@@ -191,10 +200,6 @@ export class AddComponent {
     const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
 
     return `${formattedSize} ${sizes?.[i]}`;
-  }
-
-  editAutoPart() {
-    console.log(this.form.getRawValue());
   }
 }
 

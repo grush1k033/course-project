@@ -135,7 +135,7 @@
         label='Добавить новый товар' severity="warning" />
     } @else {
       <p-button
-        (onClick)="editAutoPart()"
+        (onClick)="submitForm(true)"
         [disabled]="form.invalid"
         [style]="{width: '100%'}"
         label='Редактировать товар' severity="warning" />

@@ -17,7 +17,6 @@
     }
 
     &__items {
-      background-color: #fafafa;
       width: 100%;
       display: flex;
       padding-top: 14px;
@@ -30,13 +29,15 @@
     &__item {
       border:none;
       cursor: pointer;
-      background: white;
       padding: 16px;
-      width: 310px;
+      width: calc(25% - 10px);
       height: 76px;
       display: flex;
       align-items: center;
       gap: 25px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
       &__image {
         height: 60px;

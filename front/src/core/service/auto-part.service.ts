@@ -54,7 +54,7 @@ export class AutoPartService {
   }
 
   updateAutoPartAll(dto: Omit<IAutoPart, 'id'>, id: number) {
-    return this.httpClient.post<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
+    return this.httpClient.put<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
   }
 
   deleteAutoPart(id: string) {
