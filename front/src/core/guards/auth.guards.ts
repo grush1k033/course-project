@@ -8,12 +8,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  _guardWork = new BehaviorSubject(false);
-  guardWork$ = this._guardWork.asObservable();
-
-  set guardWork(value: boolean) {
-    this._guardWork.next(value);
-  }
   constructor(
     private authService: AuthService,
     private router: Router
@@ -27,7 +21,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return true;
     } else {
       this.router.navigate(['/main']).then()
-      this.guardWork = true;
       return false;
     }
   }

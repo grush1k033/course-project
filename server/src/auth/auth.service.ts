@@ -28,7 +28,7 @@ export class AuthService {
         })
     }
 
-    async login(dto: Omit<IUserDto, 'name'>): Promise<Token> {
+    async login(dto: Omit<IUserDto, 'name'>) {
         const user: IUser  = await this.userService.getUserByEmail(dto.email).catch(err => {
             this.logger.error(err);
             return null;
@@ -47,6 +47,6 @@ export class AuthService {
             isAdmin: user.isAdmin
         });
 
-        return {accessToken};
+        return {id: user.id, accessToken};
     }
 }

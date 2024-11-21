@@ -24,7 +24,7 @@
       <div class="auto-parts__right-content__box-up" [ngClass]="{discount: !item.discount}">
 
       @if(!!item.discount) {
-        <div class="wrapper" [ngClass]="{isAdmin: true}">
+        <div class="wrapper" [ngClass]="{isAdmin}">
           <div class="box-up__discount">
             <div class="box-up__discount__label">-{{ item.discount }}%</div>
             <div class="box-up__discount__info" tooltipPosition="bottom"
@@ -34,7 +34,7 @@
           <div class="box-up__price"><span>{{ item.price }}</span> BYN</div>
         </div>
       }
-      @if(true) {
+      @if(isAdmin) {
         <div class="menu flex align-self-start">
           <p-menu #menu [model]="editMenu" [popup]="true" />
           <p-button size="small" (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>

@@ -13,19 +13,18 @@
       </div>
     }
 
-    @let basket = basketService.basket$ | async;
-    @let len = basket?.length;
-      <div (click)="router.navigate(['cart'])" class="header__basket">
-        <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [badgeDisabled]="!len"
-          [value]="len || 0"></i>
+
+      <div (click)="toCart()" class="header__basket">
+        <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [badgeDisabled]="!authService.isAuth"
+          [value]=" (basketService.basket$ | async)?.length || 0"></i>
         <div class="header__basket__label">Корзина</div>
       </div>
-      <div (click)="router.navigate(['order'])" class="header__order">
-        <i style="font-size: 25px" class="pi pi-list" pBadge [badgeDisabled]="true"
+      <div (click)="toOrder()" class="header__order">
+        <i style="font-size: 25px" class="pi pi-list" pBadge [badgeDisabled]="!authService.isAuth"
            [value]="0"></i>
         <div class="header__basket__label">Заказы</div>
       </div>
-      @if(this.authService.isAuth) {
+      @if(authService.isAuth) {
         <p-avatar routerLink="profile" size="large"
                   image="https://sun9-32.userapi.com/impg/REgaDYC60vK42Mommuw_9z8TASotezEHTHcmTQ/9dbwCdu0xoo.jpg?size=828x1035&quality=95&sign=ef070ef5ff49b7c51277fcd1f8461c2f&type=album"
                   shape="circle" />

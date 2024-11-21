@@ -11,6 +11,7 @@ import {PricePipe} from '../../pipes/price.pipe';
 import {FavouritePipe} from '../../pipes/favourite.pipe';
 import {GarageComponent} from '../garage/garage.component';
 import {BasketService} from '../../service/basket.service';
+import { ProfileService } from '../../service/profile.service';
 
 
 @Component({
@@ -35,11 +36,16 @@ export class AutoPartItemsComponent implements OnInit{
   id: string | null = null;
   rangeValues: number[] = [0, 3000];
   favourite: string = '2';
+  isAdmin = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     public autoPartService: AutoPartService,
+    public userService: ProfileService,
   ) {
     this.id = (this.activatedRoute.snapshot.params as {id: string}).id;
+    this.userService.getUser().subscribe(user => {
+      this.isAdmin = !!user.isAdmin;
+    })
   }
 
 

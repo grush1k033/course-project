@@ -3,6 +3,7 @@ import {UserService} from "./user.service";
 import {CheckUserDto, IUserDto} from "../Interfaces/interfaces";
 import {DatabaseService} from "../services/database.service";
 import {CommonService} from "../services/common.service";
+import { Public } from '../auth/public.decorator';
 
 @Controller('user')
 export class UserController {
@@ -28,6 +29,7 @@ export class UserController {
         return await this.userService.addUser(dto);
     }
 
+    @Public()
     @Post('exists')
     async checkUserExists(@Body() checkUserDto: CheckUserDto): Promise<{isExist: boolean}> {
         return await this.userService.doesUserExist(checkUserDto);

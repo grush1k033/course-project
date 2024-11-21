@@ -21,12 +21,12 @@ import { AuthService } from '../../service/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit, OnDestroy{
+export class HeaderComponent implements OnInit {
   value: string = '';
   visibleRegistration: boolean = false;
   visibleLogin: boolean = false;
   isCartPage: boolean = false;
-  guardWorkSub: Subscription;
+
 
 
   constructor(
@@ -34,7 +34,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
     public basketService: BasketService,
     public router: Router,
     private location: Location,
-    private authGuards: AuthGuard,
     public authService: AuthService
   ) {
     router.events.subscribe((val) => {
@@ -42,13 +41,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.isCartPage = val.url.includes('cart');
       }
     });
-    this.guardWorkSub = this.authGuards.guardWork$.subscribe((res) => {
-      this.visibleLogin = res;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.guardWorkSub.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -65,6 +57,20 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   back() {
     this.location.back();
+  }
+
+  toCart() {
+    if(!this.authService.isAuth) {
+      this.visibleLogin = true;
+    }
+    this.router.navigate(['cart']).then()
+  }
+
+  toOrder() {
+    if(!this.authService.isAuth) {
+      this.visibleLogin = true;
+    }
+    this.router.navigate(['order']).then()
   }
 }
 
