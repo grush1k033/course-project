@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Query} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {CheckUserDto, IUserDto} from "../Interfaces/interfaces";
 import {DatabaseService} from "../services/database.service";
@@ -8,6 +8,11 @@ import {CommonService} from "../services/common.service";
 export class UserController {
     constructor(private userService: UserService,private db: DatabaseService, private cm: CommonService) {}
 
+
+    @Get('mail')
+    async getUserByEmail(@Query('email') email: string) {
+        return await this.userService.getUserByEmail(email);
+    }
     @Get()
     async getAllUser() {
         return await this.userService.getAllUser();
@@ -26,6 +31,11 @@ export class UserController {
     @Post('exists')
     async checkUserExists(@Body() checkUserDto: CheckUserDto): Promise<{isExist: boolean}> {
         return await this.userService.doesUserExist(checkUserDto);
+    }
+
+    @Delete(':id')
+    async deleteUser(@Param('id') id: string) {
+        return await this.userService.deleteUser(id);
     }
 
 }

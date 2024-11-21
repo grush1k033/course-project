@@ -11,6 +11,8 @@ import {BasketModule} from './basket/basket.module';
 import {UserModule} from './user/user.module';
 import {FilesModule} from './files/files.module';
 import {MulterModule} from "@nestjs/platform-express";
+import { AuthModule } from './auth/auth.module';
+import {ConfigModule} from "@nestjs/config";
 
 
 @Module({
@@ -26,7 +28,10 @@ import {MulterModule} from "@nestjs/platform-express";
         MulterModule.register({
             dest: './uploads',
         }),
-        FilesModule],
+        FilesModule,
+        AuthModule,
+        ConfigModule.forRoot({isGlobal: true})
+    ],
     controllers: [AppController],
     providers: [DatabaseService],
 })
