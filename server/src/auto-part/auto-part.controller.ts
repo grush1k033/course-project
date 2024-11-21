@@ -4,12 +4,11 @@ import {DatabaseService} from "../services/database.service";
 import {CommonService} from "../services/common.service";
 import {IAddAutoPartDto} from "../Interfaces/interfaces";
 import { Public } from '../auth/public.decorator';
-
-@Public()
 @Controller('auto-part')
 export class AutoPartController {
 
     constructor(private autoPartService: AutoPartService, private db: DatabaseService, private cm: CommonService) {}
+    @Public()
     @Get()
     async getAllAutoParts(
         @Query('categoryId') categoryId: string,
@@ -17,7 +16,7 @@ export class AutoPartController {
     ) {
         return await this.autoPartService.getAll(categoryId, carsId);
     }
-
+    @Public()
     @Get(':id')
     async getById(@Param('id') id: string) {
         return await this.autoPartService.getById(id);
