@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {OrderItemComponent} from '../order-item/order-item.component';
 import {OrderAutopartItemComponent} from '../order-autopart-item/order-autopart-item.component';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
   selector: 'app-order-item-detail',
@@ -15,7 +16,11 @@ import {OrderAutopartItemComponent} from '../order-autopart-item/order-autopart-
 })
 export class OrderItemDetailComponent {
   id: string;
-  constructor(public activatedRoute: ActivatedRoute) {
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    private profileService: ProfileService
+  ) {
     this.id = (this.activatedRoute.snapshot.params as {id: string}).id;
+    this.profileService.getUser().subscribe();
   }
 }

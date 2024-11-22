@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {OrderItemComponent} from '../order-item/order-item.component';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
   selector: 'app-order-items',
@@ -11,5 +12,7 @@ import {OrderItemComponent} from '../order-item/order-item.component';
   styleUrl: './order-items.component.scss'
 })
 export class OrderItemsComponent {
-
+  constructor(private profileService: ProfileService) {
+    this.profileService.getUser().subscribe();
+  }
 }

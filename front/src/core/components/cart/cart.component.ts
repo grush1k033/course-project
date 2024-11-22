@@ -6,6 +6,7 @@ import { SkeletonModule } from "primeng/skeleton";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import {Button} from 'primeng/button';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
     selector: 'app-cart',
@@ -31,7 +32,9 @@ export class CartComponent {
     constructor(
         private basketService: BasketService,
         private location: Location,
+        private profileService: ProfileService
     ) {
+        this.profileService.getUser().subscribe();
         this.getBasketItems();
     }
 
