@@ -5,11 +5,11 @@ import {FileUploadModule} from 'primeng/fileupload';
 import { DropdownModule } from 'primeng/dropdown';
 import { GarageComponent } from '../../garage/garage.component';
 import {CategoryService, ICategory} from '../../../service/category.service';
-import {AsyncPipe, CommonModule} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {TooltipModule} from 'primeng/tooltip';
 import {ToastModule} from 'primeng/toast';
-import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {BadgeModule} from 'primeng/badge';
 import {ProfileService} from '../../../service/profile.service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -27,7 +27,7 @@ export type Form  = FormGroup<{
   price: FormControl<number | null>,
   amount: FormControl<number | null>,
   discount: FormControl<number | null>,
-  image: FormControl<File | null>
+  image: FormControl<string | null>
 }>
 
 
@@ -40,7 +40,6 @@ export type Form  = FormGroup<{
     FileUploadModule,
     DropdownModule,
     GarageComponent,
-    AsyncPipe,
     InputTextareaModule,
     TooltipModule,
     ToastModule,
@@ -65,6 +64,8 @@ export class AddComponent {
 
   id: string;
 
+  imageSrc = "assets/icons/zaglushka.svg"
+
   constructor(
     public  categoryService: CategoryService,
     public profileService: ProfileService,
@@ -83,7 +84,7 @@ export class AddComponent {
       price: new FormControl(0, Validators.required),
       amount: new FormControl(0, Validators.required),
       discount: new FormControl(0),
-      image: new FormControl(<File>{})
+      image: new FormControl("")
     })
 
     if(this.id) {
@@ -91,6 +92,10 @@ export class AddComponent {
         this.setDefaultForm(item)
       })
     }
+
+    this.form.controls.image.valueChanges.subscribe(res => {
+      console.log(res);
+    })
   }
 
   setDefaultForm(item?: IAutoPart) {
@@ -103,8 +108,39 @@ export class AddComponent {
       price: item ? +item.price : 0,
       amount: item ? item.amount : 0,
       discount: item ? item.discount : 0,
-      image: <File>{}
+      image: item ? item.image : ""
     })
+
+    if(item) {
+      this.imageSrc = item.image.includes("http") ? item.image : 'assets/images/'+ item?.image + '.webp';
+    }
+  }
+
+ 
+  getCategories() {
+    this.categoryService.getAllCategory().subscribe(res => {
+      this.categories = res;
+    })
+  }
+
+  selectedFile:File | null = null;
+
+  onFileSelected(event:any) {
+    this.selectedFile = event.currentFiles[0] as File;
+  }
+
+  uploadFile(){
+    const formData = new FormData();
+    if(this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      this.profileService.addFile(formData).subscribe((res: any) => {
+        if(res.body?.data) {
+          this.form.controls.image.setValue("http://localhost:3000/files/" + res.body.data.filename);
+          this.imageSrc = this.form.controls.image.value as string;
+        }
+      })
+    }
+    
   }
 
   submitForm(edit: boolean = false) {
@@ -115,13 +151,14 @@ export class AddComponent {
       price: (form.price as number).toString(),
       amount: form.amount as number,
       discount: form.discount as number,
-      image: form.image?.name ? 'form.image?.name' : 'null',
+      image: form.image as string,
       category_id: form.category as number,
       cars_id: +(form.model as string),
       favourites: 0,
     }
 
     if(!edit) {
+      
       this.autoPartService.addAutoPart(dto).subscribe(() => {
         this.setDefaultForm();
         this.form.markAsUntouched()
@@ -138,11 +175,6 @@ export class AddComponent {
 
   }
 
-  getCategories() {
-    this.categoryService.getAllCategory().subscribe(res => {
-      this.categories = res;
-    })
-  }
 
   
 

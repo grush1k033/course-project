@@ -12,6 +12,7 @@ export interface IUser {
   email:string;
   password:string;
   isAdmin?: number
+  image?: string
 }
 
 @Injectable({

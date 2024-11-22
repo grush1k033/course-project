@@ -33,7 +33,6 @@ export class AuthInterceptor implements HttpInterceptor {
      })
      return next.handle(authReq).pipe(
        catchError(({ error }) => {
-         console.log(error);
          if(error.statusCode === 401) {
 
             this.auth.logout();

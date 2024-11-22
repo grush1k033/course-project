@@ -49,6 +49,11 @@ export class UserService {
         return (await this.databaseService.pool.query(this.commonService.delete(id)))[0];
     }
 
+    async updateImage(dto: {image: string}, id: string) {
+        await this.databaseService.pool.query(`UPDATE users SET image = '${dto.image}' WHERE id = ${id}`);
+        return (await this.databaseService.pool.query(this.commonService.getByID(id)))[0][0];
+    }
+
     public hashPassword(password: string) {
         const salt: number = +this.configService.get('CRYPT_SALT', 10);
         return hashSync(password, genSaltSync(salt));

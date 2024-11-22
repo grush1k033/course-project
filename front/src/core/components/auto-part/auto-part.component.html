@@ -1,9 +1,10 @@
+<p-toast />
 @if (item) {
   <div class="auto-parts">
     <div class="auto-parts__left-content">
       <div class="auto-parts__left-content__product-image">
         <img
-          [src]="'assets/images/'+ item.image + '.webp'"
+          [src]="imageSrc"
           onerror="src = 'assets/icons/zaglushka.svg'"
           alt="Автозапчасть">
         <div class="article">код А.000000{{ item.id }}</div>

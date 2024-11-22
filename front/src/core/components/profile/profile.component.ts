@@ -27,14 +27,40 @@ import { ProfileService } from '../../service/profile.service';
 })
 export class ProfileComponent {
   user: IUser | null = null;
+  imageProfileSrc = 'assets/icons/zaglushka.svg'
+  selectedFile: File | null = null;
   constructor(
     public router: Router,
     public auth: AuthService,
     public profileService: ProfileService
   ) {
+    this.getUser();
+  }
+
+  getUser() {
     this.profileService.getUser().subscribe(user => {
       this.user = user
     })
+  }
+
+  onSelectedFile(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+    this.uploadFile();
+  }
+
+  uploadFile(){
+    const formData = new FormData();
+    if(this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      this.profileService.addFile(formData).subscribe((res: any) => {
+        if(res.body?.data) {
+          this.imageProfileSrc = "http://localhost:3000/files/" + res.body.data.filename;
+          this.profileService.updateImage(this.imageProfileSrc, this.user?.id as string).subscribe();
+          this.getUser();
+        }
+      })
+    }
+    
   }
 
   navigateToEditProfile() {

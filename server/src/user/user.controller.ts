@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch, Post, Query} from '@nestjs/common';
 import {UserService} from "./user.service";
 import {CheckUserDto, IUserDto} from "../Interfaces/interfaces";
 import {DatabaseService} from "../services/database.service";
@@ -34,6 +34,12 @@ export class UserController {
     async checkUserExists(@Body() checkUserDto: CheckUserDto): Promise<{isExist: boolean}> {
         return await this.userService.doesUserExist(checkUserDto);
     }
+
+    @Patch(':id')
+    async updateImage(@Body() dto: {image: string}, @Param('id') id: string) {
+         return await this.userService.updateImage(dto, id);
+    }
+
 
     @Delete(':id')
     async deleteUser(@Param('id') id: string) {

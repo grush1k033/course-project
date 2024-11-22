@@ -25,9 +25,13 @@
         <div class="header__basket__label">Заказы</div>
       </div>
       @if(authService.isAuth) {
-        <p-avatar routerLink="profile" size="large"
-                  image="https://sun9-32.userapi.com/impg/REgaDYC60vK42Mommuw_9z8TASotezEHTHcmTQ/9dbwCdu0xoo.jpg?size=828x1035&quality=95&sign=ef070ef5ff49b7c51277fcd1f8461c2f&type=album"
-                  shape="circle" />
+        @if(user?.image) {
+          <p-avatar routerLink="profile" size="large"
+          [image]="user?.image"
+          shape="circle" />
+        } @else {
+          <a routerLink="profile" class="avatar">{{user?.name?.[0]}}</a>
+        }        
       } @else {
         <p-button (click)="visibleLogin=true" icon="pi pi-user" [rounded]="true" severity="info" />
       }

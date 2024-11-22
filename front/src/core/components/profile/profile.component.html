@@ -5,13 +5,16 @@
             <div class="part-name">
                 <div class="part-round">
                     <img src="" alt="">
+                    <label for="file-upload" class="custom-file-upload">
+                        <img [src]="user?.image || imageProfileSrc" alt="">
+                    </label>
+                    <input (change)="onSelectedFile($event)" id="file-upload" type="file" />
                 </div>
                 <div class="part-text">
                     <div class="part-text__title">{{user?.name}}<br> {{user?.email}}</div>
                     <div class="part-text__id">Номер профиля - {{user?.id}}</div>
                 </div>
             </div>
-            <a [routerLink]="'/profile/edit'" class="part-link">Изменить профиль</a>
            </div>
            <div class="part-section">
                 <div class="part-section__title">Личные данные</div>

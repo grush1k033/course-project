@@ -2,6 +2,8 @@ import { Controller, Get, Post,UseInterceptors, UploadedFile, UploadedFiles, Res
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../utils/file-upload.utils';
+import { Public } from 'src/auth/public.decorator';
+@Public()
 @Controller('files')
 export class FilesController {
     constructor() {}

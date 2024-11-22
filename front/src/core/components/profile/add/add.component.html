@@ -3,8 +3,22 @@
     [isProfile]="true"
     (onChangeGarage)="changeGarage()"
   ></app-garage>
-
   <div class="input-wrapper">
+    <div class="input-wrapper__image">
+      <img [src]="imageSrc">
+    </div>
+    <div class="card flex justify-content-center">
+      <p-fileUpload 
+          mode="basic" 
+          chooseLabel="Choose" 
+          chooseIcon="pi pi-upload"
+          name="demo[]" 
+          accept="image/*" 
+          maxFileSize="1000000" 
+          (onSelect)="onFileSelected($event)"
+          (onBeforeUpload)="uploadFile()"
+        />
+    </div>
     <div class="flex flex-column gap-2">
       <label for="name">Введите название автозапчасти</label>
       <input
@@ -74,8 +88,6 @@
         />
       </div>
     </div>
-
-    <input type="file" (change)="onFileSelected($event)">
 
     @if(!id) {
       <p-button

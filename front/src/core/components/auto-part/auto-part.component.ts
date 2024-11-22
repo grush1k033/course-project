@@ -12,25 +12,27 @@ import {Button} from 'primeng/button';
 import {VisibleImgDirective} from '../../directive/visible-img.directive';
 import {TooltipModule} from 'primeng/tooltip';
 import {BasketService, IBasket} from '../../service/basket.service';
-import {Subscription} from 'rxjs';
-import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
+import {catchError, Subscription, throwError} from 'rxjs';
+import {MenuItem, MessageService} from 'primeng/api';
 import {MenuModule} from 'primeng/menu';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {Router} from '@angular/router';
-import { ProfileService } from '../../service/profile.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-auto-part',
   standalone: true,
-  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, MenuModule, NgClass, AsyncPipe],
+  imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, MenuModule, NgClass, ToastModule],
   templateUrl: './auto-part.component.html',
-  styleUrl: './auto-part.component.scss'
+  styleUrl: './auto-part.component.scss',
+  providers: [MessageService]
 })
 export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() item: IAutoPart | null = null;
   @Output() onUpdateFavourite = new EventEmitter<boolean>();
   selectAmount: number = 1;
   likeSrc = "assets/icons/like-empty.svg";
+  imageSrc = 'assets/icons/zaglushka.svg'
   basket: IBasket[] | null = null;
   basketSub: Subscription | null = null;
   editMenu: MenuItem[] = [
@@ -59,6 +61,7 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
     private autoPartService: AutoPartService,
     private basketService: BasketService,
     private router: Router,
+    private messageService: MessageService,
   ) {
 
   }
@@ -76,6 +79,16 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
     this.likeSrc = (this.item && this.item?.favourites)
       ? "assets/icons/like.svg"
       : "assets/icons/like-empty.svg";
+      this.setImageSrc()
+  }
+
+  setImageSrc() {
+    console.log(this.item?.image)
+    if(this.item?.image.includes('http')) {
+      this.imageSrc = this.item.image;
+    } else {
+      this.imageSrc = 'assets/images/'+ this.item?.image + '.webp'
+    }
   }
 
   editAutoPart() {
@@ -135,9 +148,20 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   addToBasket(id: number) {
-    let amount = this.selectAmount;
-    this.basketService.addBasket(id, amount).subscribe(() => {
-      this.basketService.getBasket().subscribe();
-    })
+    if(!this.isInBasket) {
+      let amount = this.selectAmount;
+      this.basketService.addBasket(id, amount).pipe(
+        catchError(({ error }) => {
+            if(error.statusCode === 401) {
+                this.messageService.add({ severity: 'warning', summary: '', detail: 'Авторизуйтесь' });
+            }
+            return throwError(error)
+          })
+        )
+        .subscribe(() => {
+        this.basketService.getBasket().subscribe();
+      })
+    }
+  
   }
 }

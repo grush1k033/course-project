@@ -36,4 +36,8 @@ export class ProfileService {
   getUser() {
     return this.http.get<IUser>('http://localhost:3000/user/' + this.localStorage.get(USER_ID))
   }
+
+  updateImage(image: string, id: string) {
+    return this.http.patch<IUser>('http://localhost:3000/user/' + id, {image});
+  }
 }

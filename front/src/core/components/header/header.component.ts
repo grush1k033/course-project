@@ -10,9 +10,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { RegistrationModalComponent } from "../registration-modal/registration-modal.component";
 import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { Button } from 'primeng/button';
-import { AuthGuard } from '../../guards/auth.guards';
-import { Observable, Subscription } from 'rxjs';
-import { AuthService } from '../../service/auth.service';
+import { AuthService, IUser } from '../../service/auth.service';
+import { ProfileService } from '../../service/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -26,15 +25,15 @@ export class HeaderComponent implements OnInit {
   visibleRegistration: boolean = false;
   visibleLogin: boolean = false;
   isCartPage: boolean = false;
-
-
+  user: IUser | null = null;
 
   constructor(
     private autoPartService: AutoPartService,
     public basketService: BasketService,
     public router: Router,
     private location: Location,
-    public authService: AuthService
+    public authService: AuthService,
+    private profileService: ProfileService
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -45,6 +44,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBasket()
+    this.getUser();
+  }
+
+  getUser() {
+    this.profileService.getUser().subscribe(user => {
+      this.user = user
+    })
   }
 
   changeSearch() {
