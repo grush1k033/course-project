@@ -13,11 +13,13 @@ import {VisibleImgDirective} from '../../directive/visible-img.directive';
 import {TooltipModule} from 'primeng/tooltip';
 import {BasketService, IBasket} from '../../service/basket.service';
 import {catchError, Subscription, throwError} from 'rxjs';
-import {MenuItem, MessageService} from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import {MenuModule} from 'primeng/menu';
 import { NgClass } from '@angular/common';
 import {Router} from '@angular/router';
 import { ToastModule } from 'primeng/toast';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DeleteConfirmModalComponent } from '../modals/delete-confirm-modal/delete-confirm-modal.component';
 
 @Component({
   selector: 'app-auto-part',
@@ -25,7 +27,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [DropdownModule, FormsModule, Button, VisibleImgDirective, TooltipModule, MenuModule, NgClass, ToastModule],
   templateUrl: './auto-part.component.html',
   styleUrl: './auto-part.component.scss',
-  providers: [MessageService]
+  providers: [MessageService, DialogService]
 })
 export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() item: IAutoPart | null = null;
@@ -49,7 +51,7 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
           label: 'Удалить',
           icon: 'pi pi-trash',
           iconClass: 'delete',
-          command: this.deleteAutoPart.bind(this)
+          command: this.show.bind(this)
         }
       ]
     }
@@ -62,6 +64,7 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
     private basketService: BasketService,
     private router: Router,
     private messageService: MessageService,
+    public dialogService: DialogService,
   ) {
 
   }
@@ -80,6 +83,10 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
       ? "assets/icons/like.svg"
       : "assets/icons/like-empty.svg";
       this.setImageSrc()
+
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   setImageSrc() {
@@ -153,7 +160,7 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
       this.basketService.addBasket(id, amount).pipe(
         catchError(({ error }) => {
             if(error.statusCode === 401) {
-                this.messageService.add({ severity: 'warning', summary: '', detail: 'Авторизуйтесь' });
+              this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Авторизуйтесь' });
             }
             return throwError(error)
           })
@@ -162,6 +169,25 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
         this.basketService.getBasket().subscribe();
       })
     }
-  
+  }
+
+  ref: DynamicDialogRef | undefined;
+
+  show() {
+    this.ref = this.dialogService.open(DeleteConfirmModalComponent, {
+      header: 'Вы действительно ходите удалить товар?',
+      width: '30vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+    });
+
+    this.ref.onClose.subscribe((data?: {delete: boolean}) => {
+      if(data?.delete) {
+        this.deleteAutoPart();
+      }
+    })
   }
 }

@@ -1,0 +1,11 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+}

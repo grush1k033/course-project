@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { USER_ID } from '../constants';
 import { IUser } from './auth.service';
+import { IBasket } from './basket.service';
 
 export interface IUploadFileResponse {
   status: number,
@@ -19,6 +20,11 @@ export interface IUploadFileData {
   providedIn: 'root'
 })
 export class ProfileService {
+  private _user = new BehaviorSubject<IUser>(<IUser>{});
+  user$ = this._user.asObservable();
+  set user(value: IUser) {
+    this._user.next(value);
+  }
 
   constructor(
     private http: HttpClient,
@@ -35,6 +41,9 @@ export class ProfileService {
 
   getUser() {
     return this.http.get<IUser>('http://localhost:3000/user/' + this.localStorage.get(USER_ID))
+      .pipe(
+        tap((user) => this.user = user)
+      )
   }
 
   updateImage(image: string, id: string) {

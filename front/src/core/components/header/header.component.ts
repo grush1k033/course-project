@@ -12,6 +12,7 @@ import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { Button } from 'primeng/button';
 import { AuthService, IUser } from '../../service/auth.service';
 import { ProfileService } from '../../service/profile.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -20,13 +21,13 @@ import { ProfileService } from '../../service/profile.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   value: string = '';
   visibleRegistration: boolean = false;
   visibleLogin: boolean = false;
   isCartPage: boolean = false;
   user: IUser | null = null;
-
+  userSub: Subscription | null = null;
   constructor(
     private autoPartService: AutoPartService,
     public basketService: BasketService,
@@ -42,14 +43,18 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.userSub?.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.getBasket()
     this.getUser();
   }
 
   getUser() {
-    this.profileService.getUser().subscribe(user => {
-      this.user = user
+    this.userSub = this.profileService.user$.subscribe(user => {
+      this.user = user;
     })
   }
 

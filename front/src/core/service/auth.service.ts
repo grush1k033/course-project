@@ -4,6 +4,7 @@ import {LocalStorageService} from './local-storage.service';
 import { Observable, tap } from 'rxjs';
 import { TOKEN, USER_ID } from '../constants';
 import { BasketService } from './basket.service';
+import { ProfileService } from './profile.service';
 
 
 export interface IUser {
@@ -23,7 +24,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private localStorage: LocalStorageService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private profileService: ProfileService
   ) {}
 
   checkLogin(name:string):Observable<{isExist: boolean}> {
@@ -37,6 +39,7 @@ export class AuthService {
           this.localStorage.set(TOKEN, token.accessToken);
           this.localStorage.set(USER_ID, token.id);
           this.basketService.getBasket().subscribe()
+          this.profileService.getUser().subscribe()
         })
       )
   }
