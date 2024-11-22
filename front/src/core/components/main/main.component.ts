@@ -12,6 +12,7 @@ import {LocalStorageService} from '../../service/local-storage.service';
 import {LOCAL_STORAGE_KEY_CAR_MARK, LOCAL_STORAGE_KEY_CAR_MODEL} from '../../constants';
 import {HttpClient} from '@angular/common/http';
 import {GarageComponent} from '../garage/garage.component';
+import { ProfileService } from '../../service/profile.service';
 
 
 @Component({
@@ -31,8 +32,10 @@ export class MainComponent{
   categories$: Observable<ICategory[]> | null;
   constructor(
     public categoryService: CategoryService,
+    private profileService: ProfileService,
     private router: Router,
   ) {
+    this.profileService.getUser().subscribe()
     this.categories$ = this.categoryService.getAllCategory();
   }
 

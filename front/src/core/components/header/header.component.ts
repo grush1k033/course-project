@@ -48,13 +48,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getBasket()
-    this.getUser();
+    if(this.authService.isAuth) {
+      this.getUser();
+    }
+
   }
 
   getUser() {
     this.userSub = this.profileService.user$.subscribe(user => {
       this.user = user;
+      this.getBasket()
     })
   }
 

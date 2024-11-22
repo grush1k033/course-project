@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, tap} from 'rxjs';
+import { ProfileService } from './profile.service';
+import { LocalStorageService } from './local-storage.service';
+import { USER_ID } from '../constants';
 
 export interface IBasket {
   id: string;
@@ -36,14 +39,19 @@ export class BasketService {
   set basket(value: IBasket[]) {
     this._basket.next(value);
   }
+  constructor(
+    private http: HttpClient,
+    private localStorage: LocalStorageService
+  ) {
 
-  userId = 1;
-  constructor(private http: HttpClient) {}
+  }
 
   getBasket() {
-    return this.http.get<IBasket[]>(`http://localhost:3000/basket/${this.userId}`)
+    return this.http.get<IBasket[]>(`http://localhost:3000/basket/${this.localStorage.get(USER_ID)}`)
       .pipe(
-        tap(res => {this.basket = res})
+        tap(res => {
+          this.basket = res
+        })
       );
   }
 
@@ -51,13 +59,13 @@ export class BasketService {
     const dto:IBasketDto = {
       countAutoparts: count,
       AutopartId: id,
-      UserId: this.userId,
+      UserId: +this.localStorage.get(USER_ID),
     }
     return this.http.post<IBasket>('http://localhost:3000/basket', dto);
   }
-  
+
   getBasketItems(){
-    return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.userId}`)
+    return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.localStorage.get(USER_ID)}`)
   }
 
   deleteItem(id: number) {
@@ -68,7 +76,7 @@ export class BasketService {
     const dto:{countAutoparts: number} = {
       countAutoparts: count
     }
-    return this.http.patch<typeof dto>(`http://localhost:3000/basket/${id}?UserId=${this.userId}`, dto);
+    return this.http.patch<typeof dto>(`http://localhost:3000/basket/${id}?UserId=${this.localStorage.get(USER_ID)}`, dto);
   }
 
   getPrice(price: string, discount: number) {
