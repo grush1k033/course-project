@@ -25,16 +25,27 @@ export class BasketController {
       return await this.basketService.deleteBasket(id);
     }
 
+    @Delete('item/:id')
+    async deleteItemBasket(@Param('id') id: string) {
+        return await this.basketService.deleteItemBasket(id);
+    }
+
+
     @Get('/items/:id') 
     async getBasketItems(@Param('id') id: string) {
         return await this.basketService.getBasketItems(id);
+    }
+
+    @Get('all/items')
+    async getBasketItemsAll() {
+        return await this.basketService.getBasketItemsAll();
     }
 
     @Patch(':id')
     async updateAmount(@Param('id') id: number, @Body() dto:{countAutoparts: number}, @Query('UserId') UserId: number,) {
         return await this.basketService.updateAmount(dto, id, UserId);
     }
-    
+
 }
 
 

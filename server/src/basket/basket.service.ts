@@ -42,6 +42,11 @@ export class BasketService {
         return res[0];
     }
 
+  async getBasketItemsAll() {
+    const res = await this.databaseService.pool.query("SELECT * FROM baskets");
+    return res[0];
+  }
+
     async deleteBasket(id: string) {
         return this.databaseService.pool.query(this.commonService.delete(id));
     }
@@ -49,5 +54,13 @@ export class BasketService {
     async updateAmount(dto:{countAutoparts: number}, id:number, UserId: number) {
         const res = await this.databaseService.pool.query(`UPDATE baskets SET countAutoparts = ${dto.countAutoparts} WHERE id = ${id} and UserId = ${UserId}`);
         return res;
+    }
+
+    async deleteItemBasket(id: string) {
+      const res = (await this.databaseService.pool.query(`SELECT * FROM baskets WHERE AutopartId = ${id}`))[0] as IBasket[];
+
+      res.forEach(({id}) => {
+        this.databaseService.pool.query(this.commonService.delete(id.toString()))
+      })
     }
 }
