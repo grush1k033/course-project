@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, tap} from 'rxjs';
-import { ProfileService } from './profile.service';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { USER_ID } from '../constants';
 
@@ -28,6 +27,12 @@ export interface IBasketItems {
   amount: number;
   discount:number;
   favourites: number
+}
+
+export interface MailDto {
+  link: string,
+  orderNumber: string,
+  mail: string
 }
 
 @Injectable({
@@ -81,5 +86,9 @@ export class BasketService {
 
   getPrice(price: string, discount: number) {
     return (+price * (1 - ((discount as number) / 100))).toFixed(2);
-}
+  }
+
+  sendMail(dto: MailDto): Observable<{message: string}> {
+    return this.http.post<{message: string}>("http://localhost:3000/mail", dto)
+  }
 }

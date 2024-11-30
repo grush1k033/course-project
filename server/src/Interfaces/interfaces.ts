@@ -34,14 +34,14 @@ export interface IAutoPart {
 export type IAddAutoPartDto = Omit<IAutoPart, 'id'>
 
 export interface IBasket {
-    id:number;
-    autoPart_id:number;
+    id: number;
+    autoPart_id: number;
     user_id: number;
 }
 
 export interface IBasketDto {
     countAutoparts: number;
-    AutopartId:number;
+    AutopartId: number;
     UserId: number;
 }
 
@@ -54,17 +54,30 @@ export interface ICategory {
 export interface IUser {
     id: number;
     name: string;
-    email:string;
-    password:string;
-    isAdmin:string;
+    email: string;
+    password: string;
+    isAdmin: string;
 }
 
 export interface IUserDto {
     name: string;
-    email:string;
-    password:string;
+    email: string;
+    password: string;
 }
 
 export interface CheckUserDto {
     email: string;
+}
+
+export interface MailDto {
+    link: string,
+    orderNumber: string,
+    mail: string
+}
+
+export interface OrderDto {
+    timeOfDelivery: string, 
+    countAutoparts: number, 
+    UserId: number, 
+    isConfirmed: boolean
 }

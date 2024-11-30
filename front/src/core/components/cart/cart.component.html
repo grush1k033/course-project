@@ -1,3 +1,4 @@
+<p-toast />
 <div class="container">
 <div class="items">
   @for(item of basketItems; track item.basket_id) {
@@ -36,13 +37,12 @@
         <label class="wrap-buttons__phone-title" [ngClass]="{error: email['touched'] && email.invalid}">Введите email*</label>
         <input type="email" name="email"
           [formControl]="email"
-          value
           placeholder="Введите email"
-          maxlength="19"
           style="text-align: center;">
       </div>
       <div class="wrap-buttons__order-button">
         <p-button
+          (onClick)="sendMail('12312312312312')"
           [style]="{width: '100%',}"
           label="Заказать"
           severity='warning'

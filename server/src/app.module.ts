@@ -16,16 +16,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { MailerModule, MailerOptions } from '@nestjs-modules/mailer';
-import { config } from 'process';
-import { audit } from 'rxjs';
 import { AppService } from './app.service';
+import { OrderModule } from './order/order.module';
 const mailerOptions = (config: ConfigService) : MailerOptions => ({
   transport: {
-    host: config.get('SMTP_HOST') || "smtp.gmail.com",
+    host: config.get('SMTP_HOST'),
     auth: {
-      user: config.get('SMTP_USER') || 'grushevskiy.yevgeniy@gmail.com',
-      pass: config.get('SMTP_PASSWORD') || 'Unypyrebe333kdk@m@'
-    }
+      user: config.get('SMTP_USER'),
+      pass: config.get('SMTP_PASSWORD')
+    },
   }
 })
 
@@ -48,6 +47,7 @@ export const options = () => ({
     MulterModule.register({
       dest: './uploads',
     }),
+    OrderModule,
     FilesModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),

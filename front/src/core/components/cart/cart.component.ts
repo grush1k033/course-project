@@ -7,6 +7,8 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import { ButtonModule } from 'primeng/button';
 import {Button} from 'primeng/button';
 import { ProfileService } from '../../service/profile.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: 'app-cart',
@@ -18,8 +20,10 @@ import { ProfileService } from '../../service/profile.service';
     FormsModule,
     ButtonModule,
     Button,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule
   ],
+  providers: [MessageService],
     templateUrl: './cart.component.html',
     styleUrl: './cart.component.scss',
 })
@@ -32,7 +36,8 @@ export class CartComponent {
     constructor(
         private basketService: BasketService,
         private location: Location,
-        private profileService: ProfileService
+        private profileService: ProfileService,
+        private messageService: MessageService,
     ) {
         this.profileService.getUser().subscribe();
         this.getBasketItems();
@@ -70,6 +75,20 @@ export class CartComponent {
 
     updateItem() {
         this.getBasketItems();
+    }
+
+    sendMail(orderNumber: string) {
+        this.basketService.sendMail({
+            link: `http://localhost:3000/order/${orderNumber}`,
+            mail: this.email.value as string,
+            orderNumber
+        }).subscribe(res => {
+            if(res.message) {
+                this.email.setValue("");
+                this.email.markAsUntouched();
+                this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Вам отправлено письмо на почту для подтверждения заказа!' });
+            }
+        })
     }
 
 }
