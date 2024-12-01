@@ -2,7 +2,7 @@
   <div class="order-auto-part-wrap">
     <div class="order-autopart-left">
       <div class="image-wrap">
-        <img [src]="imageSrc" alt="">
+        <img [src]="imageSrc" alt="" onerror="src = 'assets/icons/zaglushka.svg'">
       </div>
       <div class="order-autopart-content">
         <div class="order-autopart-content__description">{{orderAutoPart?.description}} </div>

@@ -9,6 +9,8 @@
     flex-direction: column;
     gap: 16px;
 
+
+
     overflow-y: scroll;
     height: calc(100vh - 332px);
     margin-bottom: 20px;
@@ -23,6 +25,12 @@
       background-color: lightgray;    /* цвет плашки */
       border-radius: 20px;       /* закругления плашки */
       border: 3px solid #fafafa;  /* padding вокруг плашки */
+    }
+
+    &.history {
+      height: fit-content;
+      margin-bottom: 0;
+      overflow: auto;
     }
   }
 

@@ -34,9 +34,12 @@ export class OrderItemComponent implements OnChanges {
   }
 
   navigateToDetail() {
-    this.router.navigate(['order', this.item?.id], {
-      queryParams: {isConfirmed: this.item?.isConfirmed, history: this.history}
-    })
+    if(!this.history) {
+      this.router.navigate(['order', this.item?.id], {
+        queryParams: {isConfirmed: this.item?.isConfirmed}
+      })
+    }
+   
   }
 
 }

@@ -6,16 +6,15 @@
         <p-button label="Заказ завершен" icon="pi pi-check" [severity]="'success'" iconPos="right" />
       } @else {
         @if(item?.isConfirmed) {
-          <p-button    [pTooltip]="tooltipContent1"  label="Заказ принят" icon="pi pi-check" iconPos="right" />
+          <p-chip  [style]="{background: '#3B82F6', color: '#fff'}"  [pTooltip]="tooltipContent1"  label="Заказ принят" icon="pi pi-check" iconPos="right" />
         } @else {
           <p-chip [pTooltip]="tooltipContent2" label="Заказ ожидает подтверждения" />
         }
       }
-    
-      
+  
       <ng-template #tooltipContent1>
         <div class="flex align-items-center">
-            <span> <b>PrimeNG</b> rocks! <br>dscdscsdcsd <br>vsdvdsvsdv </span>
+            <span> Ожидайте получения заказа</span>
         </div>
       </ng-template>
       <ng-template #tooltipContent2>

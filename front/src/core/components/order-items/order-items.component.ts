@@ -5,14 +5,18 @@ import { IOrder, OrderService } from '../../service/order.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AccordionModule } from 'primeng/accordion';
+import { OrderItemDetailComponent } from "../order-item-detail/order-item-detail.component";
 
 @Component({
   selector: 'app-order-items',
   standalone: true,
   imports: [
     OrderItemComponent,
-    CommonModule
-  ],
+    CommonModule,
+    AccordionModule,
+    OrderItemDetailComponent
+],
   templateUrl: './order-items.component.html',
   styleUrl: './order-items.component.scss'
 })
@@ -22,6 +26,7 @@ export class OrderItemsComponent implements OnInit {
   total: number = 0;
   countProduct: string = '';
   page: 'order' | 'orders-history' = 'order';
+  
 
   constructor(private profileService: ProfileService, private orderService: OrderService, private router: Router) {
     this.profileService.getUser().subscribe();

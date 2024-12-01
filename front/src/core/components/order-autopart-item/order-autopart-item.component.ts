@@ -14,19 +14,21 @@ import { IOrderAutopart } from '../../service/order.service';
 export class OrderAutopartItemComponent implements OnChanges {
   @Input() orderAutoPart: IOrderAutopart | null = null;
   isConfirmed;
-  history;
+  @Input() history: boolean = false;
   imageSrc = 'assets/icons/zaglushka.svg';
   totalPrice: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.isConfirmed = !!+this.activatedRoute.snapshot.queryParams["isConfirmed"]; 
-    this.history = this.activatedRoute.snapshot.queryParams["history"] === 'true'; 
   }
  
   ngOnChanges(): void {
     this.setImageSrc();
     if(this.orderAutoPart) {
       this.totalPrice = +(+this.orderAutoPart.price* +this.orderAutoPart.count).toFixed(2);
+      if(this.history) {
+        this.isConfirmed = this.history;
+      }
     }
     
   }

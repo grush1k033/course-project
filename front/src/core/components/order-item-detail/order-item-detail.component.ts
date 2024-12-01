@@ -1,25 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderAutopartItemComponent} from '../order-autopart-item/order-autopart-item.component';
 import { ProfileService } from '../../service/profile.service';
 import { IOrderAutopart, OrderService } from '../../service/order.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DeleteConfirmModalComponent } from '../modals/delete-confirm-modal/delete-confirm-modal.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-item-detail',
   standalone: true,
   imports: [
-    OrderAutopartItemComponent
+    OrderAutopartItemComponent, CommonModule
   ],
   templateUrl: './order-item-detail.component.html',
   styleUrl: './order-item-detail.component.scss',
   providers: [DialogService]
 })
-export class OrderItemDetailComponent {
+export class OrderItemDetailComponent implements OnChanges {
   id: string;
   ordersAutoparts: IOrderAutopart[] = [];
   total: number = 0;
+  @Input() history: boolean = false;
+  @Input() set idOrder(id: string) {
+    if(id) this.id = id;
+  }
+
   constructor(
     public activatedRoute: ActivatedRoute,
     private profileService: ProfileService,
@@ -29,7 +35,15 @@ export class OrderItemDetailComponent {
   ) {
     this.id = (this.activatedRoute.snapshot.params as {id: string}).id;
     this.profileService.getUser().subscribe();
-    this.getOrdersAutoparts(this.id);
+    if(!this.history) {
+      this.getOrdersAutoparts(this.id);
+    }
+  }
+
+  ngOnChanges(): void {
+    if(history) {
+      this.getOrdersAutoparts(this.id);
+    }
   }
 
   getOrdersAutoparts(id: string) {

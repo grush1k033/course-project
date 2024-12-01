@@ -65,7 +65,7 @@ export const routes: Routes = [
       },
       {
         path: 'orders-history',
-        component: OrderItemsComponent
+        component: OrderItemsComponent,
       },
       {
         path: 'favorite',

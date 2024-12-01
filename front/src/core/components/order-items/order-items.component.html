@@ -1,27 +1,45 @@
 <div class="container">
   @if(page === 'order') {
-    <h1>Заказы</h1>
-  }
+  <h1>Заказы</h1>
 
-
-  <div class="items" [ngClass]="{history: page === 'orders-history'}">
+  <div class="items">
     @for(item of orders; track item) {
-      <app-order-item [history]="page === 'orders-history'" [item]="item"></app-order-item>
+    <app-order-item [item]="item"></app-order-item>
     } @empty {
-      <div class="empty">
-        <img src="assets/images/no-favourite.png" alt="">
-        <h2>Заказов пока нет</h2>
-      </div>
+    <div class="empty">
+      <img src="assets/images/no-favourite.png" alt="">
+      <h2>Заказов пока нет</h2>
+    </div>
     }
   </div>
-  @if(page === 'order') {
-    <div class="items-total">
-      <div class="divider"></div>
-      <div class="total">Всего {{countProduct}} на сумму {{total}} BYN</div>
-      <div class="divider"></div>
+  }
+
+  @if(page === 'orders-history') {
+    <div class="items" [ngClass]="{history: page === 'orders-history'}">
+      <p-accordion class="w-full" expandIcon="pi pi-plus" collapseIcon="pi pi-minus">
+        @for(item of orders; track item) {
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <app-order-item [history]="page === 'orders-history'" [item]="item"></app-order-item>
+          </ng-template>
+          <app-order-item-detail [idOrder]="item.id" [history]="true"></app-order-item-detail>
+        </p-accordionTab>
+        } @empty {
+        <div class="empty">
+          <img src="assets/images/no-favourite.png" alt="">
+          <h2>Заказов пока нет</h2>
+        </div>
+        }
+      </p-accordion>
     </div>
   }
 
+  @if(page === 'order') {
+  <div class="items-total">
+    <div class="divider"></div>
+    <div class="total">Всего {{countProduct}} на сумму {{total}} BYN</div>
+    <div class="divider"></div>
+  </div>
+  }
+
 </div>
-
-
