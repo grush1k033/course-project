@@ -12,6 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputIconModule } from 'primeng/inputicon';
 import { AuthService, IUser } from '../../service/auth.service';
+import { catchError, throwError } from 'rxjs';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 type TypeForm = FormGroup<{
   email: FormControl<string | null>,
@@ -30,9 +33,10 @@ interface IPasswordError {
 @Component({
   selector: 'app-login-modal',
   standalone: true,
-  imports: [PasswordModule, CommonModule, DividerModule, ButtonModule, DialogModule, AvatarModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, InputIconModule],
+  imports: [PasswordModule, CommonModule, DividerModule, ButtonModule, DialogModule, AvatarModule, ReactiveFormsModule, InputTextModule, FloatLabelModule,  ToastModule, InputIconModule],
   templateUrl: './login-modal.component.html',
-  styleUrl: './login-modal.component.scss'
+  styleUrl: './login-modal.component.scss',
+  providers: [MessageService],
 })
 export class LoginModalComponent {
   form: TypeForm;
@@ -40,7 +44,7 @@ export class LoginModalComponent {
   @Output() onHide = new EventEmitter<boolean>()
   @Output() onNavigateToRegistration = new EventEmitter<boolean>()
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService,     private messageService: MessageService,) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email], loginValidator(this.auth, true)),
       password: new FormControl('', [Validators.required, passwordValidator()]),
@@ -82,7 +86,15 @@ export class LoginModalComponent {
       email: email as string,
       password: password as string
     }
-    this.auth.login(dto).subscribe(() => {
+    this.auth.login(dto).pipe(
+      catchError(({ error }) => {
+        if(error.statusCode === 401) {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Введен неверный логин или пароль!' });
+          this.form.controls.password.setValue('');
+        }
+        return throwError(error)
+      })
+    ).subscribe(() => {
       this.onHide.next(false);
     })
   }
