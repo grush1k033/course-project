@@ -1,9 +1,29 @@
 .container {
+
+  h1 {
+    margin-left: 24px;
+  }
   .items {
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    overflow-y: scroll;
+    height: calc(100vh - 332px);
+    margin-bottom: 20px;
+  
+    &::-webkit-scrollbar {
+      width: 12px;               /* ширина scrollbar */
+    }
+    &::-webkit-scrollbar-track {
+      background: white;        /* цвет дорожки */
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: lightgray;    /* цвет плашки */
+      border-radius: 20px;       /* закругления плашки */
+      border: 3px solid #fafafa;  /* padding вокруг плашки */
+    }
   }
 
   .items-total {

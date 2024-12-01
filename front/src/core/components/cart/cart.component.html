@@ -4,9 +4,10 @@
   @for(item of basketItems; track item.basket_id) {
     <app-cart-item (onDelete) = "deleteBasketItem($event)" (onUpdate)="updateItem()" [baketItem]="item"></app-cart-item>
   } @empty {
-    @for(item of [1,2,3,4]; track item) {
-      <p-skeleton width="100%" height="152px"></p-skeleton>
-    }
+    <div class="empty">
+      <img src="assets/images/cart-empty.png" alt="">
+      <h2>Ваша корзина пуста</h2>
+    </div>
   }
 </div>
 <div class="total">
@@ -42,7 +43,7 @@
       </div>
       <div class="wrap-buttons__order-button">
         <p-button
-          (onClick)="sendMail('12312312312312')"
+          (onClick)="orderHandler()"
           [style]="{width: '100%',}"
           label="Заказать"
           severity='warning'

@@ -1,29 +1,37 @@
-<div (click)="router.navigate(['order', item])" class="order">
+<div (click)="navigateToDetail()" class="order">
   <div class="order-left">
-    <div class="order-left__title" >Заказ #{{ item }}010-037</div>
+    <div class="order-left__title" >Заказ #{{item?.id}}-0{{item?.id}}</div>
     <div class="order-left__button">
-      <p-button    [pTooltip]="tooltipContent"  label="Заказ принят" icon="pi pi-check" iconPos="right" />
-      <ng-template #tooltipContent>
+      @if(history) {
+        <p-button label="Заказ завершен" icon="pi pi-check" [severity]="'success'" iconPos="right" />
+      } @else {
+        @if(item?.isConfirmed) {
+          <p-button    [pTooltip]="tooltipContent1"  label="Заказ принят" icon="pi pi-check" iconPos="right" />
+        } @else {
+          <p-chip [pTooltip]="tooltipContent2" label="Заказ ожидает подтверждения" />
+        }
+      }
+    
+      
+      <ng-template #tooltipContent1>
         <div class="flex align-items-center">
             <span> <b>PrimeNG</b> rocks! <br>dscdscsdcsd <br>vsdvdsvsdv </span>
         </div>
-    </ng-template>
+      </ng-template>
+      <ng-template #tooltipContent2>
+        <div class="flex align-items-center">
+            <span> Вам на почту отправлено письмо, зайдите и подтвердите заказ. </span>
+        </div>
+      </ng-template>
     </div>
   </div>
   <div class="order-right">
     <div class="divider"></div>
     <div class="actions">
       <div class="actions__count-other">
-        <div class="actions__count-other__count">5 товаров</div>
-        <div class="actions__count-other__other">
-          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 10.5C5.17157 10.5 4.5 11.1716 4.5 12C4.5 12.8284 5.17157 13.5 6 13.5C6.82843 13.5 7.5 12.8284 7.5 12C7.5 11.1716 6.82843 10.5 6 10.5Z" fill="#000000"/>
-            <path d="M10.5 12C10.5 11.1716 11.1716 10.5 12 10.5C12.8284 10.5 13.5 11.1716 13.5 12C13.5 12.8284 12.8284 13.5 12 13.5C11.1716 13.5 10.5 12.8284 10.5 12Z" fill="#000000"/>
-            <path d="M16.5 12C16.5 11.1716 17.1716 10.5 18 10.5C18.8284 10.5 19.5 11.1716 19.5 12C19.5 12.8284 18.8284 13.5 18 13.5C17.1716 13.5 16.5 12.8284 16.5 12Z" fill="#000000"/>
-          </svg>
-        </div>
+        <div class="actions__count-other__count">{{countProducts}}</div>
       </div>
-      <div class="actions__price">204.50 BYN</div>
+      <div class="actions__price">{{item?.total}} BYN</div>
     </div>
   </div>
 </div>

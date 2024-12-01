@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Button } from 'primeng/button';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-delete-confirm-modal',
@@ -13,9 +13,12 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   providers: [DialogService]
 })
 export class DeleteConfirmModalComponent {
-
-  constructor(private ref: DynamicDialogRef) {
+  order: boolean = false;
+  constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+    this.order = config?.data?.order || false;
   }
+
+  
 
   close() {
     this.ref.close()

@@ -2,23 +2,31 @@
   <div class="order-auto-part-wrap">
     <div class="order-autopart-left">
       <div class="image-wrap">
-        <img width="84px" src="../../../assets/images/autopart29_1.webp" alt="">
+        <img [src]="imageSrc" alt="">
       </div>
       <div class="order-autopart-content">
-        <div class="order-autopart-content__description">Airline AN-M-01 - Салфетки влажные для стеклянных поверхностей  {{ orderAutoPart }}</div>
-        <div class="order-autopart-content__button">
-          <div class="order-autopart-content__button__title">Принят</div>
-          <div class="order-autopart-content__button__icon">i</div>
-        </div>
-        <div class="order-autopart-content__id">Код товара: A.453325</div>
+        <div class="order-autopart-content__description">{{orderAutoPart?.description}} </div>
+        @if(isConfirmed) {
+          @if (history) {
+            <p-chip [style]="{background: '#22c55e', color: '#fff'}" label="Завершен" />
+          } @else {
+            <p-chip [style]="{background: '#3B82F6', color: '#fff'}" label="Принят" />
+          }
+         
+        } @else {
+          <p-chip label="Ожидает подтверждения" />
+        }
+        
+        
+        <div class="order-autopart-content__id">Код товара: A.000000{{orderAutoPart?.AutopartsId}}</div>
       </div>
     </div>
     <div class="order-autopart-right">
       <div class="divider"></div>
       <div class="wrap-price">
-        <div class="wrap-price__count">2шт.</div>
-        <div class="wrap-price__total-price">40.90 BYN</div>
-        <div class="wrap-price__one-price">20.45 BYN</div>
+        <div class="wrap-price__count">{{orderAutoPart?.count}}шт.</div>
+        <div class="wrap-price__total-price">{{totalPrice}} BYN</div>
+        <div class="wrap-price__one-price">{{orderAutoPart?.price}} BYN</div>
       </div>
     </div>
   </div>

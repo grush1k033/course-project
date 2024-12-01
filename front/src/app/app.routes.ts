@@ -9,6 +9,7 @@ import {OrderItemComponent} from '../core/components/order-item/order-item.compo
 import {OrderItemsComponent} from '../core/components/order-items/order-items.component';
 import {OrderItemDetailComponent} from '../core/components/order-item-detail/order-item-detail.component';
 import { AuthGuard } from '../core/guards/auth.guards';
+import { FavoriteComponent } from '../core/components/favorite/favorite.component';
 
 export const routes: Routes = [
   {
@@ -61,7 +62,17 @@ export const routes: Routes = [
       {
         path: 'edit',
         component: AddComponent
-      }
+      },
+      {
+        path: 'orders-history',
+        component: OrderItemsComponent
+      },
+      {
+        path: 'favorite',
+        component: FavoriteComponent
+      },
+      
+
     ]
   }
 ];

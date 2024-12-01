@@ -1,16 +1,27 @@
 <div class="container">
-  <h1>Заказы</h1>
+  @if(page === 'order') {
+    <h1>Заказы</h1>
+  }
 
-  <div class="items">
-    @for(item of [1,2,3,4,5]; track item) {
-      <app-order-item [item]="item"></app-order-item>
+
+  <div class="items" [ngClass]="{history: page === 'orders-history'}">
+    @for(item of orders; track item) {
+      <app-order-item [history]="page === 'orders-history'" [item]="item"></app-order-item>
+    } @empty {
+      <div class="empty">
+        <img src="assets/images/no-favourite.png" alt="">
+        <h2>Заказов пока нет</h2>
+      </div>
     }
   </div>
-  <div class="items-total">
-    <div class="divider"></div>
-    <div class="total">Всего 5 заказов на сумму 1022.50 BYN</div>
-    <div class="divider"></div>
-  </div>
+  @if(page === 'order') {
+    <div class="items-total">
+      <div class="divider"></div>
+      <div class="total">Всего {{countProduct}} на сумму {{total}} BYN</div>
+      <div class="divider"></div>
+    </div>
+  }
+
 </div>
 
 

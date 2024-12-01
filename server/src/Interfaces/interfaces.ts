@@ -79,5 +79,11 @@ export interface OrderDto {
     timeOfDelivery: string, 
     countAutoparts: number, 
     UserId: number, 
-    isConfirmed: boolean
+    isConfirmed: boolean,
+    total: string
+}
+
+export interface OrderAutopartDto {
+    OrdersId: number,
+    Autoparts: {id: number, count: number}[],
 }

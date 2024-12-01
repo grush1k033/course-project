@@ -21,7 +21,7 @@
       </div>
       <div (click)="toOrder()" class="header__order">
         <i style="font-size: 25px" class="pi pi-list" pBadge [badgeDisabled]="!authService.isAuth"
-           [value]="0"></i>
+           [value]="(orderService.orders$ | async)?.length || 0"></i>
         <div class="header__basket__label">Заказы</div>
       </div>
       @if(authService.isAuth) {

@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="items">
+    @for(item of autoParts;track item) {
+      <app-auto-part (onUpdateFavourite)="updateFavourite()" [item]="item"></app-auto-part>
+    } @empty {
+      <div class="empty">
+        <img src="assets/images/no-favourite.png" alt="">
+        <h2>В избранном пока ничего нет</h2>
+      </div>
+    }
+  </div>
+</div> 

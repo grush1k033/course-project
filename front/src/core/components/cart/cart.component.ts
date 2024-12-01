@@ -9,6 +9,7 @@ import {Button} from 'primeng/button';
 import { ProfileService } from '../../service/profile.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from "primeng/api";
+import { IOrder, OrderAutopartDto, OrderService } from "../../service/order.service";
 
 @Component({
     selector: 'app-cart',
@@ -28,6 +29,7 @@ import { MessageService } from "primeng/api";
     styleUrl: './cart.component.scss',
 })
 export class CartComponent {
+
     basketItems: IBasketItems[] = [];
     value = 0;
     total = 0;
@@ -38,6 +40,7 @@ export class CartComponent {
         private location: Location,
         private profileService: ProfileService,
         private messageService: MessageService,
+        private orderService: OrderService
     ) {
         this.profileService.getUser().subscribe();
         this.getBasketItems();
@@ -79,7 +82,7 @@ export class CartComponent {
 
     sendMail(orderNumber: string) {
         this.basketService.sendMail({
-            link: `http://localhost:3000/order/${orderNumber}`,
+            link: `http://localhost:3000/order/confirm/${orderNumber}`,
             mail: this.email.value as string,
             orderNumber
         }).subscribe(res => {
@@ -88,7 +91,35 @@ export class CartComponent {
                 this.email.markAsUntouched();
                 this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Вам отправлено письмо на почту для подтверждения заказа!' });
             }
+            this.getOrders();
         })
+    }
+
+    createOrder(count: number) {
+        this.orderService.createOrder(count, this.total).subscribe(resp => {
+            this.sendMail(resp.id);
+            const dto: OrderAutopartDto = {
+                OrdersId: +resp.id,
+                Autoparts: this.basketItems.map(item => ({
+                    id: item.id,
+                    count: item.countAutoparts
+                }))
+            }
+            this.createOrderAutoparts(dto);
+        });
+    }
+
+    createOrderAutoparts(dto: OrderAutopartDto) {
+        this.orderService.createOrderAutoparts(dto).subscribe();
+    }
+
+    orderHandler() {
+        this.createOrder(this.basketItems.length);
+    }
+
+
+    getOrders() {
+        this.orderService.getOrders().subscribe();
     }
 
 }

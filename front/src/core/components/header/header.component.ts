@@ -13,6 +13,7 @@ import { Button } from 'primeng/button';
 import { AuthService, IUser } from '../../service/auth.service';
 import { ProfileService } from '../../service/profile.service';
 import { Subscription } from 'rxjs';
+import { OrderService } from '../../service/order.service';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public router: Router,
     private location: Location,
     public authService: AuthService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    public orderService: OrderService
   ) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -58,6 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSub = this.profileService.user$.subscribe(user => {
       this.user = user;
       this.getBasket()
+      this.getOrders();
     })
   }
 
@@ -67,6 +70,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   getBasket() {
     this.basketService.getBasket().subscribe();
+  }
+
+  getOrders() {
+    this.orderService.getOrders().subscribe();
   }
 
   back() {

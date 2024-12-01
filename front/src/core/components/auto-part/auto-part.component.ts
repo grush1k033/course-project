@@ -90,7 +90,6 @@ export class AutoPartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setImageSrc() {
-    console.log(this.item?.image)
     if(this.item?.image.includes('http')) {
       this.imageSrc = this.item.image;
     } else {

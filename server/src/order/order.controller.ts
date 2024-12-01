@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
-import { OrderDto } from 'src/Interfaces/interfaces';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Res } from '@nestjs/common';
+import { OrderAutopartDto, OrderDto } from 'src/Interfaces/interfaces';
 import { OrderService } from './order.service';
+import { Public } from 'src/auth/public.decorator';
+import { Response } from 'express';
 
 @Controller('order')
 export class OrderController {
@@ -12,13 +14,34 @@ export class OrderController {
         return this.orderService.createOrder(dto);
     }
 
+
+    @Post('autoparts')
+    async createOrderAutoparts(@Body() dto: OrderAutopartDto) {
+        return await this.orderService.createOrderAutoparts(dto);
+    }
+
+    @Public()
+    @Get('confirm/:id')
+    async updateOrderStatus(@Param('id') id: string, @Res() resp: Response) {
+        await this.orderService.updateOrderStatus(id)
+        return resp.redirect('http://localhost:4200/order'); 
+    }
+
+    @Get('autoparts/:id')
+    async getOrdersAutoparts(@Param('id') id: string) {
+        return this.orderService.getOrdersAutoparts(id);
+    }
+
     @Get(':id')
-    getOrdersById(@Param('id') id: string) {
+     getOrdersById(@Param('id') id: string) {
         return this.orderService.getOrders(id);
     }
 
-    @Patch(':id')
-    updateOrderStatus(@Body() dto: {isConfirmed: boolean, UserId: string}, @Param('id') id: string) {
-        return this.orderService.updateOrderStatus(id, dto)
-    }
+    @Delete(':id')
+    deleteOrder(@Param('id') id: string) {
+       return this.orderService.deleteOrder(id);
+   }
+
+   
 }
+
