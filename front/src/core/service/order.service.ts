@@ -1,25 +1,26 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { LocalStorageService } from "./local-storage.service";
 import { USER_ID } from "../constants";
 import { BehaviorSubject, Observable, tap } from "rxjs";
+import { LOADING_TOKEN } from '../interceptors/loading.interceptor';
 
 export interface IOrder {
     id: string,
-    timeOfDelivery: string, 
-    countAutoparts: number, 
-    UserId: number, 
+    timeOfDelivery: string,
+    countAutoparts: number,
+    UserId: number,
     isConfirmed: number,
     total: number
 }
 
 export interface IOrderAutopart {
-    OrdersId: string, 
-    AutopartsId: string, 
-    name: string, 
-    description: string, 
-    price: string, 
-    image: string, 
+    OrdersId: string,
+    AutopartsId: string,
+    name: string,
+    description: string,
+    price: string,
+    image: string,
     count: string
 }
 
@@ -40,16 +41,14 @@ export class OrderService {
     }
 
     constructor(private http: HttpClient, private localStorage: LocalStorageService) {
-        
+
     }
 
-    get countOrders(): number {
-        return this.countOrders;
-    }
-
-    getOrders(): Observable<IOrder[]> {
+    getOrders(loading = false): Observable<IOrder[]> {
         const id = this.localStorage.get(USER_ID);
-        return this.http.get<IOrder[]>(`http://localhost:3000/order/${id}`)
+        return this.http.get<IOrder[]>(`http://localhost:3000/order/${id}`, {
+          context: new HttpContext().set(LOADING_TOKEN, loading)
+        })
             .pipe(
                 tap((resp) => this.orders = resp.filter((item) => {
                     return new Date(item.timeOfDelivery) > new Date()
@@ -65,7 +64,7 @@ export class OrderService {
             UserId: this.localStorage.get(USER_ID),
             total
         }
-        return this.http.post<{id: string}>("http://localhost:3000/order", dto); 
+        return this.http.post<{id: string}>("http://localhost:3000/order", dto);
     }
 
     createOrderAutoparts(dto: OrderAutopartDto) {
@@ -83,10 +82,10 @@ export class OrderService {
     adjustDate(currentDate: Date): string {
         // Получаем час из текущей даты
         const hours = currentDate.getHours();
-        
+
         // Создаем новый объект даты
         const newDate = new Date(currentDate);
-    
+
         // Проверяем, утро ли это (8-12 часов)
         if (hours >= 8 && hours < 12) {
             // Если утро, добавляем 1 день
@@ -95,22 +94,22 @@ export class OrderService {
             // Если не утро, добавляем 2 дня
             newDate.setDate(newDate.getDate() + 2);
         }
-    
+
         // Генерируем случайное число от 8 до 12 для часов
         const randomHour = Math.floor(Math.random() * 5) + 8; // 8, 9, 10, 11, 12
         newDate.setHours(randomHour, 0, 0, 0); // Устанавливаем случайный час, минуты, секунды и миллисекунды в 0
-    
+
         return newDate.toString();
     }
 
     declensionOfGoods(count: number, order: boolean = false) {
         const lastDigit = count % 10;
         const lastTwoDigits = count % 100;
-    
+
         if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
             return count + (!order ? ' товаров' : ' заказов');
         }
-    
+
         switch (lastDigit) {
             case 1:
                 return count + (!order ? ' товар' : ' заказ');

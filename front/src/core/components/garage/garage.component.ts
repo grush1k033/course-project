@@ -42,26 +42,32 @@ export class GarageComponent implements OnInit, OnDestroy {
 
   getCar() {
     this.carService.getCar().subscribe((res) => {
-      this.carImage = res?.image;
-      this.onChangeGarage.next(true);
+      if(res) {
+        this.carImage = res?.image;
+        this.onChangeGarage.next(true);
+      }
     })
   }
 
   getModels(id: string) {
     this.loading = true;
     this.subModels = this.carService.getModels(id).subscribe((res) => {
-      this.models = res;
-      this.loading = false;
-      this.onChangeGarage.next(true);
+      if(res) {
+        this.models = res;
+        this.loading = false;
+        this.onChangeGarage.next(true);
+      }
     })
   }
 
   getMarks() {
     this.subMarks = this.carService.getAllMarks().subscribe((res)=> {
-      this.marks = res;
-      const id = this.selectedMark;
-      if(id) {
-        this.getModels(id);
+      if(res) {
+        this.marks = res;
+        const id = this.selectedMark;
+        if(id) {
+          this.getModels(id);
+        }
       }
     })
   }

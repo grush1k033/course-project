@@ -1,6 +1,11 @@
+:host {
+  width: 100%;
+}
+
 .auto-part {
   display: flex;
   gap: 20px;
+  width: 100%;
 
   &__items {
     display: flex;

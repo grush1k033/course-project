@@ -33,7 +33,7 @@ import { finalize } from 'rxjs';
   styleUrl: './auto-part-items.component.scss'
 })
 export class AutoPartItemsComponent {
-  status = false;
+  status = true;
   autoParts: IAutoPart[] = [];
   id: string | null = null;
   rangeValues: number[] = [0, 3000];
@@ -52,7 +52,7 @@ export class AutoPartItemsComponent {
 
   getAutoPart(id: string) {
     this.status = true;
-    this.autoPartService.getAutoPartByCategory(id)
+    this.autoPartService.getAutoPartByCategory(id, true)
       .pipe(
         finalize(() => { this.status = false})
       )

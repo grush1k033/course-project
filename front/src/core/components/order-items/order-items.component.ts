@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrderItemComponent} from '../order-item/order-item.component';
 import { ProfileService } from '../../service/profile.service';
 import { IOrder, OrderService } from '../../service/order.service';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'primeng/accordion';
@@ -22,11 +22,11 @@ import { OrderItemDetailComponent } from "../order-item-detail/order-item-detail
 })
 export class OrderItemsComponent implements OnInit {
   orders: IOrder[] = [];
-  loading = false;
+  loading = true;
   total: number = 0;
   countProduct: string = '';
   page: 'order' | 'orders-history' = 'order';
-  
+
 
   constructor(private profileService: ProfileService, private orderService: OrderService, private router: Router) {
     this.profileService.getUser().subscribe();
@@ -39,8 +39,8 @@ export class OrderItemsComponent implements OnInit {
 
   getOrders() {
     this.loading = true;
-    this.orderService.getOrders().pipe(
-      tap(() => this.loading = false)
+    this.orderService.getOrders(true).pipe(
+      finalize(() => this.loading = false)
     ).subscribe(resp => {
       this.orders = resp.filter((item) => {
         if(this.page === 'order') {
