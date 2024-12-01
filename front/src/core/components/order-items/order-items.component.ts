@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrderItemComponent} from '../order-item/order-item.component';
 import { ProfileService } from '../../service/profile.service';
 import { IOrder, OrderService } from '../../service/order.service';
-import { finalize, tap } from 'rxjs';
+import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'primeng/accordion';

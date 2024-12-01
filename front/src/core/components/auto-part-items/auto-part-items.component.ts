@@ -1,16 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AutoPartService, IAutoPart} from '../../service/auto-part.service';
 import {DropdownModule} from 'primeng/dropdown';
 import {FormsModule} from '@angular/forms';
 import {AutoPartComponent} from '../auto-part/auto-part.component';
 import {SearchPipe} from '../../pipes/search.pipe';
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {FiltersComponent} from '../filters/filters.component';
 import {PricePipe} from '../../pipes/price.pipe';
 import {FavouritePipe} from '../../pipes/favourite.pipe';
 import {GarageComponent} from '../garage/garage.component';
-import {BasketService} from '../../service/basket.service';
 import { ProfileService } from '../../service/profile.service';
 import { finalize } from 'rxjs';
 
