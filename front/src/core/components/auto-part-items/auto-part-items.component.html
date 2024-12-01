@@ -15,10 +15,12 @@
       @for(item of autoParts | search : data | price : rangeValues | favourite: favourite ;track item) {
         <app-auto-part [isAdmin]="isAdmin" (onUpdateFavourite)="updateFavourite($event)"  [item]="item"></app-auto-part>
       } @empty {
-        <div class="empty">
-          <img src="assets/images/no-search-results.png" alt="">
-          <h2>Автозапчастей пока нет</h2>
-        </div>
+        @if(!status) {
+          <div class="empty">
+            <img src="assets/images/no-search-results.png" alt="">
+            <h2>Автозапчастей пока нет</h2>
+          </div>
+        }
       }
     </div>
   </div>

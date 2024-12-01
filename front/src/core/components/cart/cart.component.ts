@@ -10,6 +10,7 @@ import { ProfileService } from '../../service/profile.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from "primeng/api";
 import { IOrder, OrderAutopartDto, OrderService } from "../../service/order.service";
+import { finalize } from 'rxjs';
 
 @Component({
     selector: 'app-cart',
@@ -29,7 +30,7 @@ import { IOrder, OrderAutopartDto, OrderService } from "../../service/order.serv
     styleUrl: './cart.component.scss',
 })
 export class CartComponent {
-
+  status = false;
     basketItems: IBasketItems[] = [];
     value = 0;
     total = 0;
@@ -47,7 +48,12 @@ export class CartComponent {
     }
 
     getBasketItems() {
-        this.basketService.getBasketItems().subscribe((res) => {
+      this.status = true;
+        this.basketService.getBasketItems(true)
+          .pipe(
+            finalize(() => this.status = false)
+          )
+          .subscribe((res) => {
             this.basketItems = res;
             this.calculateOldTotal();
             this.calculateTotal();

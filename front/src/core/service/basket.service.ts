@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { USER_ID } from '../constants';
+import { LOADING_TOKEN } from '../interceptors/loading.interceptor';
 
 export interface IBasket {
   id: string;
@@ -69,8 +70,10 @@ export class BasketService {
     return this.http.post<IBasket>('http://localhost:3000/basket', dto);
   }
 
-  getBasketItems(){
-    return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.localStorage.get(USER_ID)}`)
+  getBasketItems(loading = false){
+    return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.localStorage.get(USER_ID)}`, {
+      context: new HttpContext().set(LOADING_TOKEN, loading),
+    })
   }
 
   deleteItem(id: number) {

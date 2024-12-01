@@ -12,6 +12,7 @@ import {FavouritePipe} from '../../pipes/favourite.pipe';
 import {GarageComponent} from '../garage/garage.component';
 import {BasketService} from '../../service/basket.service';
 import { ProfileService } from '../../service/profile.service';
+import { finalize } from 'rxjs';
 
 
 @Component({
@@ -31,7 +32,8 @@ import { ProfileService } from '../../service/profile.service';
   templateUrl: './auto-part-items.component.html',
   styleUrl: './auto-part-items.component.scss'
 })
-export class AutoPartItemsComponent implements OnInit{
+export class AutoPartItemsComponent {
+  status = false;
   autoParts: IAutoPart[] = [];
   id: string | null = null;
   rangeValues: number[] = [0, 3000];
@@ -48,13 +50,13 @@ export class AutoPartItemsComponent implements OnInit{
     })
   }
 
-
-  ngOnInit(): void {
-    // this.getAutoPart(this.id as string);
-  }
-
   getAutoPart(id: string) {
-    this.autoPartService.getAutoPartByCategory(id).subscribe(res => {
+    this.status = true;
+    this.autoPartService.getAutoPartByCategory(id)
+      .pipe(
+        finalize(() => { this.status = false})
+      )
+      .subscribe(res => {
       this.autoParts = res;
     })
   }

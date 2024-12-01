@@ -4,10 +4,12 @@
   @for(item of basketItems; track item.basket_id) {
     <app-cart-item (onDelete) = "deleteBasketItem($event)" (onUpdate)="updateItem()" [baketItem]="item"></app-cart-item>
   } @empty {
-    <div class="empty">
-      <img src="assets/images/cart-empty.png" alt="">
-      <h2>Ваша корзина пуста</h2>
-    </div>
+    @if (!status) {
+      <div class="empty">
+        <img src="assets/images/cart-empty.png" alt="">
+        <h2>Ваша корзина пуста</h2>
+      </div>
+    }
   }
 </div>
 <div class="total">
