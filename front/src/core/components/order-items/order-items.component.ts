@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'primeng/accordion';
 import { OrderItemDetailComponent } from "../order-item-detail/order-item-detail.component";
+import { Button } from 'primeng/button';
+import { ngxCsv } from 'ngx-csv';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-order-items',
@@ -15,8 +18,9 @@ import { OrderItemDetailComponent } from "../order-item-detail/order-item-detail
     OrderItemComponent,
     CommonModule,
     AccordionModule,
-    OrderItemDetailComponent
-],
+    OrderItemDetailComponent,
+    Button,
+  ],
   templateUrl: './order-items.component.html',
   styleUrl: './order-items.component.scss'
 })
@@ -27,7 +31,6 @@ export class OrderItemsComponent implements OnInit {
   countProduct: string = '';
   page: 'order' | 'orders-history' = 'order';
 
-
   constructor(private profileService: ProfileService, private orderService: OrderService, private router: Router) {
     this.profileService.getUser().subscribe();
     this.page = this.router.url.split('/').pop() as typeof this.page;
@@ -36,6 +39,22 @@ export class OrderItemsComponent implements OnInit {
     this.getOrders();
   }
 
+
+  exportToCSV(): void {
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'Заказы',
+      useBom: true,
+      noDownload: false,
+      headers: Object.keys(this.orders[0]).filter(Boolean)
+    };
+
+    new ngxCsv(this.orders, 'orders', options);
+  }
 
   getOrders() {
     this.loading = true;

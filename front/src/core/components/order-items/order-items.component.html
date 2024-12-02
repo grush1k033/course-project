@@ -1,6 +1,9 @@
 <div class="container">
   @if(page === 'order') {
-  <h1>Заказы</h1>
+  <div class="wrapper">
+    <h1>Заказы</h1>
+    <p-button (onClick)="exportToCSV()" label="Экспорт в CSV"></p-button>
+  </div>
 
   <div class="items">
     @if(!loading) {
