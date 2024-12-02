@@ -48,8 +48,10 @@ export class AutoPartService {
   getAutoPartById(id: string) {
     return this.httpClient.get<IAutoPart>(`http://localhost:3000/auto-part/${id}`)
   }
-  getAllAutoPart():Observable<IAutoPart[]> {
-    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part`);
+  getAllAutoPart(loading = false):Observable<IAutoPart[]> {
+    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part`, {
+      context: new HttpContext().set(LOADING_TOKEN, loading)
+    });
   }
 
   updateAutoPart(dto: {favourite: boolean}, id: number) {

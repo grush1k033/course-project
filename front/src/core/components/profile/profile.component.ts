@@ -7,6 +7,8 @@ import {RouterOutlet} from '@angular/router';
 import { FooterComponent } from "../footer/footer.component";
 import { AuthService, IUser } from '../../service/auth.service';
 import { ProfileService } from '../../service/profile.service';
+import { DeleteConfirmModalComponent } from '../modals/delete-confirm-modal/delete-confirm-modal.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 
 @Component({
@@ -24,6 +26,7 @@ import { ProfileService } from '../../service/profile.service';
   ],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss',
+  providers: [DialogService]
 })
 export class ProfileComponent {
   user: IUser | null = null;
@@ -32,7 +35,8 @@ export class ProfileComponent {
   constructor(
     public router: Router,
     public auth: AuthService,
-    public profileService: ProfileService
+    public profileService: ProfileService,
+    public dialogService: DialogService
   ) {
     this.getUser();
   }
@@ -60,7 +64,7 @@ export class ProfileComponent {
         }
       })
     }
-    
+
   }
 
   navigateToEditProfile() {
@@ -71,5 +75,27 @@ export class ProfileComponent {
   logout() {
     this.router.navigate(['profile/edit']).then()
     this.auth.logout();
+  }
+
+  ref: DynamicDialogRef | undefined;
+  show() {
+    this.ref = this.dialogService.open(DeleteConfirmModalComponent, {
+      header: 'Вы действительно хотите выйти?',
+      data: {
+        logout: true
+      },
+      width: '30vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+    });
+
+    this.ref.onClose.subscribe((data?: {delete: boolean}) => {
+      if(data?.delete) {
+        this.logout();
+      }
+    })
   }
 }

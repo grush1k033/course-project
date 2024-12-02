@@ -14,11 +14,13 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 })
 export class DeleteConfirmModalComponent {
   order: boolean = false;
+  logout: boolean = false;
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
     this.order = config?.data?.order || false;
+    this.logout = config?.data?.logout || false;
   }
 
-  
+
 
   close() {
     this.ref.close()

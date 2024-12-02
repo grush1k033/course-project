@@ -1,10 +1,17 @@
 <div class="modal">
-  @if(!order) {
+  @if(!order && !logout) {
     <p class="modal__description"><strong>Внимание!</strong> Товар удалиться у пользователей в корзине.</p>
   }
-  <div class="modal__buttons">
-    <p-button (onClick)="close()" [label]="order ? 'Назад': 'Отмена'" severity="secondary" />
-    <p-button (onClick)="delete()" [label]="order ? 'Отменить заказ': 'Удалить'"  severity="danger" />
-  </div>
+  @if(logout) {
+    <div class="modal__buttons">
+      <p-button (onClick)="close()" [label]="'Отмена'" severity="secondary" />
+      <p-button (onClick)="delete()" [label]="'Выйти'"  severity="danger" />
+    </div>
+  } @else {
+    <div class="modal__buttons">
+      <p-button (onClick)="close()" [label]="order ? 'Назад': 'Отмена'" severity="secondary" />
+      <p-button (onClick)="delete()" [label]="order ? 'Отменить заказ': 'Удалить'"  severity="danger" />
+    </div>
+  }
 </div>
 

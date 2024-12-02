@@ -1,26 +1,34 @@
 .loading {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  justify-content: center;
-  height: 20px;
-  transform: translateY(7px);
-
+  height: 60px;
+  overflow: hidden;
   i {
-    animation: 1s linear 0s normal none infinite running rot;
-    width: 20px;
-    height: 20px;
-    font-size: 20px
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ea580c;
+    font-size: 60px;
+    animation: 1s linear infinite car;
   }
+}
+::ng-deep .p-dialog {
+  box-shadow: none;
 }
 
 ::ng-deep .p-dialog .p-dialog-header {
   padding: 0.5rem;
+  display: none;
 }
 
-  @keyframes rot {
+::ng-deep .p-dialog .p-dialog-content {
+  background: transparent;
+  color: #4b5563;
+  overflow: hidden;
+}
+
+
+@keyframes car {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(0);
   }
   100% {
     transform: rotate(360deg);

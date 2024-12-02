@@ -30,8 +30,8 @@
           [image]="user?.image"
           shape="circle" />
         } @else {
-          <a routerLink="profile" class="avatar">{{user?.name?.[0]}}</a>
-        }        
+          <a routerLink="profile" class="avatar">{{user?.name?.[0] || 'U'}}</a>
+        }
       } @else {
         <p-button (click)="visibleLogin=true" icon="pi pi-user" [rounded]="true" severity="info" />
       }

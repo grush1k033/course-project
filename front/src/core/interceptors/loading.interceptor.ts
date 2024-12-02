@@ -18,6 +18,7 @@ export class LoadingInterceptor implements HttpInterceptor {
   constructor(
     private dialogService: DialogService
   ) {
+    // this.show();
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
