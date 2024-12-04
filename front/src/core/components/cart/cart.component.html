@@ -1,7 +1,6 @@
 <p-toast />
 <div class="container">
 <div class="items">
-  @if(!status) {
     @for(item of basketItems; track item.basket_id) {
       <app-cart-item (onDelete) = "deleteBasketItem($event)" (onUpdate)="updateItem()" [baketItem]="item"></app-cart-item>
     } @empty {
@@ -10,7 +9,6 @@
         <h2>Ваша корзина пуста</h2>
       </div>
     }
-  }
 </div>
 <div class="total">
   <div class="total-back">

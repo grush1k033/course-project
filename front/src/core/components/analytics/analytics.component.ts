@@ -48,6 +48,16 @@ export class AnalyticsComponent {
   }
 
 
+  getColor(name: string) {
+    switch(name) {
+      case 'Масло моторное': return 'red';
+        break;
+        default:
+          return 'green'
+    }
+    
+  }
+
   getOrdersWithAutoPart() {
     this.orderService.getOrderWithAutoPart().subscribe(res => {
       const items = Object.entries(this.transformOrdersWithAutoPart(res));
@@ -55,7 +65,7 @@ export class AnalyticsComponent {
       const datasets: any[] = items.map(item => item[1]).map((item, i) => ({
         type: 'bar',
         label: item[0].name,
-        backgroundColor: 'red',
+        backgroundColor: this.getColor(item[0].name),
         data: item.map(item => item.count)
       }))
 
