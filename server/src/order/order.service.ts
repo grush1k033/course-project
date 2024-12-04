@@ -18,6 +18,10 @@ export class OrderService {
         return (await this.db.pool.query(`Select * from orders where UserId = ${userId}`))[0]
     }
 
+    async getOrdersAll() {
+        return (await this.db.pool.query(this.cm.getAll()))[0];
+    }
+
     async updateOrderStatus(id: string) {
         await this.db.pool.query(`UPDATE orders SET isConfirmed = 1 WHERE id = ${id}`);
         return (await this.db.pool.query(this.cm.getByID(id)))[0][0]

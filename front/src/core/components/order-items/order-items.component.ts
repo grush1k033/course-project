@@ -8,8 +8,6 @@ import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'primeng/accordion';
 import { OrderItemDetailComponent } from "../order-item-detail/order-item-detail.component";
 import { Button } from 'primeng/button';
-import { ngxCsv } from 'ngx-csv';
-import * as XLSX from 'xlsx';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

@@ -14,6 +14,11 @@ export class OrderController {
         return this.orderService.createOrder(dto);
     }
 
+    @Get('all-orders')
+    getOrderALl() {
+        return this.orderService.getOrdersAll();
+    }
+
 
     @Post('autoparts')
     async createOrderAutoparts(@Body() dto: OrderAutopartDto) {

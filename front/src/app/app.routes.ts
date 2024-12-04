@@ -10,6 +10,7 @@ import {OrderItemsComponent} from '../core/components/order-items/order-items.co
 import {OrderItemDetailComponent} from '../core/components/order-item-detail/order-item-detail.component';
 import { AuthGuard } from '../core/guards/auth.guards';
 import { FavoriteComponent } from '../core/components/favorite/favorite.component';
+import { AnalyticsComponent } from '../core/components/analytics/analytics.component';
 
 export const routes: Routes = [
   {
@@ -71,8 +72,10 @@ export const routes: Routes = [
         path: 'favorite',
         component: FavoriteComponent
       },
-      
-
+      {
+        path: 'analytics',
+        component: AnalyticsComponent
+      },
     ]
   }
 ];

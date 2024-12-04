@@ -97,6 +97,12 @@ export class OrderService {
       });
     }
 
+    getOrdersAll(loading = false):Observable<IOrder[]> {
+      return this.http.get<IOrder[]>('http://localhost:3000/order/all-orders', {
+        context: new HttpContext().set(LOADING_TOKEN, loading)
+      });
+    }
+
     adjustDate(currentDate: Date): string {
         // Получаем час из текущей даты
         const hours = currentDate.getHours();

@@ -8,5 +8,8 @@
     "start:server": "cd server && nest start --watch"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^4.4.7"
+  }
 }
