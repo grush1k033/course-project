@@ -2,16 +2,20 @@
   width: 100%;
 }
 
-h1 {
-  margin-left: 24px;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
 }
+
+
 .items {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 24px;
-  width: 100%;
   overflow-y: scroll;
   height: calc(100vh - 260px);
   margin-bottom: 20px;

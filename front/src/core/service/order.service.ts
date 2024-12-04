@@ -24,6 +24,17 @@ export interface IOrderAutopart {
     count: string
 }
 
+export interface ICsvJsonData {
+  OrdersId: number,
+  count: number,
+  name: string,
+  description: string,
+  price: number,
+  discount: number,
+  timeOfDelivery: string,
+  total: string
+}
+
 export interface OrderAutopartDto {
     OrdersId: number,
     Autoparts: {id: number, count: number}[],
@@ -77,6 +88,13 @@ export class OrderService {
 
     deleteOrder(id: string) {
         return this.http.delete('http://localhost:3000/order/' + id);
+    }
+
+    exportInCsv(): Observable<ICsvJsonData[]> {
+      const userId = this.localStorage.get(USER_ID);
+      return this.http.get<ICsvJsonData[]>('http://localhost:3000/order/exportInCsv/' + userId, {
+        context: new HttpContext().set(LOADING_TOKEN, true)
+      });
     }
 
     adjustDate(currentDate: Date): string {

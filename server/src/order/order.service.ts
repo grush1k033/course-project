@@ -52,6 +52,27 @@ export class OrderService {
         `))[0];
     }
 
+    async exportInCsv(id: string) {
+        const jsonData: any[] = (await this.db.pool.query(`
+            select
+                a.OrdersId,
+                a.count,
+                c.name,
+                c.description,
+                c.price,
+                c.discount,
+                b.timeOfDelivery,
+                b.total
+            From orders b
+                     left join
+                 autoparts_orders a on b.id = a.OrdersId
+                     left join
+                 autoparts c on a.AutopartsId = c.id
+            where b.UserId = ${id} and b.isConfirmed = 1;
+        `))[0] as any[]
+        return jsonData;
+    }
+
     async deleteOrder(id: string) {
         await this.db.pool.query(`DELETE FROM autoparts_orders WHERE OrdersId = ${id}`);
         return (await this.db.pool.query(this.cm.delete(id)));

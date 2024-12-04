@@ -35,13 +35,13 @@ export class OrderItemDetailComponent implements OnChanges {
   ) {
     this.id = (this.activatedRoute.snapshot.params as {id: string}).id;
     this.profileService.getUser().subscribe();
-    if(!this.history) {
+    if(!this.history && this.id) {
       this.getOrdersAutoparts(this.id);
     }
   }
 
   ngOnChanges(): void {
-    if(history) {
+    if(history && this.id) {
       this.getOrdersAutoparts(this.id);
     }
   }

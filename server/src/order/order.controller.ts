@@ -27,6 +27,12 @@ export class OrderController {
         return resp.redirect('http://localhost:4200/order'); 
     }
 
+    @Public()
+    @Get('exportInCsv/:id')
+    exportInCsv(@Param('id') id: string) {
+        return this.orderService.exportInCsv(id);
+    }
+
     @Get('autoparts/:id')
     async getOrdersAutoparts(@Param('id') id: string) {
         return this.orderService.getOrdersAutoparts(id);

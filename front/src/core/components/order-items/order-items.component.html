@@ -1,8 +1,11 @@
+<p-toast />
 <div class="container">
   @if(page === 'order') {
   <div class="wrapper">
     <h1>Заказы</h1>
-    <p-button (onClick)="exportToCSV()" label="Экспорт в CSV"></p-button>
+    <div class="wrapper__button">
+      <p-button (onClick)="exportToCSV()" label="Экспорт в CSV" severity="contrast" ></p-button>
+    </div>
   </div>
 
   <div class="items">
