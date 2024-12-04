@@ -22,6 +22,23 @@ export class OrderService {
         return (await this.db.pool.query(this.cm.getAll()))[0];
     }
 
+    async getOrdersWithAutoPart() {
+        return (await this.db.pool.query(`
+            SELECT
+                SUM(a.count) AS total_count,
+                b.timeOfDelivery,
+                c.name
+            FROM
+                orders b
+                    LEFT JOIN
+                autoparts_orders a ON b.id = a.OrdersId
+                    LEFT JOIN
+                autoparts c ON a.AutopartsId = c.id
+            GROUP BY
+                b.timeOfDelivery, c.name, c.id;
+        `))[0];
+    }
+
     async updateOrderStatus(id: string) {
         await this.db.pool.query(`UPDATE orders SET isConfirmed = 1 WHERE id = ${id}`);
         return (await this.db.pool.query(this.cm.getByID(id)))[0][0]

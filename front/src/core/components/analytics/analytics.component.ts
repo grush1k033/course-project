@@ -1,8 +1,16 @@
 import { Component } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { finalize } from 'rxjs';
-import { IOrder, OrderService } from '../../service/order.service';
+import { IOrder, IOrderWithAutoPart, OrderService } from '../../service/order.service';
 
+export interface ITransformOrderAutoPart {
+  [key: string]: ITransformOrderAutoPartValue[]
+}
+
+export interface ITransformOrderAutoPartValue {
+  name: string,
+  count: number
+}
 @Component({
   selector: 'app-analytics',
   standalone: true,
@@ -16,7 +24,7 @@ export class AnalyticsComponent {
   orders: IOrder[] = [];
   loading = true;
   basicData: any;
-
+  data: any;
   basicOptions: any;
 
   monthNames = [
@@ -24,6 +32,7 @@ export class AnalyticsComponent {
     "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
   ];
   constructor(private orderService: OrderService) {
+    this.getOrdersWithAutoPart()
   }
 
   getOrders() {
@@ -36,6 +45,45 @@ export class AnalyticsComponent {
       const orderCounts = this.getMonthlyOrderCount(resp).map(({orderCount}) => orderCount);
       this.setData(months, orderCounts);
     })
+  }
+
+
+  getOrdersWithAutoPart() {
+    this.orderService.getOrderWithAutoPart().subscribe(res => {
+      const items = Object.entries(this.transformOrdersWithAutoPart(res));
+      const months = items.map(item => item[0]);
+      const datasets: any[] = items.map(item => item[1]).map((item, i) => ({
+        type: 'bar',
+        label: item[0].name,
+        backgroundColor: 'red',
+        data: item.map(item => item.count)
+      }))
+
+      this.data = {
+        labels: months,
+        datasets
+      }
+      console.log(this.data);
+    })
+
+  }
+
+  transformOrdersWithAutoPart(data: IOrderWithAutoPart[]): ITransformOrderAutoPart {
+    return data.reduce((acc, { name, timeOfDelivery, total_count }) => {
+      // Получаем номер месяца из даты
+      const monthIndex = new Date(timeOfDelivery).getMonth(); // 0 - Январь, 11 - Декабрь
+      const monthName = this.monthNames[monthIndex]; // Получаем название месяца
+
+      // Проверяем, существует ли уже массив для этого месяца
+      if (!acc[monthName]) {
+        acc[monthName] = []; // Если нет, создаем новый массив
+      }
+
+      // Добавляем новый объект в соответствующий массив
+      acc[monthName].push({ name, count: total_count });
+
+      return acc;
+    }, <ITransformOrderAutoPart>{});
   }
 
   getMonthlyOrderCount = (orders: IOrder[]) => {

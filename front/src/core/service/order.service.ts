@@ -5,6 +5,12 @@ import { USER_ID } from "../constants";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { LOADING_TOKEN } from '../interceptors/loading.interceptor';
 
+export interface IOrderWithAutoPart {
+  total_count: number,
+  name: string,
+  timeOfDelivery: string
+}
+
 export interface IOrder {
     id: string,
     timeOfDelivery: string,
@@ -101,6 +107,10 @@ export class OrderService {
       return this.http.get<IOrder[]>('http://localhost:3000/order/all-orders', {
         context: new HttpContext().set(LOADING_TOKEN, loading)
       });
+    }
+
+    getOrderWithAutoPart(): Observable<IOrderWithAutoPart[]> {
+      return this.http.get<IOrderWithAutoPart[]>('http://localhost:3000/order/all-orders-auto-part');
     }
 
     adjustDate(currentDate: Date): string {
