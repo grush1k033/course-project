@@ -51,11 +51,21 @@ export class AnalyticsComponent {
       monthlyCount[yearMonth] += 1; // Увеличиваем количество заказов за месяц
     });
 
-    // Преобразуем объект в массив
-    return Object.entries(monthlyCount).map(([key, count]) => ({
+    const months = Object.entries(monthlyCount).map(([key, count]) => ({
       month: key,
       orderCount: count,
     }));
+
+    const monthIndex = this.monthNames.reduce((acc, month, index) => {
+      acc[month as keyof typeof acc] = index;
+      return acc;
+    }, <{ [p: string]: number }>{});
+
+// Сортируем массив месяцев по индексу
+    months.sort((a, b) => monthIndex[a.month] - monthIndex[b.month]);
+
+    // Преобразуем объект в массив
+    return months;
   };
 
   ngOnInit() {
