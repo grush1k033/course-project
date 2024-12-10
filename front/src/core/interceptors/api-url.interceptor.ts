@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpHandler, 
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
-import { API_URL } from '../../../enviroments';
+import { environment } from '../../environments/environment';
+
+
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { API_URL } from '../../../enviroments';
 })
 export class ApiUrlInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const apiReq = req.clone({url:`${API_URL}/${req.url}`})
+    const apiReq = req.clone({url:`${environment.API_URL}/${req.url}`})
     return next.handle(apiReq);
   }
 }
