@@ -36,33 +36,33 @@ export class AutoPartService {
 
   getAutoPartByCategory(categoryId: string, loading = false): Observable<IAutoPart[]> {
     const id = this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL);
-    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part?categoryId=${categoryId}${id ? `&carsId=${id}` : ''}`, {
+    return this.httpClient.get<IAutoPart[]>(`auto-part?categoryId=${categoryId}${id ? `&carsId=${id}` : ''}`, {
       context: new HttpContext().set(LOADING_TOKEN, loading)
     })
   }
 
   addAutoPart(dto: Omit<IAutoPart, 'id'>) {
-    return this.httpClient.post<typeof dto>("http://localhost:3000/auto-part", dto);
+    return this.httpClient.post<typeof dto>("auto-part", dto);
   }
 
   getAutoPartById(id: string) {
-    return this.httpClient.get<IAutoPart>(`http://localhost:3000/auto-part/${id}`)
+    return this.httpClient.get<IAutoPart>(`auto-part/${id}`)
   }
   getAllAutoPart(loading = false):Observable<IAutoPart[]> {
-    return this.httpClient.get<IAutoPart[]>(`http://localhost:3000/auto-part`, {
+    return this.httpClient.get<IAutoPart[]>(`auto-part`, {
       context: new HttpContext().set(LOADING_TOKEN, loading)
     });
   }
 
   updateAutoPart(dto: {favourite: boolean}, id: number) {
-    return this.httpClient.patch<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
+    return this.httpClient.patch<IAutoPart>(`auto-part/${id}`,dto)
   }
 
   updateAutoPartAll(dto: Omit<IAutoPart, 'id'>, id: number) {
-    return this.httpClient.put<IAutoPart>(`http://localhost:3000/auto-part/${id}`,dto)
+    return this.httpClient.put<IAutoPart>(`auto-part/${id}`,dto)
   }
 
   deleteAutoPart(id: string) {
-    return this.httpClient.delete<void>(`http://localhost:3000/auto-part/${id}`);
+    return this.httpClient.delete<void>(`auto-part/${id}`);
   }
 }

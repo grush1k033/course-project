@@ -7,6 +7,7 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import { AuthInterceptor } from '../core/interceptors/auth.interceptor';
 import { LoadingInterceptor } from '../core/interceptors/loading.interceptor';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ApiUrlInterceptor } from '../core/interceptors/api-url.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptorsFromDi(),
     ),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiUrlInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

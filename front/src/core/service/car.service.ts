@@ -27,15 +27,15 @@ export class CarService {
   ) {}
 
   getModels(id: string): Observable<IModel[]> {
-    return this.http.get<IModel[]>(`http://localhost:3000/models/${id}`);
+    return this.http.get<IModel[]>(`models/${id}`);
   }
 
   getAllMarks(): Observable<IMark[]> {
-    return this.http.get<IMark[]>('http://localhost:3000/marks')
+    return this.http.get<IMark[]>('marks')
   }
 
   getCar():Observable<ICar> {
     const id = this.localStorage.get(LOCAL_STORAGE_KEY_CAR_MODEL);
-    return this.http.get<ICar>(`http://localhost:3000/car/${id}`);
+    return this.http.get<ICar>(`car/${id}`);
   }
 }

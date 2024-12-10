@@ -53,7 +53,7 @@ export class BasketService {
   }
 
   getBasket() {
-    return this.http.get<IBasket[]>(`http://localhost:3000/basket/${this.localStorage.get(USER_ID)}`)
+    return this.http.get<IBasket[]>(`basket/${this.localStorage.get(USER_ID)}`)
       .pipe(
         tap(res => {
           this.basket = res
@@ -67,24 +67,24 @@ export class BasketService {
       AutopartId: id,
       UserId: +this.localStorage.get(USER_ID),
     }
-    return this.http.post<IBasket>('http://localhost:3000/basket', dto);
+    return this.http.post<IBasket>('basket', dto);
   }
 
   getBasketItems(loading = false){
-    return this.http.get<IBasketItems[]>(`http://localhost:3000/basket/items/${this.localStorage.get(USER_ID)}`, {
+    return this.http.get<IBasketItems[]>(`basket/items/${this.localStorage.get(USER_ID)}`, {
       context: new HttpContext().set(LOADING_TOKEN, loading),
     })
   }
 
   deleteItem(id: number) {
-    return this.http.delete(`http://localhost:3000/basket/${id}`);
+    return this.http.delete(`basket/${id}`);
   }
 
   updateBasketItem(id: number, count: number) {
     const dto:{countAutoparts: number} = {
       countAutoparts: count
     }
-    return this.http.patch<typeof dto>(`http://localhost:3000/basket/${id}?UserId=${this.localStorage.get(USER_ID)}`, dto);
+    return this.http.patch<typeof dto>(`basket/${id}?UserId=${this.localStorage.get(USER_ID)}`, dto);
   }
 
   getPrice(price: string, discount: number) {
@@ -92,6 +92,6 @@ export class BasketService {
   }
 
   sendMail(dto: MailDto): Observable<{message: string}> {
-    return this.http.post<{message: string}>("http://localhost:3000/mail", dto)
+    return this.http.post<{message: string}>("mail", dto)
   }
 }

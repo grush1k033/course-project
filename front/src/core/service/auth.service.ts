@@ -29,11 +29,11 @@ export class AuthService {
   ) {}
 
   checkLogin(name:string):Observable<{isExist: boolean}> {
-    return this.http.post<{isExist: boolean}>("http://localhost:3000/user/exists", {email:name});
+    return this.http.post<{isExist: boolean}>("user/exists", {email:name});
   }
 
   login(dto: Omit<IUser, 'name'>) {
-    return this.http.post<{id: string,accessToken: string}>("http://localhost:3000/auth/login", dto)
+    return this.http.post<{id: string,accessToken: string}>("auth/login", dto)
       .pipe(
         tap((token) => {
           this.localStorage.set(TOKEN, token.accessToken);
@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   register(dto: IUser) {
-    return this.http.post('http://localhost:3000/auth/register', dto);
+    return this.http.post('auth/register', dto);
   }
 
   get isAuth() {

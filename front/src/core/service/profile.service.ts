@@ -33,20 +33,20 @@ export class ProfileService {
 
 
   addFile(data: FormData) {
-    return this.http.post<IUploadFileResponse>("http://localhost:3000/files", data, {
+    return this.http.post<IUploadFileResponse>("files", data, {
       reportProgress: true,
       observe: 'events' // Позволяет отслеживать прогресс загрузки
     });
   }
 
   getUser() {
-    return this.http.get<IUser>('http://localhost:3000/user/' + this.localStorage.get(USER_ID))
+    return this.http.get<IUser>('user/' + this.localStorage.get(USER_ID))
       .pipe(
         tap((user) => this.user = user)
       )
   }
 
   updateImage(image: string, id: string) {
-    return this.http.patch<IUser>('http://localhost:3000/user/' + id, {image});
+    return this.http.patch<IUser>('user/' + id, {image});
   }
 }

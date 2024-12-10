@@ -63,7 +63,7 @@ export class OrderService {
 
     getOrders(loading = false): Observable<IOrder[]> {
         const id = this.localStorage.get(USER_ID);
-        return this.http.get<IOrder[]>(`http://localhost:3000/order/${id}`, {
+        return this.http.get<IOrder[]>(`order/${id}`, {
           context: new HttpContext().set(LOADING_TOKEN, loading)
         })
             .pipe(
@@ -81,36 +81,36 @@ export class OrderService {
             UserId: this.localStorage.get(USER_ID),
             total
         }
-        return this.http.post<{id: string}>("http://localhost:3000/order", dto);
+        return this.http.post<{id: string}>("order", dto);
     }
 
     createOrderAutoparts(dto: OrderAutopartDto) {
-        return this.http.post("http://localhost:3000/order/autoparts", dto);
+        return this.http.post("order/autoparts", dto);
     }
 
     getOrdersAutoparts(id: string) {
-        return this.http.get<IOrderAutopart[]>(`http://localhost:3000/order/autoparts/${id}`);
+        return this.http.get<IOrderAutopart[]>(`order/autoparts/${id}`);
     }
 
     deleteOrder(id: string) {
-        return this.http.delete('http://localhost:3000/order/' + id);
+        return this.http.delete('order/' + id);
     }
 
     exportInCsv(): Observable<ICsvJsonData[]> {
       const userId = this.localStorage.get(USER_ID);
-      return this.http.get<ICsvJsonData[]>('http://localhost:3000/order/exportInCsv/' + userId, {
+      return this.http.get<ICsvJsonData[]>('order/exportInCsv/' + userId, {
         context: new HttpContext().set(LOADING_TOKEN, true)
       });
     }
 
     getOrdersAll(loading = false):Observable<IOrder[]> {
-      return this.http.get<IOrder[]>('http://localhost:3000/order/all-orders', {
+      return this.http.get<IOrder[]>('order/all-orders', {
         context: new HttpContext().set(LOADING_TOKEN, loading)
       });
     }
 
     getOrderWithAutoPart(): Observable<IOrderWithAutoPart[]> {
-      return this.http.get<IOrderWithAutoPart[]>('http://localhost:3000/order/all-orders-auto-part');
+      return this.http.get<IOrderWithAutoPart[]>('order/all-orders-auto-part');
     }
 
     adjustDate(currentDate: Date): string {

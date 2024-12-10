@@ -61,12 +61,13 @@ export class AnalyticsComponent {
   getOrdersWithAutoPart() {
     this.orderService.getOrderWithAutoPart().subscribe(res => {
       const items = Object.entries(this.transformOrdersWithAutoPart(res));
+      console.log(items);
       const months = items.map(item => item[0]);
-      const datasets: any[] = items.map(item => item[1]).map((item, i) => ({
+      const datasets: any[] = items.map((item, i) => ({
         type: 'bar',
-        label: item[0].name,
-        backgroundColor: this.getColor(item[0].name),
-        data: item.map(item => item.count)
+        label: '23423423',
+        backgroundColor: this.getColor('Масло моторное'),
+        data: items
       }))
 
       this.data = {

@@ -20,7 +20,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
     FormsModule,
     ReactiveFormsModule,
     RouterOutlet,
-    FooterComponent,
     RouterLink,
     RouterLinkActive
   ],

@@ -18,4 +18,12 @@ export class DatabaseService {
   //   password: 'mhcSJCTcwA',
   //   database: 'sql7746026',
   // });
+
+  // pool = mysql.createPool({
+  //   host: 'localhost',
+  //   user: 'root',
+  //   port: 3306,
+  //   password: 'unypyrebe',
+  //   database: 'storeautoparts',
+  // });
 }
