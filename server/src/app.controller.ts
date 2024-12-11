@@ -16,4 +16,11 @@ export class AppController {
       mail,
     });
   }
+
+  @Get('test-test')
+  getTest() {
+    return {
+      test: true
+    }
+  }
 }
