@@ -1,3 +1,3 @@
 export const environment = {
-  API_URL: 'http://server/bla',
+  API_URL: 'https://course-project-production.up.railway.app',
 }
