@@ -3,22 +3,6 @@ import * as mysql from 'mysql2/promise';
 
 @Injectable()
 export class DatabaseService {
-  pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    port: 3306,
-    password: 'unypyrebe',
-    database: 'storeautoparts',
-  });
-
-  // pool = mysql.createPool({
-  //   host: 'sql7.freesqldatabase.com',
-  //   user: 'sql7746026',
-  //   port: 3306,
-  //   password: 'mhcSJCTcwA',
-  //   database: 'sql7746026',
-  // });
-
   // pool = mysql.createPool({
   //   host: 'localhost',
   //   user: 'root',
@@ -26,4 +10,12 @@ export class DatabaseService {
   //   password: 'unypyrebe',
   //   database: 'storeautoparts',
   // });
+  pool = mysql.createPool({
+    host: 'sql.freedb.tech',
+    user: 'freedb_grush1k',
+    port: 3306,
+    password: 'sCRdc9@r?Y5%#nc',
+    database: 'freedb_storeautoparts',
+  });
+
 }
