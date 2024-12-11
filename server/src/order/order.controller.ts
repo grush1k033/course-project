@@ -34,7 +34,7 @@ export class OrderController {
     @Get('confirm/:id')
     async updateOrderStatus(@Param('id') id: string, @Res() resp: Response) {
         await this.orderService.updateOrderStatus(id)
-        return resp.redirect('http://localhost:4200/order'); 
+        return resp.redirect('https://inquisitive-dasik-5ebded.netlify.app/order');
     }
 
     @Public()
