@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from "primeng/api";
 import { IOrder, OrderAutopartDto, OrderService } from "../../service/order.service";
 import { finalize } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-cart',
@@ -88,7 +89,7 @@ export class CartComponent {
 
     sendMail(orderNumber: string) {
         this.basketService.sendMail({
-            link: `http://localhost:3000/order/confirm/${orderNumber}`,
+            link: `${environment.API_URL}/order/confirm/${orderNumber}`,
             mail: this.email.value as string,
             orderNumber
         }).subscribe(res => {
