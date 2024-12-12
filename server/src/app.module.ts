@@ -18,6 +18,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { MailerModule, MailerOptions } from '@nestjs-modules/mailer';
 import { AppService } from './app.service';
 import { OrderModule } from './order/order.module';
+import * as process from 'node:process';
 const mailerOptions = (config: ConfigService) : MailerOptions => ({
   transport: {
     host: config.get('SMTP_HOST'),
@@ -50,7 +51,10 @@ export const options = () => ({
     OrderModule,
     FilesModule,
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      envFilePath: process.env.NODE_ENV === 'development' ? '.env.development' : '.env',
+      isGlobal: true
+    }),
   ],
   controllers: [AppController],
   providers: [

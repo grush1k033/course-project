@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import * as mysql from 'mysql2/promise';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class DatabaseService {
-  // pool = mysql.createPool({
-  //   host: 'localhost',
-  //   user: 'root',
-  //   port: 3306,
-  //   password: 'unypyrebe',
-  //   database: 'storeautoparts',
-  // });
+
+  constructor(private config: ConfigService) {}
+
   pool = mysql.createPool({
-    host: 'sql.freedb.tech',
-    user: 'freedb_grush1k',
-    port: 3306,
-    password: 'sCRdc9@r?Y5%#nc',
-    database: 'freedb_storeautoparts',
+    host: this.config.get('HOST'),
+    user: this.config.get('USER'),
+    port: this.config.get('PORT'),
+    password: this.config.get('PASSWORD'),
+    database: this.config.get('DATABASE'),
   });
 
 }
