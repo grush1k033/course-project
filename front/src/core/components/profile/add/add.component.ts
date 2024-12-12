@@ -17,6 +17,7 @@ import {LocalStorageService} from '../../../service/local-storage.service';
 import {LOCAL_STORAGE_KEY_CAR_MARK, LOCAL_STORAGE_KEY_CAR_MODEL} from '../../../constants';
 import {AutoPartService, IAutoPart} from '../../../service/auto-part.service';
 import {ActivatedRoute} from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 export type Form  = FormGroup<{
   mark: FormControl<string | null>
@@ -135,7 +136,7 @@ export class AddComponent {
       formData.append('image', this.selectedFile, this.selectedFile.name);
       this.profileService.addFile(formData).subscribe((res: any) => {
         if(res.body?.data) {
-          this.form.controls.image.setValue("http://localhost:3000/files/" + res.body.data.filename);
+          this.form.controls.image.setValue(environment.API_URL + "/files/" + res.body.data.filename);
           this.imageSrc = this.form.controls.image.value as string;
         }
       })

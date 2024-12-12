@@ -9,6 +9,7 @@ import { AuthService, IUser } from '../../service/auth.service';
 import { ProfileService } from '../../service/profile.service';
 import { DeleteConfirmModalComponent } from '../modals/delete-confirm-modal/delete-confirm-modal.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { environment } from "../../../environments/environment";
 
 
 @Component({
@@ -57,7 +58,7 @@ export class ProfileComponent {
       formData.append('image', this.selectedFile, this.selectedFile.name);
       this.profileService.addFile(formData).subscribe((res: any) => {
         if(res.body?.data) {
-          this.imageProfileSrc = "http://localhost:3000/files/" + res.body.data.filename;
+          this.imageProfileSrc = environment.API_URL + "/files/" + res.body.data.filename;
           this.profileService.updateImage(this.imageProfileSrc, this.user?.id as string).subscribe();
           this.getUser();
         }
