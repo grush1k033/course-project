@@ -1,3 +1,4 @@
+
 .items {
   display: flex;
   flex-direction: column;
@@ -8,6 +9,9 @@
   padding: 15px 20px;
   overflow-y: scroll;
   border-radius: 10px;
+  @media(max-width:780px) {
+    padding: 15px 10px;
+  }
 
   &::-webkit-scrollbar {
     width: 12px;               /* ширина scrollbar */
@@ -26,12 +30,23 @@
   display: flex;
   justify-content: space-around;
   align-items:center;
-  margin: 0 20px 24px;
+  margin: 0 20px;
   height: 200px;
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   padding: 20px 30px;
+  @media(max-width:780px) {
+    display: flex;
+    margin: 0;
+    padding: 10px;
+    gap:20px;
+  }
+  .total-back {
+    @media(max-width:780px) {
+      display: none;
+    }
+  }
 }
 
 .total-result {
@@ -40,18 +55,29 @@
   justify-content: space-between;
   align-items:center;
   padding: 15px 30px;
-  width: 800px;
-  height: 160px;
+  height: 100%;
+  gap:20px;
   border-radius: 10px;
   border: 2px #f67828 solid;
   background-color: rgba(246, 120, 40, 0.05);
+  @media(max-width:780px) {
+    display: flex;
+    padding: 10px 15px;
+  }
 }
 
 .wrap-price {
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items:flex-start;
+  gap:20px;
   justify-content: space-around;
+  @media(max-width:780px) {
+    display: flex;
+    justify-content: center;
+    gap:20px;
+  }
 
   &__old {
     display:flex;
@@ -66,11 +92,13 @@
   &__sum {
     color:#000000;
     font-size: 20px;
-    line-height: 14px;
+    line-height: 1.2;
     font-weight: 400;
+    @media(max-width:780px) {
+      display: flex;
+      
+    }
   }
-
-
 
   &__delivery{
     display: flex;
@@ -101,6 +129,13 @@
   align-items:flex-end;
   padding-bottom: 10px;
   gap: 50px;
+  @media(max-width:780px) {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    gap:20px;
+    padding: 0;
+  }
 
   &__phone-title {
     color: #505050;
@@ -128,6 +163,10 @@
     border: 2px #f67828 solid;
     border-radius: 10px;
     background-color: white;
+    @media(max-width:780px) {
+      width: 150px;
+    }
+
   }
 }
 

@@ -13,16 +13,16 @@
     </div>
   </div>
   <div class="right-content">
-    <div style="width: 140px;">
+    <div style="width: 80px;">
       <p-inputNumber 
       (onInput)="changeAmount($event)"
       min = '0'
       [max] = 'baketItem.amount'
       [(ngModel)]="amountValue" 
       [showButtons]="true" 
-      buttonLayout="horizontal" 
+      buttonLayout="vertical" 
       spinnerMode="vertical" 
-      inputId="vertical"
+      inputId="horizontal"
       decrementButtonClass="p-button-secondary"
       incrementButtonClass="p-button-secondary" 
       incrementButtonIcon="pi pi-plus" 

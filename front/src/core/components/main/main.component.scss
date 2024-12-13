@@ -3,6 +3,10 @@
   margin-top: 24px;
   &__title {
     font-size: 26px;
+    @media(max-width:780px) {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .category {
@@ -13,7 +17,7 @@
 
 
     &__title {
-      font-size: 30px
+      font-size: 30px;
     }
 
     &__items {
@@ -24,6 +28,11 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
+      @media(max-width:780px) {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 14px 10px;
+      }
     }
 
     &__item {
@@ -38,7 +47,13 @@
       border-radius: 10px;
       background-color: #fff;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-
+      @media(max-width:780px) {
+        display: flex;
+        flex-direction: column;
+        height: 120px;
+        gap: 10px;
+        flex: 1 1 calc(50% - 20px);
+      }
       &__image {
         height: 60px;
       }

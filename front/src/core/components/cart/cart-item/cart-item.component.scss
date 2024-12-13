@@ -9,12 +9,22 @@
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    @media(max-width:780px) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap:20px;
+    }
 }
 
 .left-content {
     display: flex;
     flex-direction: row;
     gap: 20px;
+    @media(max-width:780px) {
+        display: flex;
+        justify-content: space-between;
+    }
 
     &__checkbox {
         display: flex;
@@ -28,69 +38,41 @@
 
         img {
             height: 90px;
+            
         }
     }
 
     &__description {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        white-space: wrap;
-
-        &__counter {
-            display: flex;
-            align-items: center;
-            width: 100px;
-            height: 30px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+        gap:10px;
+        white-space:wrap;
     }
 }
 
-.custom-checkbox {
-    display: flex;
-    cursor: pointer;
-}
-
-.checkbox-input {
-    display: none; /* Скрываем стандартный чекбокс */
-}
-
-.checkbox-icon {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #007BFF;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s;
-}
-
-.checkbox-input:checked + .checkbox-icon {
-    background-color: #007BFF;
-}
-
-.checkbox-icon svg {
-    display: none; 
-}
-
-.checkbox-input:checked + .checkbox-icon svg {
-    display: block; 
-}
 
 .right-content {
     display: flex;
     justify-content: space-between;
     align-items:center;
     gap: 40px;
+    @media(max-width:780px) {
+        display: flex;
+        justify-content: center;
+        gap:10px;
+    }
 
     &__price-wrapper {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         gap: 20px;
+        @media(max-width:780px) {
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            gap:10px;
+        }
 
         &__old-price {
             color: #777;
@@ -116,6 +98,12 @@
         justify-content: space-around;
         align-items:center;
         gap:10px;
+        @media(max-width:780px) {
+            height:100%;
+            display: flex;
+            justify-content: center;
+            gap:30px;
+        }
 
         &__favourites{
             cursor: pointer;

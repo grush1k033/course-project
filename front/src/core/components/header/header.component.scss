@@ -15,6 +15,10 @@
     display: flex;
     align-items: center;
     gap: 50px;
+    @media(max-width:704px) {
+      display: flex;
+      gap: 30px;
+    }
   }
 
 
@@ -29,11 +33,19 @@
     letter-spacing: 4px;
     font-size: 25px;
     white-space: nowrap;
+    @media(max-width:704px) {
+      display: flex;
+      
+    }
+    .header__logo__label {
+      @media(max-width:704px) {
+        display: none;
+      }
+    }
     img {
       height: 60px;
     }
   }
-
   &__search {
     height: 100%;
     width: 50%;
@@ -45,6 +57,22 @@
     //   position: absolute;
     //   top:-8px;
     // }
+    @media(max-width:704px) {
+      display: none;
+    }
+    input {
+      width: 100%;
+    }
+  }
+
+  &__searchh {
+    display: none;
+    padding: 0 5px;
+    @media(max-width:704px) {
+      display: flex;
+      align-items:center;
+      justify-content: center;
+    }
     input {
       width: 100%;
     }

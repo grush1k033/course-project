@@ -12,32 +12,34 @@
         <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value" />
       </div>
     }
-
-
-      <div (click)="toCart()" class="header__basket">
-        <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [badgeDisabled]="!authService.isAuth"
-          [value]=" (basketService.basket$ | async)?.length || 0"></i>
-        <div class="header__basket__label">Корзина</div>
-      </div>
-      <div (click)="toOrder()" class="header__order">
-        <i style="font-size: 25px" class="pi pi-list" pBadge [badgeDisabled]="!authService.isAuth"
-           [value]="(orderService.orders$ | async)?.length || 0"></i>
-        <div class="header__basket__label">Заказы</div>
-      </div>
-      @if(authService.isAuth) {
-        @if(user?.image) {
-          <p-avatar routerLink="profile" size="large"
-          [image]="user?.image"
-          shape="circle" />
-        } @else {
-          <a routerLink="profile" class="avatar">{{user?.name?.[0] || 'U'}}</a>
-        }
+    <div (click)="toCart()" class="header__basket">
+      <i style="font-size: 25px" class="pi pi-cart-plus" pBadge [badgeDisabled]="!authService.isAuth"
+        [value]=" (basketService.basket$ | async)?.length || 0"></i>
+      <div class="header__basket__label">Корзина</div>
+    </div>
+    <div (click)="toOrder()" class="header__order">
+      <i style="font-size: 25px" class="pi pi-list" pBadge [badgeDisabled]="!authService.isAuth"
+         [value]="(orderService.orders$ | async)?.length || 0"></i>
+      <div class="header__basket__label">Заказы</div>
+    </div>
+    @if(authService.isAuth) {
+      @if(user?.image) {
+        <p-avatar routerLink="profile" size="large"
+        [image]="user?.image"
+        shape="circle" />
       } @else {
-        <p-button (click)="visibleLogin=true" icon="pi pi-user" [rounded]="true" severity="info" />
+        <a routerLink="profile" class="avatar">{{user?.name?.[0] || 'U'}}</a>
       }
-
-
+    } @else {
+      <p-button (click)="visibleLogin=true" icon="pi pi-user" [rounded]="true" severity="info" />
+    }
   </div>
+  @if(!isCartPage) {
+    <div class="header__searchh p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input (input)="changeSearch()" placeholder="Поиск" type="text" pInputText [(ngModel)]="value" />
+    </div>
+  }
 </div>
 
 <app-registration-modal (onHide)="visibleRegistration = false" [visible]="visibleRegistration"
